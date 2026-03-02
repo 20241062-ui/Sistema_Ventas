@@ -1,21 +1,21 @@
 @font-face {
-  font-family: 'SF-UI-Display';
-  src: url('./fonts/sfui.woff') format('woff');
+    font-family: 'SF-UI-Display';
+    src: url('./fonts/sfui.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'SF-UI-Display-Black';
-  src: url('./fonts/sfuiblack.woff') format('woff');
+    font-family: 'SF-UI-Display-Black';
+    src: url('./fonts/sfuiblack.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'SF-UI-Display-Bold';
-  src: url('./fonts/sfuibold.woff') format('woff');
+    font-family: 'SF-UI-Display-Bold';
+    src: url('./fonts/sfuibold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'SF-UI-Display-Semibold';
-  src: url('./fonts/sfuisemibold.woff') format('woff');
+    font-family: 'SF-UI-Display-Semibold';
+    src: url('./fonts/sfuisemibold.woff') format('woff');
 }
 
 body{
@@ -73,7 +73,7 @@ form{
 }
 
 input[type="submit"]:hover {
-  cursor: pointer;
+   cursor: pointer;
 }
 
 .textfields{

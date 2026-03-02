@@ -3,7 +3,7 @@
     $user = "u138650717_ComerLL";
     $pass = "Ivanbm12345#";             
     $bd = "u138650717_ComerLL";
- 
+
 
     $conn = new mysqli($host, $user, $pass, $bd);
 
@@ -11,5 +11,4 @@
         die("La conexión falló: " . $conn->connect_error);
         
     }
-   
 ?>
