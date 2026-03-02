@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>FlashCode - Categorías</title>
+  <link rel="stylesheet" href="estiloAdmin.css?=<?php echo time()?>">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div class="brand-text">
+        <h1>FlashCode</h1>
+        <small>Tienda online</small>
+      </div>
+    </div>
+    <nav class="top-actions">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Productos</a>
+      <a href="marcas.html">Marcas</a>
+      <a href="AcercaDe.html">Acerca de</a>
+      <input type="search" placeholder="Buscar...">
+
+      <div class="user"><a class="btn-ghost" href="login.html">Cerrar sesión</a>
+        </div>
+        
+    </nav>
+  </header>
+
+  <div class="container" style="flex-direction:column;">
+
+    <main class="main">
+      <h2>Categorías</h2>
+
+      <div class="categorias-lista">
+        <div class="categoria-item" onclick="location.href='productosCate.html?categoria=computadoras'">
+          <h3>Computadoras</h3>
+          <p>10 productos</p>
+        </div>
+
+        <div class="categoria-item" onclick="location.href='productosCate.html?categoria=accesorios'">
+          <h3>Accesorios</h3>
+          <p>25 productos</p>
+        </div>
+
+        <div class="categoria-item" onclick="location.href='productosCate.html?categoria=impresoras'">
+          <h3>Impresoras</h3>
+          <p>8 productos</p>
+        </div>
+
+        <div class="categoria-item" onclick="location.href='productosCate.html?categoria=smartphones'">
+          <h3>Smartphones</h3>
+          <p>15 productos</p>
+        </div>
+
+        <!-- Agrega más categorías aquí -->
+      </div>
+
+    </main>
+
+  </div>
+
+  <footer class="footer">
+    <small>© 2025 FlashCode — Todos los derechos reservados</small>
+  </footer>
+
+</body>
+</html>
