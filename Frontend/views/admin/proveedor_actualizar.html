@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Proveedor - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html" class="active">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+        
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main class="main">
+
+        <form class="panelP-formularioProductos" action="proveedores.html" method="GET">
+
+            <h2>Actualizar proveedor</h2>
+
+            <input type="hidden" name="vchRFC" value="GOG123456ABC">
+
+            <label for="vchNombre">Nombre:</label>
+            <input type="text" id="vchNombre" name="vchNombre"
+                   value="Google"
+                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required>
+
+            <label for="vchApellido_Paterno">Apellido Paterno (u Organización):</label>
+            <input type="text" id="vchApellido_Paterno" name="vchApellido_Paterno"
+                   value="Mexico"
+                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+">
+
+            <label for="vchApellido_Materno">Apellido Materno:</label>
+            <input type="text" id="vchApellido_Materno" name="vchApellido_Materno"
+                   value="S. de R.L."
+                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+">
+
+            <label for="vchColonia">Colonia:</label>
+            <input type="text" id="vchColonia" name="vchColonia"
+                   value="Lomas de Chapultepec"
+                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s#.-]+">
+
+            <label for="intNo_ExteriorInterior">No. Exterior / Interior:</label>
+            <input type="number" id="intNo_ExteriorInterior" name="intNo_ExteriorInterior"
+                   value="123"
+                   min="0">
+
+            <label for="vchCodigo_Postal">Código Postal:</label>
+            <input type="text" id="vchCodigo_Postal" name="vchCodigo_Postal"
+                   value="11000"
+                   pattern="[0-9]{5}" maxlength="5">
+
+            <label for="vchCalle">Calle:</label>
+            <input type="text" id="vchCalle" name="vchCalle"
+                   value="Paseo de la Reforma"
+                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s#.-]+">
+
+            <label for="vchTelefono">Teléfono:</label>
+            <input type="text" id="vchTelefono" name="vchTelefono"
+                   value="5512345678"
+                   pattern="[0-9]{10}" maxlength="10">
+
+            <label for="vchCorreo">Correo:</label>
+            <input type="email" id="vchCorreo" name="vchCorreo"
+                   value="proveedores@google.com">
+
+            <label for="vchRazon_Social">Razón Social:</label>
+            <input type="text" id="vchRazon_Social" name="vchRazon_Social"
+                   value="Google Mexico S. de R.L. de C.V."
+                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s#.&(),.-]+">
+
+            <div class="botones">
+                <button type="submit" class="guardar">Actualizar</button>
+                <button type="button" onclick="window.location.href='proveedores.html'" class="cancelar">Cancelar</button>
+            </div>
+        </form>
+
+    </main>
+</div>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+
+</body>
+</html>

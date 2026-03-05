@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Marcas - Sistema de Ventas</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+    <header class="header-admin">
+        <div class="contenedor-header">
+            <a href="menuAdministrador.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+            </a>
+
+            <nav class="nav-admin">
+                <a href="menuAdministrador.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compra.html">Compras</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="marcas.html" class="active">Marcas</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="listaSucursales.html">Sucursales</a>
+                <a href="informacionEmpresa.html">Información</a>
+                <a href="clientes.html">Clientes</a>
+                <a href="preguntasFrecuentes.html">FAQ</a>
+                <a href="contactoLista.html">Contacto</a>
+                <a href="usuarios.html">Usuarios</a>
+            </nav>
+
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+                <div class="menu">
+                    <a href="perfilAdmin.html">Mi cuenta</a>
+                    <a href="../publico/index.html">Inicio</a>
+                    <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main">
+            <h2>Marcas registradas</h2>
+
+            <div class="productos-superior">
+                <button class="btn-superior" onclick="window.location.href='marca_nueva.html'">Nueva marca</button>
+
+                <form action="marcas.html" method="GET" class="productos-buscar">
+                    <input type="search" name="buscar" placeholder="Buscar por ID o nombre...">
+                    <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
+                </form>
+            </div>
+
+            <div class="panel table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Marca</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Apple</td>
+                            <td>
+                                <button class="guardar" onclick="window.location.href='marca_actualizar.html'">Editar</button>
+                                <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar esta marca?')) window.location.href='marcas.html'">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Samsung</td>
+                            <td>
+                                <button class="guardar" onclick="window.location.href='marca_actualizar.html'">Editar</button>
+                                <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar esta marca?')) window.location.href='marcas.html'">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Sony</td>
+                            <td>
+                                <button class="guardar" onclick="window.location.href='marca_actualizar.html'">Editar</button>
+                                <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar esta marca?')) window.location.href='marcas.html'">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="linksFooter">  
+            <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+        </div>
+    </footer>
+</body>
+</html>

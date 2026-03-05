@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Clientes - Sistema de ventas</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html" class="active">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main class="main">
+        <h2>Clientes registrados</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total clientes</h3>
+                <p class="big">25</p>
+            </div>
+            <div class="card success">
+                <h3>Activos</h3>
+                <p class="big">20</p>
+            </div>
+            <div class="card warning">
+                <h3>Inactivos</h3>
+                <p class="big">5</p>
+            </div>
+        </div>
+
+        <div class="productos-superior">
+            <div class="productos-buscar">
+                <input type="search" placeholder="Buscar por nombre, apellidos o correo...">
+                <button type="button" class="btn-superior buscar">🔍 Buscar</button>
+            </div>
+        </div>
+
+        <div class="panel table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo Electrónico</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td>Juan</td>
+                        <td>Pérez García</td>
+                        <td>juan.perez@ejemplo.com</td>
+                        <td>Activo</td>
+                        <td>
+                            <button class="cancelar" onclick="confirm('¿Desactivar este cliente?')">Baja</button>
+                        </td>
+                    </tr>
+                    <tr class="inactivo" style="background-color: #f9f9f9; opacity: 0.7;">
+                        <td>102</td>
+                        <td>María</td>
+                        <td>López Torres</td>
+                        <td>m.lopez@ejemplo.com</td>
+                        <td>Inactivo</td>
+                        <td>
+                            <button class="activar" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Activar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+
+</body>
+</html>

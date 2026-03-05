@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesorios - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/home.css">
+</head>
+<body>
+    <header>
+        <div class="contenedor-header">
+            <a href="index.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+            </a>
+
+            <nav>
+                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="celulares.html" class="nav-link">Celulares</a>
+                <a href="Accesorios.html" class="nav-link activo">Accesorios</a>
+                <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
+            </nav>
+
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+                <div class="menu">
+                    <a href="perfil.html">Mi cuenta</a>
+                    <a href="../admin/menuAdministrador.html">Panel de Administración</a>
+                    <a href="cerrar_sesion.html">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-div-Accesorios">
+        <div class="hero">
+            <div class="textohero">
+                <h1>Audífonos Gamer Pro $1,250.00</h1>
+                <h3>Sólo en Comercializadora Doble L</h3>
+            </div>
+            
+            <form action="productoDetalle.html" method="GET">
+                <input type="hidden" name="producto_id" value="VCH2007101">
+                <button type="submit" class="comprar">Comprar</button>
+            </form>
+        </div>
+    </div>
+        
+    <div>
+        <h2 class="featured-text">Accesorios</h2>
+    </div>
+
+    <div class="contenedor-productos">
+        <div class="galeria-productos">
+
+            <div class="producto">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
+                <div class="recuadro">
+                    <div class="producto-detalle">
+                        <div class="texto-producto">
+                            <h2>Funda Silicona iPhone 15</h2>
+                            <h3>$350.00</h3>
+                        </div>
+                        <form action="productoDetalle.html" method="GET">
+                            <input type="hidden" name="producto_id" value="ACC001">
+                            <button type="submit" class="comprarproducto">Comprar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="producto">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
+                <div class="recuadro">
+                    <div class="producto-detalle">
+                        <div class="texto-producto">
+                            <h2>Cargador Carga Rápida 20W</h2>
+                            <h3>$450.00</h3>
+                        </div>
+                        <form action="productoDetalle.html" method="GET">
+                            <input type="hidden" name="producto_id" value="ACC002">
+                            <button type="submit" class="comprarproducto">Comprar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="producto">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
+                <div class="recuadro">
+                    <div class="producto-detalle">
+                        <div class="texto-producto">
+                            <h2>Protector de Pantalla Cristal</h2>
+                            <h3>$150.00</h3>
+                        </div>
+                        <form action="productoDetalle.html" method="GET">
+                            <input type="hidden" name="producto_id" value="ACC003">
+                            <button type="submit" class="comprarproducto">Comprar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="linksFooter">
+            <a href="AcercaDe.html"><h3>Acerca de</h3></a>
+            <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
+            <a href="contactoPublico.html"><h3>Contacto</h3></a>
+            <a href="ubicacion.html"><h3>Ubicación</h3></a>
+            <a href="politicaCompra.html"><h3>Políticas</h3></a>
+            <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
+        </div>
+    </footer>
+
+</body>
+</html>

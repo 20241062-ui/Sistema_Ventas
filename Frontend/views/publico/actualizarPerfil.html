@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/home.css">
+    <style>
+        main {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            background-color: #f5f5f5;
+            min-height: 80vh;
+        }
+
+        .perfil-container {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 1000px;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .perfil-menu {
+            width: 100%;
+            background-color: #8737d1ff;
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .perfil-menu h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .perfil-menu p {
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .perfil-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            background-color: rgba(255,255,255,0.15);
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .perfil-menu a:hover {
+            background-color: rgba(255,255,255,0.25);
+        }
+
+        .perfil-info {
+            width: 100%;
+            padding: 40px;
+        }
+
+        h3 {
+            color: #8737d1ff;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        input[readonly] {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+
+        .botones {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-guardar {
+            background-color: #8737d1ff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-guardar:hover {
+            background-color: #7028b3;
+        }
+
+        .btn-cancelar {
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        footer {
+            width: 100%;
+            height: fit-content;
+            background-color: #8A2BE2;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .linksFooter {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 20px;
+            column-gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .linksFooter a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px; 
+            font-weight: 600;
+        }
+
+        .linksFooter a h3 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 18px; 
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="contenedor-header">
+            <a href="index.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+            </a>
+            <nav>
+                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="celulares.html" class="nav-link">Celulares</a>
+                <a href="Accesorios.html" class="nav-link">Accesorios</a>
+                <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="perfil-container">
+            <div class="perfil-menu">
+                <h2>Mi cuenta</h2>
+                <p>Juan Pérez<br>juan.perez@ejemplo.com</p>
+                <a href="perfil.html">Mis datos</a>
+                <a href="actualizarPerfil.html">Editar información</a>
+                <a href="cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+
+            <div class="perfil-info">
+                <h3>Editar información de cliente</h3>
+                <form action="perfil.html" method="GET">
+                    <label>Nombre(s):</label>
+                    <input type="text" name="vchNombre" value="Juan" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
+
+                    <label>Apellido Paterno:</label>
+                    <input type="text" name="vchApellido_Paterno" value="Pérez" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
+
+                    <label>Apellido Materno:</label>
+                    <input type="text" name="vchApellido_Materno" value="García" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
+                    
+                    <label>Teléfono de contacto:</label>
+                    <input type="text" 
+                           name="vchTelefono" 
+                           id="vchTelefono"
+                           value="5512345678" 
+                           placeholder="Ingresar si desea comprar"
+                           maxlength="10">
+                    
+                    <label>Correo electrónico (No modificable):</label>
+                    <input type="email" value="juan.perez@ejemplo.com" readonly>
+
+                    <label>Nueva Contraseña (dejar en blanco para no cambiar):</label>
+                    <input type="password" name="vchpassword" placeholder="••••••••">
+
+                    <div class="botones">
+                        <button type="submit" class="btn-guardar">Guardar cambios</button>
+                        <button type="button" class="btn-cancelar" onclick="window.location.href='perfil.html'">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="linksFooter">
+            <a href="AcercaDe.html"><h3>Acerca de</h3></a>
+            <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
+            <a href="contactoPublico.html"><h3>Contacto</h3></a>
+            <a href="ubicacion.html"><h3>Ubicación</h3></a>
+            <a href="politicaCompra.html"><h3>Políticas</h3></a>
+            <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
+        </div>
+    </footer>
+    
+    <script>
+        // Mantener la validación básica de números por estética en el esqueleto
+        function soloNumeros(e) {
+            var key = window.event ? e.which : e.keyCode;
+            if (key < 48 || key > 57) e.preventDefault();
+        }
+        document.getElementById('vchTelefono').onkeypress = soloNumeros;
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Sucursales - Sistema de Ventas</title>
+<link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html" class="active">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main class="main">
+        <h2>Lista de sucursales</h2>
+
+        <div class="productos-superior">
+            <button class="btn-superior" onclick="window.location.href='agregarSucursal.html'">
+                 Nueva sucursal
+            </button>
+        </div>
+
+        <div class="panel table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Teléfono</th>
+                        <th>Horario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sucursal Matriz</td>
+                        <td>Av. Principal #100</td>
+                        <td>Pachuca</td>
+                        <td>7711234567</td>
+                        <td>Lun-Vie 9:00-18:00</td>
+                        <td>
+                            <button class="guardar" onclick="window.location.href='editarSucursal.html'">
+                                Editar
+                            </button>
+                            <button class="cancelar" onclick="if(confirm('¿Eliminar sucursal?')) window.location.href='listaSucursales.html'">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sucursal Norte</td>
+                        <td>Calle Reforma #45</td>
+                        <td>Mineral de la Reforma</td>
+                        <td>7717654321</td>
+                        <td>Lun-Sab 10:00-19:00</td>
+                        <td>
+                            <button class="guardar" onclick="window.location.href='editarSucursal.html'">
+                                Editar
+                            </button>
+                            <button class="cancelar" onclick="if(confirm('¿Eliminar sucursal?')) window.location.href='listaSucursales.html'">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Gestión de Sucursales</a>
+    </div>
+</footer>
+
+</body>
+</html>

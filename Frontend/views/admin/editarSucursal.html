@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Sucursal - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<form class="panelP-formularioProductos" action="listaSucursales.html" method="GET">
+
+    <h2>Editar Sucursal</h2>
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" 
+           value="Sucursal Centro" 
+           pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+           maxlength="60"
+           required>
+
+    <label>Dirección:</label>
+    <input type="text" name="direccion" 
+           value="Av. Juárez #123" 
+           pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s#.,-]{1,80}"
+           maxlength="80"
+           required>
+
+    <label>Ciudad:</label>
+    <input type="text" name="ciudad" 
+           value="Pachuca" 
+           pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+           maxlength="40"
+           required>
+
+    <label>Teléfono:</label>
+    <input type="text" name="telefono" 
+           value="7711234567" 
+           pattern="[0-9]{10}"
+           maxlength="10"
+           placeholder="10 dígitos">
+
+    <label>Horario:</label>
+    <input type="text" name="horario" 
+           value="Lun-Sab 9:00-19:00" 
+           pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s:.-]{1,40}"
+           maxlength="40"
+           placeholder="Ejemplo: Lun-Sab 8:00-18:00">
+
+    <label>Link de Google Maps:</label>
+    <input type="url" name="linkmapa" 
+           value="https://maps.google.com"
+           maxlength="250"
+           placeholder="URL válida">
+
+    <div class="botones">
+        <button type="submit" class="guardar">Guardar cambios</button>
+        <button type="button" class="cancelar" onclick="window.location.href='listaSucursales.html'">
+            Cancelar
+        </button>
+    </div>
+
+</form>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+
+</body>
+</html>

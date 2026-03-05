@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil Admin - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/home.css">
+    <style>
+        /* Estilos internos mantenidos de tu PHP original */
+        main {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            background-color: #f5f5f5;
+            min-height: 80vh;
+        }
+
+        .perfil-container {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 1000px;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .perfil-menu {
+            width: 100%;
+            background-color: #8737d1ff;
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .perfil-menu h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .perfil-menu p {
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .perfil-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            background-color: rgba(255,255,255,0.15);
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .perfil-menu a:hover {
+            background-color: rgba(255,255,255,0.25);
+        }
+
+        .perfil-info {
+            width: 100%;
+            padding: 40px;
+        }
+
+        h3 {
+            color: #8A2BE2;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .btn-editar {
+            margin-top: 25px;
+            padding: 10px 20px;
+            background-color: #8A2BE2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-editar:hover {
+            background-color: #530853ff;
+        }
+
+        footer {
+            width: 100%;
+            height: fit-content;
+            background-color: #8A2BE2;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .linksFooter {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 20px;
+            column-gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .linksFooter a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px; 
+            font-weight: 600;
+        }
+
+        .linksFooter a h3 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 18px; 
+            font-family: sans-serif; 
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="contenedor-header">
+            <a href="menuAdministrador.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+            </a>
+
+            <nav class="nav-admin">
+                <a href="menuAdministrador.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compra.html">Compras</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="marcas.html">Marcas</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="listaSucursales.html">Sucursales</a>
+                <a href="informacionEmpresa.html">Información</a>
+                <a href="clientes.html">Clientes</a>
+                <a href="preguntasFrecuentes.html">FAQ</a>
+                <a href="contactoLista.html">Contacto</a>
+                <a href="usuarios.html">Usuarios</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="perfil-container">
+            <div class="perfil-menu">
+                <h2>Mi cuenta (Admin)</h2>
+                <p>Admin FlashCode<br>admin@flashcode.com</p>
+                <a href="perfilAdmin.html">Mis datos</a>
+                <a href="actualizarPerfilA.html">Editar información</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar sesión</a>
+            </div>
+
+            <div class="perfil-info">
+                <h3>Información del administrador</h3>
+                <p><strong>Nombre:</strong> Administrador</p>
+                <p><strong>Apellido:</strong> FlashCode</p>
+                <p><strong>Correo:</strong> admin@flashcode.com</p>
+
+                <button class="btn-editar" onclick="window.location.href='actualizarPerfilA.html'">Editar perfil</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="linksFooter">  
+            <a>© 2026 FlashCode — Sistema de Gestión</a>
+        </div>
+    </footer>
+
+</body>
+</html>

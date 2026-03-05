@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Actualizar Pregunta - Doble L</title>
+  <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html" class="active">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+  <form class="panelP-formularioProductos" action="preguntasFrecuentes.html" method="GET">
+    <h2>Actualizar Pregunta Frecuente</h2>
+
+    <label>Pregunta:</label>
+    <input type="text" name="pregunta" required value="¿Cuáles son los métodos de pago aceptados?">
+
+    <label>Respuesta:</label>
+    <textarea name="respuesta" rows="6" required>Aceptamos tarjetas de crédito y débito (Visa, Mastercard), transferencias bancarias y pagos en efectivo a través de tiendas de conveniencia mediante OXXO Pay.</textarea>
+
+    <div class="botones">
+      <button type="submit" class="guardar">Actualizar</button>
+      <button type="button" class="cancelar" onclick="window.location.href='preguntasFrecuentes.html'">Cancelar</button>
+    </div>
+  </form>
+
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Gestión</a>
+    </div>
+</footer>
+
+</body>
+</html>

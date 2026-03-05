@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Cliente - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html" class="active">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<form class="panelP-formularioProductos" action="clientes.html" method="GET">
+
+    <h2>Actualizar Cliente</h2>
+
+    <input type="hidden" name="id_usuario" value="123">
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required value="Juan" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$">
+
+    <label>Apellido:</label>
+    <input type="text" name="apellido" required value="Pérez" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$">
+
+    <label>Correo electrónico:</label>
+    <input type="email" name="correo" required value="juan.perez@ejemplo.com" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+
+    <label>Estado:</label>
+    <select name="estado">
+        <option value="1" selected>Activo</option>
+        <option value="0">Inactivo</option>
+    </select>
+
+    <div class="botones">
+        <button type="submit" class="guardar">Actualizar</button>
+        <button type="button" class="cancelar" onclick="window.location.href='clientes.html'">Cancelar</button>
+    </div>
+
+</form>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+
+</body>
+</html>

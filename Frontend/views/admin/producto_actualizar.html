@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" class="logo" alt="Logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html" class="active">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" class="profileicon" alt="Perfil">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+<main class="main">
+
+<form class="panelP-formularioProductos" action="menuAdministrador.html" method="GET" enctype="multipart/form-data">
+    <h2>Editar producto</h2>
+
+    <label>No. Serie:</label>
+    <input type="text" value="VCH2007100" readonly>
+
+    <label>Marca:</label>
+    <select name="intid_Marca" required>
+        <option value="1" selected>Apple</option>
+        <option value="2">Samsung</option>
+        <option value="3">Sony</option>
+    </select>
+
+    <label>Categoría:</label>
+    <select name="intid_Categoria" required>
+        <option value="1" selected>Celulares</option>
+        <option value="2">Accesorios</option>
+        <option value="3">Laptop</option>
+    </select>
+
+    <label>Nombre:</label>
+    <input type="text" name="vchNombre" value="iPhone 15 Pro" required>
+
+    <label>Descripción:</label>
+    <textarea name="vchDescripcion" rows="3">Pantalla Super Retina XDR, acabado en titanio de grado aeroespacial.</textarea>
+
+    <label>Imagen actual:</label>
+    <div class="preview">
+        <img id="imagen-preview" src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/iphone15.jpg" width="150" alt="Vista previa">
+    </div>
+
+    <label>Nueva imagen (opcional):</label>
+    <input type="file" id="vchImagen" name="vchImagen" accept="image/jpeg, image/png, image/gif, image/webp" onchange="validarImagen(this);">
+
+    <label>Precio Unitario:</label>
+    <input type="number" step="1" min="0" name="floPrecioUnitario" value="21999" required>
+
+    <label>Stock:</label>
+    <input type="number" name="intStock" value="15" required>
+
+    <label>Precio Compra:</label>
+    <input type="number" step="1" min="0" name="floPrecioCompra" value="18500" required>
+
+    <div class="botones">
+        <button type="submit" class="guardar">Guardar</button>
+        <button type="button" class="cancelar" onclick="window.location.href='menuAdministrador.html'">Cancelar</button>
+    </div>
+</form>
+
+</main>
+</div>
+
+<footer>
+    <div class="linksFooter">
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+
+<script>
+    const imagenOriginalSrc = document.getElementById('imagen-preview').src;
+
+    function validarImagen(input) {
+        const tiposPermitidos = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+        const archivo = input.files[0];
+        const imagenPreview = document.getElementById('imagen-preview'); 
+
+        if (!archivo) {
+            imagenPreview.src = imagenOriginalSrc;
+            return true;
+        }
+        
+        const nombreArchivo = archivo.name.toLowerCase();
+        let esValido = false;
+
+        for (let i = 0; i < tiposPermitidos.length; i++) {
+            if (nombreArchivo.endsWith(tiposPermitidos[i])) {
+                esValido = true;
+                break;
+            }
+        }
+
+        if (!esValido) {
+            alert('Error: Solo se permiten archivos de imagen (JPG, PNG, GIF o WEBP).');
+            input.value = ""; 
+            imagenPreview.src = imagenOriginalSrc; 
+            return false;
+        }
+
+        if (esValido) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagenPreview.src = e.target.result; 
+            };
+            reader.readAsDataURL(archivo);
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>

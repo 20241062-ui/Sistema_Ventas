@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Usuario - Admin</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" class="logo" alt="Logo">
+        </a>
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html" class="active">Usuarios</a>
+        </nav>
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" class="profileicon" alt="Perfil">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+<main class="main">
+
+    <form class="panelP-formularioProductos" action="usuarios.html" method="GET">
+        <h2>Registrar Nuevo Usuario</h2>
+        <p style="margin-bottom: 20px; color: #666;">Complete los datos para dar acceso al sistema a un nuevo colaborador.</p>
+
+        <label for="vchnombre">Nombre(s):</label>
+        <input type="text" id="vchnombre" name="vchnombre" placeholder="Ej. Juan Carlos" required>
+
+        <label for="vchapellido">Apellido(s):</label>
+        <input type="text" id="vchapellido" name="vchapellido" placeholder="Ej. Pérez López" required>
+
+        <label for="vchcorreo">Correo Electrónico (Será su usuario):</label>
+        <input type="email" id="vchcorreo" name="vchcorreo" placeholder="correo@empresa.com" required>
+
+        <label for="vchRol">Rol / Puesto:</label>
+        <select id="vchRol" name="vchRol" required>
+            <option value="" disabled selected>Seleccione un puesto...</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Vendedor">Vendedor</option>
+            <option value="Encargado">Encargado</option>
+        </select>
+
+        <label for="vchpassword">Contraseña Temporal:</label>
+        <input type="password" id="vchpassword" name="vchpassword" placeholder="Mínimo 6 caracteres" minlength="6" required>
+
+        <div class="botones">
+            <button type="submit" class="guardar">Crear Usuario</button>
+            <button type="button" class="cancelar" onclick="window.location.href='usuarios.html'">Cancelar</button>
+        </div>
+    </form>
+
+</main>
+</div>
+
+
+
+<footer>
+    <div class="linksFooter">
+        <a>© 2026 FlashCode — Sistema de Ventas</a>
+    </div>
+</footer>
+
+</body>
+</html>

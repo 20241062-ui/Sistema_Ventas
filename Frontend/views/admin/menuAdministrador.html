@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Productos - Sistema de Ventas</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html" class="active">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main class="main">
+        <h2>Productos registrados</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total productos</h3>
+                <p class="big">124</p>
+            </div>
+            <div class="card success">
+                <h3>Activos</h3>
+                <p class="big">118</p>
+            </div>
+            <div class="card warning">
+                <h3>Inactivos</h3>
+                <p class="big">6</p>
+            </div>
+        </div>
+
+        <div class="productos-superior">
+            <button class="btn-superior" onclick="window.location.href='producto_nuevo.html'">Nuevo producto</button>
+
+            <form action="menuAdministrador.html" method="GET" class="productos-buscar">
+                <input type="search" name="buscar" placeholder="Buscar producto...">
+                <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
+            </form>
+        </div>
+
+        <div class="panel table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>N° Serie</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio Venta</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>VCH2007100</td>
+                        <td>iPhone 15 Pro</td>
+                        <td class="descripcion">Pantalla Super Retina XDR, Titanio...</td>
+                        <td>$21,999.00</td>
+                        <td>15</td>
+                        <td>Activo</td>
+                        <td class="acciones">
+                            <button class="guardar" onclick="window.location.href='producto_actualizar.html'">Editar</button>
+                            <button class="cancelar" onclick="if(confirm('¿Dar de baja?')) window.location.href='menuAdministrador.html'">Baja</button>
+                        </td>
+                    </tr>
+                    <tr class="inactivo">
+                        <td>VCH2007101</td>
+                        <td>Samsung S23 (Antiguo)</td>
+                        <td class="descripcion">Modelo de exhibición anterior...</td>
+                        <td>$15,500.00</td>
+                        <td>2</td>
+                        <td>Inactivo</td>
+                        <td class="acciones">
+                            <button class="guardar" onclick="window.location.href='producto_actualizar.html'">Editar</button>
+                            <button class="activar" onclick="if(confirm('¿Activar?')) window.location.href='menuAdministrador.html'">Activar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="paginacion">
+            <a class="pagina activa" href="#">1</a>
+            <a class="pagina" href="#">2</a>
+            <a class="pagina" href="#">3</a>
+        </div>
+
+    </main>
+</div>
+
+<div class="accesibilidad">
+    <button class="btn-accessibility" onclick="toggleAccesibilidad()">
+        <img src="https://comercializadorall.grupoctic.com/img/Acceso.png" alt="Accesibilidad" class="icono-accesibilidad">
+    </button>
+
+    <div class="panel-accesibilidad" id="panelAccesibilidad" style="display: none; flex-direction: column; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; z-index: 1000;">
+        <button onclick="cambiarTexto(1)">Aumentar Texto</button>
+        <button onclick="cambiarTexto(-1)">Disminuir Texto</button>
+        <button onclick="restaurarTexto()">Restaurar</button>
+        <button onclick="toggleLectura()">Modo Lectura</button>
+        <button onclick="leerPaginaCompleta()">Leer Página</button>
+        <button onclick="detenerVoz()">Detener Voz</button>
+    </div>
+</div>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Panel de Control</a>
+    </div>
+</footer>
+
+<script>
+    function toggleAccesibilidad() {
+        const panel = document.getElementById("panelAccesibilidad");
+        panel.style.display = (panel.style.display === "flex") ? "none" : "flex";
+    }
+
+    let tamañoActual = 100;
+    function cambiarTexto(cambio) {
+        tamañoActual += cambio * 10;
+        document.body.style.fontSize = tamañoActual + "%";
+    }
+
+    function restaurarTexto() {
+        tamañoActual = 100;
+        document.body.style.fontSize = "100%";
+    }
+
+    let lecturaActiva = false;
+    function toggleLectura() {
+        lecturaActiva = !lecturaActiva;
+        alert(lecturaActiva ? "Modo lectura activado." : "Modo lectura desactivado.");
+    }
+
+    function leerTexto(texto) {
+        if (speechSynthesis.speaking) speechSynthesis.cancel();
+        const mensaje = new SpeechSynthesisUtterance(texto);
+        mensaje.lang = "es-MX";
+        speechSynthesis.speak(mensaje);
+    }
+
+    function leerPaginaCompleta() {
+        leerTexto(document.body.innerText);
+    }
+
+    function detenerVoz() {
+        speechSynthesis.cancel();
+    }
+</script>
+
+</body>
+</html>

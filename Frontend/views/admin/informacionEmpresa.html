@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Información de la Empresa - Sistema de ventas</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html" class="active">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main class="main">
+    <h2>Información de la Empresa</h2>
+    
+        <div class="cards">
+            <div class="card">
+                <h3>Total información</h3>
+                <p class="big">2</p>
+            </div>
+            <div class="card success">
+                <h3>Activas</h3>
+                <p class="big">2</p>
+            </div>
+            <div class="card warning">
+                <h3>Inactivas</h3>
+                <p class="big">0</p>
+            </div>
+        </div>
+
+        <div class="productos-superior">
+            <button class="btn-superior" onclick="window.location.href='informacionNueva.html'">Nueva información</button>
+
+            <form action="informacionEmpresa.html" method="GET" class="productos-buscar">
+                <input type="search" name="buscar" placeholder="Buscar por ID o título..."> 
+                <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
+            </form>
+        </div>
+
+        <div class="panel table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Contenido</th>
+                        <th>Estado</th>
+                        <th>Fecha Modificación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Misión</td>
+                        <td class="descripcion">Ofrecer productos tecnológicos de alta calidad...</td>
+                        <td>Activo</td>
+                        <td>2026-01-15 10:30:00</td>
+                        <td>
+                            <button class="guardar" onclick="window.location.href='informacionActualizar.html'">Editar</button>
+                            <button class="cancelar" onclick="if(confirm('¿Quieres desactivar esta información?')) window.location.href='informacionEmpresa.html'">Baja</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Visión</td>
+                        <td class="descripcion">Ser la comercializadora líder en el mercado regional...</td>
+                        <td>Activo</td>
+                        <td>2026-01-15 10:35:00</td>
+                        <td>
+                            <button class="guardar" onclick="window.location.href='informacionActualizar.html'">Editar</button>
+                            <button class="cancelar" onclick="if(confirm('¿Quieres desactivar esta información?')) window.location.href='informacionEmpresa.html'">Baja</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+</body>
+</html>

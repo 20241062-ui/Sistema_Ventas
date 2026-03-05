@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Información de Contacto - Sistema de Ventas</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+<header class="header-admin">
+    <div class="contenedor-header">
+        <a href="menuAdministrador.html">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+        </a>
+
+        <nav class="nav-admin">
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html" class="active">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="user-menu">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+            <div class="menu">
+                <a href="perfilAdmin.html">Mi cuenta</a>
+                <a href="../publico/index.html">Inicio</a>
+                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <main class="main">
+        <h2>Información de Contacto</h2>
+
+        <div class="productos-superior">
+            <button class="btn-superior" onclick="window.location.href='contactoNuevo.html'">Nuevo contacto</button>
+
+            <form action="contactoLista.html" method="GET" class="productos-buscar">
+                <input type="search" name="buscar" placeholder="Buscar por ID, campo o valor..."> 
+                <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
+            </form>
+        </div>
+
+        <div class="panel table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Campo</th>
+                        <th>Valor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Teléfono de Atención</td>
+                        <td>+52 771 123 4567</td>
+                        <td>
+                            <button class="guardar" onclick="window.location.href='contactoActualizar.html'">Editar</button>
+                            <button class="cancelar" onclick="if(confirm('¿Eliminar este contacto?')) window.location.href='contactoLista.html'">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Correo Corporativo</td>
+                        <td>ventas@doblel.com</td>
+                        <td>
+                            <button class="guardar" onclick="window.location.href='contactoActualizar.html'">Editar</button>
+                            <button class="cancelar" onclick="if(confirm('¿Eliminar este contacto?')) window.location.href='contactoLista.html'">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+<footer>
+    <div class="linksFooter">  
+        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+    </div>
+</footer>
+</body>
+</html>

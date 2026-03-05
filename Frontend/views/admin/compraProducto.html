@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Compra - Productos</title>
+<link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body class="Comprabody">
+
+<div class="containerProducto">
+    <h2 class="containerProducto-h2"> Compra - Agregar Productos</h2>
+
+    <div class="flash success" style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #c3e6cb;">
+        Producto agregado correctamente (Simulación).
+    </div>
+
+    <form action="#" class="formProduc">
+        <label>Producto:
+            <select name="vchNo_Serie" required>
+                <option value="">-- Seleccione --</option>
+                <option value="VCH001">iPhone 15 Pro Max</option>
+                <option value="VCH002">Samsung Galaxy S24 Ultra</option>
+                <option value="VCH003">Cargador 25W USB-C</option>
+            </select>
+        </label>
+
+        <label>Cantidad:
+            <input type="number" name="cantidad" value="1" required>
+        </label>
+
+        <button type="button" class="small-btn info">Actualizar</button>
+    </form>
+
+    <table class="tabla-compra">
+        <thead>
+            <tr>
+                <th>No. Serie</th>
+                <th>Producto</th>
+                <th>Precio Compra</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>VCH001</td>
+                <td>iPhone 15 Pro Max</td>
+                <td>$18,500.00</td>
+                <td>2</td>
+                <td>$37,000.00</td>
+                <td><button type="button" class="small-btn">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>VCH003</td>
+                <td>Cargador 25W USB-C</td>
+                <td>$350.00</td>
+                <td>10</td>
+                <td>$3,500.00</td>
+                <td><button type="button" class="small-btn">Eliminar</button></td>
+            </tr>
+
+            <tr>
+                <th colspan="4" class="right" style="text-align: right; padding-right: 15px;">TOTAL</th>
+                <th colspan="2">$40,500.00</th>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="botones">
+        <button type="button" class="small-btn info" onclick="window.location.href='guardar_compra.html'"> Guardar Compra</button>
+
+        <button type="button" onclick="window.location.href='compra_nueva.html'" class="small-btn">
+            Cancelar compra
+        </button>
+    </div>
+
+</div>
+
+</body>
+</html>
