@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión - Doble L</title>
-    <link rel="stylesheet" href="../../public/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <main>
-        <form name="userdata" method="GET" action="index.html">
+        <form name="userdata" id="loginForm">
             <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/blacklogo.png" alt="Logo" class="logo">
             <h2 class="titulo">Inicio de sesión</h2>
             
@@ -24,7 +24,7 @@
             </div>
             
             <div class="actionbuttons">
-                <input type="submit" value="Continuar" class="continuar">
+                <button type="submit" class="continuar">Continuar</button>
                 
                 <div class="createaccount">
                     <p>¿No tienes una cuenta?</p>
@@ -33,5 +33,18 @@
             </div>
         </form>
     </main>
+
+    <script>
+        // Lógica de navegación simulada solicitada por el docente
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Detiene el envío real al servidor (que no existe aún)
+            
+            // Simulación de validación
+            alert('¡Login exitoso! (Simulando acceso administrativo)');
+            
+            // Redirección a la carpeta admin
+            window.location.href = 'admin/menuAdministrador.html'; 
+        });
+    </script>
 </body>
 </html>

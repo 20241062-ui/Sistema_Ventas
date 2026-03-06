@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta - FlashCode</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <main>
+        <form name="userdata" id="signupForm" method="GET" action="login.html">
+            <h2 class="titulo">Crea tu cuenta</h2>
+
+            <div class="textfields">
+                <div class="campoTexto">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" class="textfield" id="nombre" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                        title="Solo letras y espacios" required>
+                </div>
+
+                <div class="campoTexto">
+                    <label for="apellidoP">Apellido Paterno</label>
+                    <input type="text" name="apellidoP" class="textfield" id="apellidoP"
+                        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" title="Solo letras y espacios" required>
+                </div>
+
+                <div class="campoTexto">
+                    <label for="apellidoM">Apellido Materno</label>
+                    <input type="text" name="apellidoM" class="textfield" id="apellidoM"
+                        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" title="Solo letras y espacios" required>
+                </div>
+
+                <div class="campoTexto">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" name="email" class="textfield" id="email"
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="ejemplo@correo.com"
+                        required>
+                </div>
+
+                <div class="campoTexto">
+                    <label for="password">Contraseña</label>
+                    <input type="password" name="password" class="textfield" id="password" pattern=".{3,}"
+                        title="Mínimo 3 caracteres" required>
+                </div>
+            </div>
+
+            <div class="actionbuttons">
+                <input type="submit" value="Registrarme" class="continuar">
+
+                <div class="createaccount">
+                    <p>¿Ya tienes una cuenta?</p>
+                    <a href="login.html">Iniciar sesión</a>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            alert('¡Cuenta creada con éxito! Ahora puedes iniciar sesión.');
+        });
+    </script>
+</body>
+
+</html>

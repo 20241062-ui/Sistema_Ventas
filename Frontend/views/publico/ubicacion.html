@@ -1,104 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubicación - FlashCode</title>
-    <link rel="stylesheet" href="../../public/css/home.css">
+    <link rel="stylesheet" href="../css/home.css">
     <style>
-        .card-contacto { border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-top: 20px; background: white; }
-        iframe { width: 100%; height: 400px; border: 0; margin-top: 20px; border-radius: 8px; }
-        #sucursalSelect { padding: 8px; border-radius: 5px; width: 100%; max-width: 300px; margin-bottom: 10px; }
+        .card-contacto {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            background: white;
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 0;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        #sucursalSelect {
+            padding: 8px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
+
 <body>
 
-<header>
-    <div class="contenedor-header">
-        <a href="index.html"><img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo"></a>
-        <nav>
-            <a href="index.html" class="nav-link">Inicio</a>
-            <a href="celulares.html" class="nav-link">Celulares</a>
-            <a href="Accesorios.html" class="nav-link">Accesorios</a>
-            <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
-        </nav>
-        <div class="user-menu">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-            <div class="menu">
-                <a href="perfil.html">Mi cuenta</a>
-                <a href="../admin/menuAdministrador.html">Panel de Administración</a>
-                <a href="cerrar_sesion.html">Cerrar Sesión</a>
+    <header>
+        <div class="contenedor-header">
+            <a href="../index.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+            </a>
+            <nav>
+                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="celulares.html" class="nav-link">Celulares</a>
+                <a href="Accesorios.html" class="nav-link">Accesorios</a>
+                <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
+            </nav>
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+                <div class="menu">
+                    <a href="perfil.html">Mi cuenta</a>
+                    <a href="../admin/menuAdministrador.html">Panel de Administración</a>
+                    <a href="../login.html">Iniciar Sesión</a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<main class="acerca-container">
-    <h1>Nuestras sucursales</h1>
+    <main class="acerca-container">
+        <h1>Nuestras sucursales</h1>
 
-    <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
-    <select id="sucursalSelect">
-        <option value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3747.347525287396!2d-98.77531!3d20.1069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDA2JzI0LjgiTiA5OMKwNDYnMzEuMSJX!5e0!3m2!1ses-419!2smx!4v1620000000000!5m2!1ses-419!2smx" 
-                data-direccion="Av. Principal #123, Col. Centro"
-                data-ciudad="Pachuca de Soto"
-                data-telefono="7711234567"
-                data-horario="Lunes a Viernes: 9:00 AM - 7:00 PM">
-            Sucursal Pachuca Centro
-        </option>
-        <option value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3747.000000000000!2d-98.70000!3d20.1300!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDA3JzQ4LjAiTiA5OMKwNDInMDAuMCJX!5e0!3m2!1ses-419!2smx!4v1620000000000!5m2!1ses-419!2smx" 
-                data-direccion="Plaza Universidad, Local 15"
-                data-ciudad="Mineral de la Reforma"
-                data-telefono="7717654321"
-                data-horario="Lunes a Domingo: 10:00 AM - 8:00 PM">
-            Sucursal Plaza Universidad
-        </option>
-    </select>
+        <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
+        <select id="sucursalSelect">
+            <option
+                value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59942.22634351374!2d-98.7891820658422!3d20.11776316270529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d109f257a09147%3A0x64369a405629c48b!2sPachuca%2C%20Hgo.!5e0!3m2!1ses-419!2smx!4v1700000000000"
+                data-direccion="Av. Principal #123, Col. Centro" data-ciudad="Pachuca de Soto"
+                data-telefono="7711234567" data-horario="Lunes a Viernes: 9:00 AM - 7:00 PM">
+                Sucursal Pachuca Centro
+            </option>
+            <option
+                value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14986.99308115664!2d-98.7186938!3d20.081858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d10a4463404c0d%3A0xe54d929424e8671d!2sMineral%20de%20la%20Reforma%2C%20Hgo.!5e0!3m2!1ses-419!2smx!4v1700000000001"
+                data-direccion="Plaza Universidad, Local 15" data-ciudad="Mineral de la Reforma"
+                data-telefono="7717654321" data-horario="Lunes a Domingo: 10:00 AM - 8:00 PM">
+                Sucursal Plaza Universidad
+            </option>
+        </select>
 
-    <iframe id="mapaSucursal" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3747.347525287396!2d-98.77531!3d20.1069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDA2JzI0LjgiTiA5OMKwNDYnMzEuMSJX!5e0!3m2!1ses-419!2smx!4v1620000000000!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy"></iframe>
+        <iframe id="mapaSucursal"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59942.22634351374!2d-98.7891820658422!3d20.11776316270529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d109f257a09147%3A0x64369a405629c48b!2sPachuca%2C%20Hgo.!5e0!3m2!1ses-419!2smx!4v1700000000000"
+            allowfullscreen="" loading="lazy"></iframe>
 
-    <div class="card-contacto" id="cardSucursal">
-        <h2>Sucursal Pachuca Centro</h2>
-        <p><strong>Dirección:</strong> Av. Principal #123, Col. Centro</p>
-        <p><strong>Ciudad:</strong> Pachuca de Soto</p>
-        <p><strong>Teléfono:</strong> 7711234567</p>
-        <p><strong>Horario:</strong> Lunes a Viernes: 9:00 AM - 7:00 PM</p>
-    </div>
-</main>
+        <div class="card-contacto" id="cardSucursal">
+            <h2>Sucursal Pachuca Centro</h2>
+            <p><strong>Dirección:</strong> Av. Principal #123, Col. Centro</p>
+            <p><strong>Ciudad:</strong> Pachuca de Soto</p>
+            <p><strong>Teléfono:</strong> 7711234567</p>
+            <p><strong>Horario:</strong> Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+        </div>
+    </main>
 
+    <footer>
+        <div class="linksFooter">
+            <a href="AcercaDe.html"><h3>Acerca de</h3></a>
+            <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
+            <a href="contactoPublico.html"><h3>Contacto</h3></a>
+            <a href="ubicacion.html" class="activo"><h3>Ubicación</h3></a>
+            <a href="politicaCompra.html"><h3>Políticas</h3></a>
+            <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
+        </div>
+    </footer>
 
+    <script>
+        const select = document.getElementById('sucursalSelect');
+        const mapa = document.getElementById('mapaSucursal');
+        const card = document.getElementById('cardSucursal');
 
-<footer>
-    <div class="linksFooter">
-        <a href="AcercaDe.html"><h3>Acerca de</h3></a>
-        <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
-        <a href="contactoPublico.html"><h3>Contacto</h3></a>
-        <a href="ubicacion.html"><h3>Ubicación</h3></a>
-        <a href="politicaCompra.html"><h3>Políticas</h3></a>
-        <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
-    </div>
-</footer>
+        select.addEventListener('change', () => {
+            const opcion = select.selectedOptions[0];
 
-<script>
-    const select = document.getElementById('sucursalSelect');
-    const mapa = document.getElementById('mapaSucursal');
-    const card = document.getElementById('cardSucursal');
+            // Actualizar el mapa
+            mapa.src = opcion.value;
 
-    select.addEventListener('change', () => {
-        const opcion = select.selectedOptions[0];
-        
-        // Actualizar el mapa
-        mapa.src = opcion.value;
-
-        // Actualizar la tarjeta de información
-        card.innerHTML = `
-            <h2>${opcion.textContent}</h2>
-            <p><strong>Dirección:</strong> ${opcion.dataset.direccion}</p>
-            <p><strong>Ciudad:</strong> ${opcion.dataset.ciudad}</p>
-            <p><strong>Teléfono:</strong> ${opcion.dataset.telefono}</p>
-            <p><strong>Horario:</strong> ${opcion.dataset.horario}</p>
-        `;
-    });
-</script>
+            // Actualizar la tarjeta de información (Uso de Template Literals)
+            card.innerHTML = `
+                <h2>${opcion.textContent}</h2>
+                <p><strong>Dirección:</strong> ${opcion.dataset.direccion}</p>
+                <p><strong>Ciudad:</strong> ${opcion.dataset.ciudad}</p>
+                <p><strong>Teléfono:</strong> ${opcion.dataset.telefono}</p>
+                <p><strong>Horario:</strong> ${opcion.dataset.horario}</p>
+            `;
+        });
+    </script>
 
 </body>
 </html>

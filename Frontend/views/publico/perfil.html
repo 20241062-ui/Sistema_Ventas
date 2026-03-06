@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - Doble L</title>
-    <link rel="stylesheet" href="../../public/css/home.css">
+    <link rel="stylesheet" href="../css/home.css">
     <style>
         main {
             display: flex;
@@ -20,7 +21,7 @@
             display: flex;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             width: 80%;
             max-width: 1000px;
             overflow: hidden;
@@ -51,7 +52,7 @@
             display: block;
             color: white;
             text-decoration: none;
-            background-color: rgba(255,255,255,0.15);
+            background-color: rgba(255, 255, 255, 0.15);
             margin: 8px 0;
             padding: 10px;
             border-radius: 6px;
@@ -59,7 +60,7 @@
         }
 
         .perfil-menu a:hover {
-            background-color: rgba(255,255,255,0.25);
+            background-color: rgba(255, 255, 255, 0.25);
         }
 
         .perfil-info {
@@ -71,11 +72,6 @@
             color: #8A2BE2;
             font-size: 22px;
             margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 16px;
-            margin-bottom: 10px;
         }
 
         .btn-editar {
@@ -94,46 +90,35 @@
 
         footer {
             width: 100%;
-            height: fit-content;
             background-color: #8A2BE2;
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding: 20px 0;
         }
 
         .linksFooter {
             display: flex;
             flex-wrap: wrap;
-            row-gap: 20px;
-            column-gap: 20px;
-            align-items: center;
+            gap: 20px;
             justify-content: center;
         }
 
         .linksFooter a {
             text-decoration: none;
             color: #ffffff;
-            font-size: 18px; 
-            font-weight: 600;
-        }
-
-        .linksFooter a h3 {
-            color: #ffffff;
-            margin: 0;
-            font-size: 18px; 
-            font-family: sans-serif; 
+            font-size: 18px;
             font-weight: 600;
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="contenedor-header">
-            <a href="index.html">
+            <a href="../index.html">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
             </a>
             <nav>
-                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="../index.html" class="nav-link">Inicio</a>
                 <a href="celulares.html" class="nav-link">Celulares</a>
                 <a href="Accesorios.html" class="nav-link">Accesorios</a>
                 <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
@@ -146,9 +131,9 @@
             <div class="perfil-menu">
                 <h2>Mi cuenta</h2>
                 <p>Juan Pérez García<br>juan.perez@email.com</p>
-                <a href="perfil.html">Mis datos</a>
+                <a href="perfil.html" style="background-color: rgba(255,255,255,0.4);">Mis datos</a>
                 <a href="actualizarPerfil.html">Editar información</a>
-                <a href="cerrar_sesion.html">Cerrar sesión</a>
+                <a href="../login.html">Cerrar sesión</a>
             </div>
 
             <div class="perfil-info">
