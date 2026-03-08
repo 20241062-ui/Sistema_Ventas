@@ -8,7 +8,7 @@ const inputPassword = document.getElementById("password");
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-   
+    // Creamos el objeto con los datos del formulario
     const datosLogin = {
         user: inputEmail.value,
         password: inputPassword.value
@@ -54,17 +54,16 @@ function redirigirSegunRol(rol) {
     switch (rol) {
         case "Administrador":
             // Agregamos ../ para salir de 'publico' e ir a 'admin'
-            window.location.href = "../admin/menuAdministrador.html"; 
+            window.location.href = "../views/admin/menuAdministrador.html"; 
             break;
         case "Vendedor":
-            window.location.href = "../admin/menuAdministrador.html";
+            window.location.href = "../views/admin/menuAdministrador.html";
             break;
         case "Encargado":
-            window.location.href = "../admin/menuAdministrador.html";
+            window.location.href = "../views/admin/menuAdministrador.html";
             break;
         default:
-            
-            window.location.href = "../../index.html"; 
+            window.location.href = ".../views/index.html"; 
             break;
     }
 }

@@ -7,27 +7,32 @@ export const login = async (req, res) => {
     try {   
         const usuario = await User.findByEmail(user);
 
-        if (usuario) {
-           
-            const match = await bcrypt.compare(password, usuario.vchpassword);
+        if (!usuario) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "El usuario no existe." 
+            });
+        }
 
-            if (match) {
-                return res.json({
+        let hash = usuario.vchpassword;
+
+        // convertir hash de PHP ($2y$) a formato compatible
+        if (hash.startsWith("$2y$")) {
+            hash = hash.replace("$2y$", "$2b$");
+        }
+
+        const match = await bcrypt.compare(password, hash);
+
+        if (match) {
+            return res.json({
                 success: true,
                 nombre: usuario.vchnombre,
                 rol: usuario.vchRol
             });
-            } else {
-                return res.status(401).json({ 
-                    success: false, 
-                    message: "La contraseña es incorrecta." 
-                });
-            }
         } else {
-            
-            return res.status(404).json({ 
+            return res.status(401).json({ 
                 success: false, 
-                message: "El usuario no existe." 
+                message: "La contraseña es incorrecta." 
             });
         }
 
