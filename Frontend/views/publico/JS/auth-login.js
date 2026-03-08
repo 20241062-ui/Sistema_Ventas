@@ -8,7 +8,7 @@ const inputPassword = document.getElementById("password");
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Creamos el objeto con los datos del formulario
+   
     const datosLogin = {
         user: inputEmail.value,
         password: inputPassword.value
@@ -17,8 +17,6 @@ loginForm.addEventListener("submit", async (e) => {
     console.log("Enviando datos a la API...", datosLogin);
 
     try {
-        // 3. PETICIÓN FETCH AL BACKEND
-        // Reemplaza esta URL por la de tu servidor local o el de Vercel/Render
         const response = await fetch("http://localhost:3000/api/login", {
             method: "POST",
             headers: {

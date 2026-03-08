@@ -13,10 +13,10 @@ export const login = async (req, res) => {
 
             if (match) {
                 return res.json({
-                    success: true,
-                    nombre: usuario.vchNombre, 
-                    rol: usuario.vchRol
-                });
+                success: true,
+                nombre: usuario.vchnombre,
+                rol: usuario.vchRol
+            });
             } else {
                 return res.status(401).json({ 
                     success: false, 
