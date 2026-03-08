@@ -34,22 +34,6 @@
         </form>
     </main>
 
-    <script>
-        // Lógica de navegación simulada para GitHub Pages
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            const email = document.getElementById('user').value;
-            
-            // Simulación: Si el correo contiene "admin", va al panel, si no, al index
-            if(email.includes('admin')) {
-                alert('¡Acceso Administrativo Exitoso!');
-                window.location.href = 'admin/menuAdministrador.html'; 
-            } else {
-                alert('¡Login de Cliente Exitoso!');
-                window.location.href = 'index.html'; 
-            }
-        });
-    </script>
+    <script src="./publico/JS/auth-login.js" type="module"></script>
 </body>
 </html>
