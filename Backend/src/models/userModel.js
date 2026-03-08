@@ -1,11 +1,10 @@
 import pool from '../config/BD.js';
 
 const User = {
-   
     findByEmail: async (email) => {
         try {
             
-            const sql = "SELECT id_usuario, vchNombre, vchpassword, vchRol FROM tblusuario WHERE vchcorreo = ? AND intid_Estado = 1";
+            const sql = `SELECT id_usuario, vchnombre, vchpassword, vchRol FROM tblusuario WHERE vchcorreo = ? AND Estado = 1`;
             
            
             const [rows] = await pool.query(sql, [email]);
@@ -18,6 +17,5 @@ const User = {
         }
     }
 };
-
 
 export default User;

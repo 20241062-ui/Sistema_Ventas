@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 //configuramos el acceso a nuestras variables de entorno 
 dotenv.config()
+console.log("Intentando conectar al host:", process.env.DB_HOST);
 
 //creamos el pool de coneccion a la base de datos
 const pool =createPool({
