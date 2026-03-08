@@ -1,28 +1,41 @@
-const User = require('../models/userModel');
-const bcrypt = require('bcrypt');
+import User from '../models/userModel.js';
+import bcrypt from 'bcrypt';
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
     const { user, password } = req.body;
 
-    User.findByEmail(user, async (err, results) => {
-        if (err) return res.status(500).json({ success: false, message: "Error en el servidor" });
-        
-        if (results.length > 0) {
-            const usuario = results[0];
-            // Comparamos la clave enviada con el hash de la base de datos
+    try {   
+        const usuario = await User.findByEmail(user);
+
+        if (usuario) {
+           
             const match = await bcrypt.compare(password, usuario.vchpassword);
 
             if (match) {
-                res.json({
+                return res.json({
                     success: true,
-                    nombre: usuario.vchnombre,
-                    rol: usuario.vchRol // Retorna: Administrador, Vendedor o Encargado
+                    nombre: usuario.vchNombre, 
+                    rol: usuario.vchRol
                 });
             } else {
-                res.status(401).json({ success: false, message: "Contraseña incorrecta" });
+                return res.status(401).json({ 
+                    success: false, 
+                    message: "La contraseña es incorrecta." 
+                });
             }
         } else {
-            res.status(404).json({ success: false, message: "Usuario no encontrado" });
+            
+            return res.status(404).json({ 
+                success: false, 
+                message: "El usuario no existe." 
+            });
         }
-    });
+
+    } catch (error) {
+        console.error("Error en el proceso de login:", error);
+        return res.status(500).json({ 
+            success: false, 
+            message: "Error interno del servidor." 
+        });
+    }
 };

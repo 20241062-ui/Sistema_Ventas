@@ -1,4 +1,5 @@
 // 1. REFERENCIAS DEL DOM (Asegúrate de que los IDs coincidan con tu HTML)
+
 const loginForm = document.getElementById("loginForm");
 const inputEmail = document.getElementById("user"); // En tu HTML el id es 'user'
 const inputPassword = document.getElementById("password");
