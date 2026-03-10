@@ -5,11 +5,11 @@ dotenv.config(); // Carga las variables del .env o del panel de Vercel
 
 const pool = mysql.createPool({
     // Usamos process.env para que sea seguro y dinámico
-    host: process.env.DB_HOST || 'srv760.hstgr.io',
+    host: process.env.DB_HOST ,
     port: 3306,
-    user: process.env.DB_USER || 'u138650717_ComerLL',
-    password: process.env.DB_PASSWORD, // Nunca dejar la contraseña real aquí
-    database: process.env.DB_NAME || 'u138650717_ComerLL',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
