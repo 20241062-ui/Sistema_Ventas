@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const galeria = document.getElementById('contenedor-galeria');
     const heroTexto = document.querySelector('.textohero');
     const heroForm = document.querySelector('.hero form');
-
     const linkAdmin = document.getElementById('link-admin');
     const linkLogin = document.getElementById('link-login');
     const linkLogout = document.getElementById('link-logout');
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         const response = await fetch(`${API_URL}/productos/home`);
-        if (!response.ok) throw new Error("Error en la respuesta de la API");
+        if (!response.ok) throw new Error("Error API");
         const data = await response.json();
 
         if (data.hero && heroTexto && heroForm) {
@@ -60,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         <h2>${prod.vchNombre}</h2>
                                         <h3>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h3>
                                     </div>
-                                    <form action="views/publico/productoDetalle.html" method="GET">
+                                    <form action="/Sistema_Ventas/Frontend/views/publico/productoDetalle.html" method="GET">
                                         <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
                                         <button type="submit" class="comprarproducto">Comprar</button>
                                     </form>
@@ -69,12 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                     `;
                 });
-            } else {
-                galeria.innerHTML = '<p style="color:white; text-align:center; width:100%;">No hay productos disponibles.</p>';
             }
         }
     } catch (error) {
-        console.error("Error cargando productos:", error);
-        if (galeria) galeria.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
+        console.error("Error:", error);
     }
 });

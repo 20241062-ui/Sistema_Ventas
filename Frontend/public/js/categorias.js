@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch(`${API_URL}/productos/categoria/${catId}`);
         const data = await response.json();
 
-        // Cargar Producto Hero
         if (data.hero && heroTexto && heroForm) {
             heroTexto.innerHTML = `
                 <h1>${data.hero.vchNombre} $${parseFloat(data.hero.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h1>
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             heroForm.querySelector('input[name="producto_id"]').value = data.hero.vchNo_Serie;
         }
 
-        // Cargar Galería
         if (galeria) {
             if (data.productos && data.productos.length > 0) {
                 galeria.innerHTML = ''; 
@@ -39,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         <h2>${prod.vchNombre}</h2>
                                         <h3>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h3>
                                     </div>
-                                    <form action="productoDetalle.html" method="GET">
+                                    <form action="/Sistema_Ventas/Frontend/views/publico/productoDetalle.html" method="GET">
                                         <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
                                         <button type="submit" class="comprarproducto">Comprar</button>
                                     </form>
@@ -54,6 +52,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error("Error:", error);
-        if (galeria) galeria.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
     }
 });

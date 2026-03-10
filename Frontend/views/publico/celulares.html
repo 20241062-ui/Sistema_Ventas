@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Celulares - Doble L</title>
-    <link rel="stylesheet" href="../../public/css/home.css">
+    <link rel="stylesheet" href="/Sistema_Ventas/Frontend/public/css/home.css">
 </head>
-<body data-categoria="1"> <header>
+<body data-categoria="1"> 
+    <header>
         <div class="contenedor-header">
-            <a href="../index.html"><img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo"></a>
+            <a href="/Sistema_Ventas/Frontend/index.html"><img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo"></a>
             <nav>
-                <a href="../index.html" class="nav-link">Inicio</a>
-                <a href="celulares.html" class="nav-link activo">Celulares</a>
-                <a href="Accesorios.html" class="nav-link">Accesorios</a>
-                <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
+                <a href="/Sistema_Ventas/Frontend/index.html" class="nav-link">Inicio</a>
+                <a href="/Sistema_Ventas/Frontend/views/publico/celulares.html" class="nav-link activo">Celulares</a>
+                <a href="/Sistema_Ventas/Frontend/views/publico/Accesorios.html" class="nav-link">Accesorios</a>
+                <a href="/Sistema_Ventas/Frontend/views/publico/Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
             </nav>
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
@@ -23,10 +24,8 @@
     </header>
     <div class="hero-div-celulares">
         <div class="hero">
-            <div class="textohero">
-                <h1>Cargando oferta destacada...</h1>
-            </div>
-            <form action="productoDetalle.html" method="GET">
+            <div class="textohero"><h1>Cargando oferta...</h1></div>
+            <form action="/Sistema_Ventas/Frontend/views/publico/productoDetalle.html" method="GET">
                 <input type="hidden" name="producto_id" value="">
                 <button type="submit" class="comprar">Comprar</button>
             </form>
@@ -34,9 +33,7 @@
     </div>
     <div><h2 class="featured-text">Celulares</h2></div>
     <div class="contenedor-productos">
-        <div class="galeria-productos" id="contenedor-galeria">
-            <p style="text-align: center; width: 100%;">Cargando celulares...</p>
-        </div>
+        <div class="galeria-productos" id="contenedor-galeria"></div>
     </div>
     <footer>
         <div class="linksFooter">
@@ -48,6 +45,6 @@
             <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
         </div>
     </footer>
-    <script src="../../public/js/categorias.js"></script>
+    <script src="/Sistema_Ventas/Frontend/public/js/categorias.js"></script>
 </body>
 </html>
