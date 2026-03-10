@@ -2,26 +2,27 @@ import db from '../config/BD.js';
 
 export const getHomeProductos = async (req, res) => {
     try {
-        const heroSerie = 'VCH2007100'; // La misma que usas en PHP
+        // Usamos el ID que confirmaste que existe en Hostinger
+        const heroSerie = 'S24U-002'; 
 
         // 1. Obtener el producto Hero
-        const [hero] = await db.query(
+        const [heroRows] = await db.query(
             'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE vchNo_Serie = ? AND Estado = 1 LIMIT 1',
             [heroSerie]
         );
 
-        // 2. Obtener los productos destacados (limitados a 10 como en tu paginación)
-        const [productos] = await db.query(
+        // 2. Obtener los productos destacados (excluyendo el hero)
+        const [productosRows] = await db.query(
             'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 AND vchNo_Serie <> ? ORDER BY vchNo_Serie DESC LIMIT 10',
             [heroSerie]
         );
 
         res.json({
-            hero: hero[0] || null,
-            productos: productos
+            hero: heroRows[0] || null,
+            productos: productosRows
         });
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al obtener productos", detalle: error.message });
+        res.status(500).json({ mensaje: "Error en el servidor", detalle: error.message });
     }
 };
 export const getProductoDetalle = async (req, res) => {
