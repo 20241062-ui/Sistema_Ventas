@@ -1,14 +1,12 @@
-// 1. REFERENCIAS DEL DOM (Asegúrate de que los IDs coincidan con tu HTML)
 
 const loginForm = document.getElementById("loginForm");
-const inputEmail = document.getElementById("user"); // En tu HTML el id es 'user'
+const inputEmail = document.getElementById("user"); 
 const inputPassword = document.getElementById("password");
 
-// 2. ENVÍO DEL FORMULARIO
+
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Creamos el objeto con los datos del formulario
     const datosLogin = {
         user: inputEmail.value,
         password: inputPassword.value
@@ -27,19 +25,19 @@ loginForm.addEventListener("submit", async (e) => {
 
         const result = await response.json();
 
-        // 4. MANEJO DE LA RESPUESTA
+
         if (result.success) {
             alert("¡Bienvenido/a " + (result.nombre || "") + "!");
 
-            // Guardamos el token o rol si es necesario
+           
             localStorage.setItem("usuario_rol", result.rol);
             localStorage.setItem("usuario_nombre", result.nombre);
 
-            // Redireccionamos según el rol que viene de tblusuario
+           
             redirigirSegunRol(result.rol);
 
         } else {
-            // Si el servidor responde con error (usuario no encontrado o clave mal)
+           
             alert(result.message || "Credenciales incorrectas");
         }
 
@@ -49,11 +47,11 @@ loginForm.addEventListener("submit", async (e) => {
     }
 });
 
-// 5. FUNCIÓN DE REDIRECCIÓN (Basada en tus roles de tblusuario)
+
 function redirigirSegunRol(rol) {
     switch (rol) {
         case "Administrador":
-            // Agregamos ../ para salir de 'publico' e ir a 'admin'
+            
             window.location.href = "../views/admin/menuAdministrador.html"; 
             break;
         case "Vendedor":
