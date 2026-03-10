@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         <h2>${prod.vchNombre}</h2>
                                         <h3>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h3>
                                     </div>
-                                    <form action="/Frontend/views/publico/productoDetalle.html" method="GET">
+                                    <form action="views/publico/productoDetalle.html" method="GET">
                                         <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
                                         <button type="submit" class="comprarproducto">Comprar</button>
                                     </form>
