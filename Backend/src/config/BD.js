@@ -1,12 +1,15 @@
 import mysql from 'mysql2';
+import dotenv from 'dotenv';
 
-// Crear el "pool" de conexiones (más eficiente que una conexión única)
+dotenv.config(); // Carga las variables del .env o del panel de Vercel
+
 const pool = mysql.createPool({
-    host: 'srv760.hstgr.io',
-    port:3306,
-    user: 'u138650717_ComerLL',               // El usuario de la base de datos
-    password: 'Ivanbm12345#',          // La contraseña del usuario
-    database: 'u138650717_ComerLL',      // El nombre de la base de datos
+    // Usamos process.env para que sea seguro y dinámico
+    host: process.env.DB_HOST || 'srv760.hstgr.io',
+    port: 3306,
+    user: process.env.DB_USER || 'u138650717_ComerLL',
+    password: process.env.DB_PASSWORD, // Nunca dejar la contraseña real aquí
+    database: process.env.DB_NAME || 'u138650717_ComerLL',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -14,7 +17,7 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
-// Prueba de conexión
+// Mantenemos tu prueba de conexión
 pool.getConnection((err, connection) => {
     if (err) {
         console.error('❌ Error en BD:', err.message);
