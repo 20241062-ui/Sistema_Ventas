@@ -11,8 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/productos', productoRoutes);
 app.use('/api/auth', authRoutes); // Prefijo para autenticación
+app.use('/api/productos', productoRoutes);
+
 
 app.get('/api/prueba-db', async (req, res) => {
     try {
@@ -31,8 +32,10 @@ app.get('/api/prueba-db', async (req, res) => {
         });
     }
 });
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor listo en http://localhost:${PORT}`);
-});
+
 export default app;
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor en puerto ${PORT}`);
+});
