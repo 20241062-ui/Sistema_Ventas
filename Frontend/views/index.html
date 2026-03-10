@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comercializadora Doble L - Inicio</title>
-    <link rel="stylesheet" href="../public/css/home.css">
+    <link rel="stylesheet" href="public/css/home.css">
 </head>
-
 <body>
     <header>
         <div class="contenedor-header">
             <a href="index.html">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
             </a>
-
             <nav>
                 <a href="index.html" class="nav-link activo">Inicio</a>
-                <a href="Frontend/views/publico/celulares.html">Celulares</a>
+                <a href="views/publico/celulares.html">Celulares</a>
                 <a href="views/publico/Accesorios.html" class="nav-link">Accesorios</a>
                 <a href="views/publico/Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
             </nav>
-
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
                 <div class="menu" id="menu-usuario">
@@ -40,8 +36,7 @@
                 <h1>Cargando oferta destacada...</h1>
                 <h3>Sólo en Comercializadora Doble L</h3>
             </div>
-
-            <form action="/Sistema_Ventas/Frontend/views/publico/productoDetalle.html" method="GET">
+            <form action="views/publico/productoDetalle.html" method="GET">
                 <input type="hidden" name="producto_id" id="hero-id" value="">
                 <button type="submit" class="comprar">Comprar</button>
             </form>
@@ -75,6 +70,6 @@
         </div>
     </footer>
 
-    <script src="../public/js/home.js"></script>
+    <script src="public/js/home.js"></script>
 </body>
 </html>
