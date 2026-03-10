@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
 
-    // CONFIGURACIÓN DE URL: Detecta si usas localhost o Vercel
-    const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:3000/api'
-        : 'https://sistema-ventas-omega.vercel.app/api';
+    const API_URL = 'https://sistema-ventas-omega.vercel.app/api';
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
