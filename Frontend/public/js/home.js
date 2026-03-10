@@ -59,22 +59,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                     : 'https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png';
 
                 galeria.innerHTML += `
-                    <div class="producto">
-                        <img src="${imgUrl}" alt="${prod.vchNombre}" class="imagenproducto">
-                        <div class="recuadro">
-                            <div class="producto-detalle">
-                                <div class="texto-producto">
+                    <div class="producto"> <img src="${imgUrl}" alt="${prod.vchNombre}" class="imagenproducto">
+                        <div class="recuadro"> <div class="producto-detalle"> <div class="texto-producto">
                                     <h2>${prod.vchNombre}</h2>
                                     <h3>$${parseFloat(prod.floPrecioUnitario).toFixed(2)}</h3>
                                 </div>
-                                <form action="publico/productoDetalle.html" method="GET">
+                                <form action="views/publico/productoDetalle.html" method="GET">
                                     <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
                                     <button type="submit" class="comprarproducto">Comprar</button>
                                 </form>
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
     } catch (error) {
