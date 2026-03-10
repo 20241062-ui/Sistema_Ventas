@@ -24,3 +24,23 @@ export const getHomeProductos = async (req, res) => {
         res.status(500).json({ mensaje: "Error al obtener productos", detalle: error.message });
     }
 };
+export const getProductoDetalle = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = `
+            SELECT p.vchNo_Serie, p.vchNombre, p.vchDescripcion, p.floPrecioUnitario, p.vchImagen, m.vchNombre AS Marca 
+            FROM tblproductos p 
+            INNER JOIN tblmarcas m ON p.intid_Marca = m.intid_Marca 
+            WHERE p.vchNo_Serie = ? AND p.Estado = 1`;
+
+        const [rows] = await db.query(sql, [id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ mensaje: "Producto no encontrado" });
+        }
+
+        res.json(rows[0]);
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al obtener el detalle", detalle: error.message });
+    }
+};

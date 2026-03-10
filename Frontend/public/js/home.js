@@ -3,7 +3,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     const heroTexto = document.querySelector('.textohero');
     const heroForm = document.querySelector('.hero-div form');
 
-    // Detectar URL de la API
+    // Elementos del menú de usuario
+    const linkAdmin = document.getElementById('link-admin');
+    const linkLogin = document.getElementById('link-login');
+    const linkLogout = document.getElementById('link-logout');
+
+    // 1. GESTIÓN DE INTERFAZ DE USUARIO (Login/Logout)
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+    if (usuario) {
+        // Si hay sesión iniciada
+        linkLogin.style.display = 'none'; // Ocultar "Iniciar Sesión"
+        linkLogout.style.display = 'block'; // Mostrar "Cerrar Sesión"
+        
+        // Si es Admin, mostrar el Panel de Administración
+        if (usuario.rol === 'Administrador') {
+            linkAdmin.style.display = 'block';
+        }
+    }
+
+    // Lógica para Cerrar Sesión
+    linkLogout.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        localStorage.removeItem('usuario');
+        alert('Sesión cerrada correctamente');
+        window.location.reload(); // Recargar para actualizar el menú
+    });
+
+    // 2. CARGA DE PRODUCTOS DESDE EL BACKEND
     const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:3000/api'
         : 'https://sistema-ventas-omega.vercel.app/api';
@@ -12,20 +40,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch(`${API_URL}/productos/home`);
         const data = await response.json();
 
-        // --- 1. CARGAR PRODUCTO HERO (DESTACADO) ---
+        // --- Cargar Producto Hero ---
         if (data.hero) {
             heroTexto.innerHTML = `
                 <h1>${data.hero.vchNombre} por menos de $${Math.floor(data.hero.floPrecioUnitario).toLocaleString()}</h1>
                 <h3>Sólo en Comercializadora Doble L</h3>
             `;
-            // Actualizar el ID en el botón de comprar del Hero
             const inputHero = heroForm.querySelector('input[name="producto_id"]');
             if (inputHero) inputHero.value = data.hero.vchNo_Serie;
         }
 
-        // --- 2. CARGAR GALERÍA DE PRODUCTOS ---
+        // --- Cargar Galería de Productos ---
         if (data.productos && data.productos.length > 0) {
-            galeria.innerHTML = ''; // Limpiar las tarjetas estáticas que tenías
+            galeria.innerHTML = ''; 
 
             data.productos.forEach(prod => {
                 const imgUrl = prod.vchImagen 
@@ -51,8 +78,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `;
             });
         }
-
     } catch (error) {
         console.error("Error cargando productos:", error);
+        galeria.innerHTML = '<p>Error al conectar con el servidor.</p>';
     }
 });
