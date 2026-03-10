@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accesorios - Doble L</title>
-    <link rel="stylesheet" href="/Sistema_Ventas/Frontend/public/css/home.css">
+    <title>Categoría - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/home.css">
 </head>
 <body data-categoria="2"> 
     <header>
         <div class="contenedor-header">
             <a href="../../index.html">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
             </a>
             <nav>
                 <a href="../../index.html" class="nav-link">Inicio</a>
@@ -18,7 +18,6 @@
                 <a href="Accesorios.html" class="nav-link">Accesorios</a>
                 <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
             </nav>
-        </div>
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
                 <div class="menu" id="menu-usuario"></div>
@@ -28,15 +27,14 @@
 
     <div class="hero-div-Accesorios">
         <div class="hero">
-            <div class="textohero"><h1>Cargando accesorios...</h1></div>
-            <form action="/Sistema_Ventas/Frontend/views/publico/productoDetalle.html" method="GET">
+            <div class="textohero"><h1>Cargando...</h1></div>
+            <form action="productoDetalle.html" method="GET">
                 <input type="hidden" name="producto_id" value="">
                 <button type="submit" class="comprar">Comprar</button>
             </form>
         </div>
     </div>
 
-    <div><h2 class="featured-text">Accesorios</h2></div>
     <div class="contenedor-productos">
         <div class="galeria-productos" id="contenedor-galeria"></div>
     </div>
@@ -47,10 +45,8 @@
             <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
             <a href="contactoPublico.html"><h3>Contacto</h3></a>
             <a href="ubicacion.html"><h3>Ubicación</h3></a>
-            <a href="politicaCompra.html"><h3>Políticas</h3></a>
-            <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
         </div>
     </footer>
-    <script src="/Sistema_Ventas/Frontend/public/js/categorias.js"></script>
+    <script src="../../public/js/categorias.js"></script>
 </body>
 </html>
