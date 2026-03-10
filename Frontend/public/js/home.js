@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const linkLogin = document.getElementById('link-login');
     const linkLogout = document.getElementById('link-logout');
 
-    const rutaDetalle = "../../views/publico/productoDetalle.html";
+    const rutaDetalle = "publico/productoDetalle.html";
 
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario) {
