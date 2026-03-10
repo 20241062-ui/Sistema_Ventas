@@ -1,0 +1,59 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    const galeria = document.getElementById('contenedor-galeria');
+    const heroTexto = document.querySelector('.textohero');
+    const heroForm = document.querySelector('.hero form');
+    const catId = document.body.dataset.categoria;
+
+    const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:3000/api'
+        : 'https://sistema-ventas-omega.vercel.app/api';
+
+    try {
+        const response = await fetch(`${API_URL}/productos/categoria/${catId}`);
+        const data = await response.json();
+
+        // Cargar Producto Hero
+        if (data.hero && heroTexto && heroForm) {
+            heroTexto.innerHTML = `
+                <h1>${data.hero.vchNombre} $${parseFloat(data.hero.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h1>
+                <h3>Sólo en Comercializadora Doble L</h3>
+            `;
+            heroForm.querySelector('input[name="producto_id"]').value = data.hero.vchNo_Serie;
+        }
+
+        // Cargar Galería
+        if (galeria) {
+            if (data.productos && data.productos.length > 0) {
+                galeria.innerHTML = ''; 
+                data.productos.forEach(prod => {
+                    const imgUrl = prod.vchImagen 
+                        ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
+                        : 'https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png';
+
+                    galeria.innerHTML += `
+                        <div class="producto">
+                            <img src="${imgUrl}" alt="${prod.vchNombre}" class="imagenproducto">
+                            <div class="recuadro">
+                                <div class="producto-detalle">
+                                    <div class="texto-producto">
+                                        <h2>${prod.vchNombre}</h2>
+                                        <h3>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h3>
+                                    </div>
+                                    <form action="productoDetalle.html" method="GET">
+                                        <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
+                                        <button type="submit" class="comprarproducto">Comprar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                galeria.innerHTML = '<p style="color:white; text-align:center; width:100%;">No hay productos en esta categoría por ahora.</p>';
+            }
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        if (galeria) galeria.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con el servidor.</p>';
+    }
+});
