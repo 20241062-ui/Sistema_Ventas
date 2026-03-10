@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import db from './config/db.js';
+import db from './config/BD.js';
 //import productoRoutes from './routes/productoRoutes.js';
 import authRoutes from './routes/authRoutes.js'; // Nueva ruta
 
