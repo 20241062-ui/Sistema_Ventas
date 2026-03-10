@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Seleccionar los contenedores del index.html
-    const galeria = document.querySelector('.galeria-productos');
+    const galeria = document.getElementById('contenedor-galeria');
     const heroTexto = document.querySelector('.textohero');
     const heroForm = document.querySelector('.hero-div form');
 
