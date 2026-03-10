@@ -15,8 +15,12 @@
       "handle": "filesystem"
     },
     {
+      "src": "/views/(.*)",
+      "dest": "/views/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/index.html"
     }
   ]
 }
