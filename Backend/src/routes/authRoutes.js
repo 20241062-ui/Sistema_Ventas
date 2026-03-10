@@ -1,10 +1,10 @@
 import express from 'express';
 import { login } from '../controllers/authController.js';
-import verificador from '..//Middlewere/authMiddlewere.js'
+import { register } from '../controllers/RegistroController.js';
 
 const router = express.Router();
 
-router.post('/login', login)
-router.post('/', verificador, ctrl.createAlumno);
+router.post('/login', login);
+router.post('/register', register);
 
 export default router;

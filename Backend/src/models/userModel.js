@@ -5,8 +5,7 @@ const User = {
         try {
             
             const sql = `SELECT id_usuario, vchnombre, vchpassword, vchRol FROM tblusuario WHERE vchcorreo = ? AND Estado = 1`;
-            
-           
+                
             const [rows] = await pool.query(sql, [email]);
             
           

@@ -1,0 +1,18 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "srv760.hstgr.io",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Comercializadora ll",
+            "database": "u138650717_ComerLL",
+            "username": "u138650717_ComerLL"
+        }
+    ]
+}

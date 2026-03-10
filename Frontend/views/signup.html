@@ -10,7 +10,7 @@
 
 <body>
     <main>
-        <form name="userdata" id="signupForm" method="GET" action="login.html">
+        <form name="userdata" id="signupForm">
             <h2 class="titulo">Crea tu cuenta</h2>
 
             <div class="textfields">
@@ -35,7 +35,7 @@
                 <div class="campoTexto">
                     <label for="email">Correo electrónico</label>
                     <input type="email" name="email" class="textfield" id="email"
-                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="ejemplo@correo.com"
+                        placeholder="ejemplo@correo.com"
                         required>
                 </div>
 
@@ -57,12 +57,7 @@
         </form>
     </main>
 
-    <script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            // Mostramos el mensaje antes de que el formulario haga el redirect a login.html
-            alert('¡Cuenta creada con éxito! (Simulación de registro). Ahora puedes iniciar sesión.');
-        });
-    </script>
+    <script src="../views/publico/JS/RegistroUsuarios.js"></script>
 </body>
 
 </html>
