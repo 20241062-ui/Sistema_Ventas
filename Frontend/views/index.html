@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comercializadora Doble L - Inicio</title>
-    <link rel="stylesheet" href="../public/css/home.css">
-</head>
-
+    <link rel="stylesheet" href="../public/css/home.css"> </head>
 <body>
     <header>
         <div class="contenedor-header">
             <a href="index.html">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
             </a>
-
             <nav>
                 <a href="index.html" class="nav-link activo">Inicio</a>
                 <a href="publico/celulares.html" class="nav-link">Celulares</a>
                 <a href="publico/Accesorios.html" class="nav-link">Accesorios</a>
                 <a href="publico/Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
             </nav>
-
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-                <div class="menu">
+                <div class="menu" id="menu-usuario">
                     <a href="publico/perfil.html">Mi cuenta</a>
-                    <a href="admin/menuAdministrador.html">Panel de Administración</a>
-                    <a href="login.html">Iniciar Sesión</a>
+                    <a href="admin/menuAdministrador.html" id="link-admin" style="display: none;">Panel de Administración</a>
+                    <a href="publico/login.html" id="link-login">Iniciar Sesión</a>
+                    <a href="#" id="link-logout" style="display: none;">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -36,64 +32,21 @@
     <div class="hero-div">
         <div class="hero">
             <div class="textohero">
-                <h1>iPhone 15 Pro por menos de $22,000</h1>
+                <h1>Smartphone POCO X7 por menos de $5,400</h1>
                 <h3>Sólo en Comercializadora Doble L</h3>
             </div>
-
             <form action="publico/productoDetalle.html" method="GET">
-                <input type="hidden" name="producto_id" value="VCH2007100">
-                <button type="submit" class="comprar">Comprar</button>
+                <input type="hidden" name="producto_id" id="hero-id" value="VCH2007200">
+                <button type="submit" class="comprar">Comprar ahora</button>
             </form>
         </div>
     </div>
 
-    <div>
-        <h2 class="featured-text">Productos destacados</h2>
-    </div>
-
+    <div><h2 class="featured-text">Productos destacados</h2></div>
     <div class="contenedor-productos">
-        <div class="galeria-productos" style="flex-wrap: wrap;">
-
-            <div class="producto">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
-                <div class="recuadro">
-                    <div class="producto-detalle">
-                        <div class="texto-producto">
-                            <h2>Samsung Galaxy S24</h2>
-                            <h3>$19,500.00</h3>
-                        </div>
-                        <form action="publico/productoDetalle.html" method="GET">
-                            <input type="hidden" name="producto_id" value="VCH-001">
-                            <button type="submit" class="comprarproducto">Comprar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="producto">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
-                <div class="recuadro">
-                    <div class="producto-detalle">
-                        <div class="texto-producto">
-                            <h2>Audífonos Sony XM5</h2>
-                            <h3>$7,200.00</h3>
-                        </div>
-                        <form action="publico/productoDetalle.html" method="GET">
-                            <input type="hidden" name="producto_id" value="VCH-002">
-                            <button type="submit" class="comprarproducto">Comprar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
+        <div class="galeria-productos" id="contenedor-galeria">
+            <p style="text-align: center; width: 100%;">Cargando productos...</p>
         </div>
-    </div>
-
-    <div class="paginacion">
-        <a href="#" class="pagina">&laquo; Anterior</a>
-        <a class="pagina activa" href="#">1</a>
-        <a class="pagina" href="#">2</a>
-        <a href="#" class="pagina">Siguiente &raquo;</a>
     </div>
 
     <footer>
@@ -102,10 +55,8 @@
             <a href="publico/quienessomos.html"><h3>¿Quiénes somos?</h3></a>
             <a href="publico/contactoPublico.html"><h3>Contacto</h3></a>
             <a href="publico/ubicacion.html"><h3>Ubicación</h3></a>
-            <a href="publico/politicaCompra.html"><h3>Políticas</h3></a>
-            <a href="publico/preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
         </div>
     </footer>
+    <script src="../public/js/home.js"></script>
 </body>
-
 </html>

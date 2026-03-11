@@ -6,10 +6,10 @@
     <title>Celulares - Doble L</title>
     <link rel="stylesheet" href="../../public/css/home.css">
 </head>
-<body>
+<body data-categoria="1"> 
     <header>
         <div class="contenedor-header">
-            <a href="../index.html">
+            <a href="/Sistema_Ventas/Frontend/index.html">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
             </a>
             <nav>
@@ -20,73 +20,36 @@
             </nav>
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-                <div class="menu">
-                    <a href="perfil.html">Mi cuenta</a>
-                    <a href="../admin/menuAdministrador.html">Panel de Administración</a>
-                    <a href="../login.html">Iniciar Sesión</a>
-                </div>
+                <div class="menu" id="menu-usuario"></div>
             </div>
         </div>
     </header>
+
     <div class="hero-div-celulares">
         <div class="hero">
-            <div class="textohero">
-                <h1> POCO X7 $5,399.00</h1>
-                <h3>Sólo en Comercializadora Doble L</h3>
-            </div>
+            <div class="textohero"><h1>Cargando oferta...</h1></div>
             <form action="productoDetalle.html" method="GET">
-                <input type="hidden" name="producto_id" value="VCH2007200">
+                <input type="hidden" name="producto_id" value="">
                 <button type="submit" class="comprar">Comprar</button>
             </form>
         </div>
     </div>
+
     <div><h2 class="featured-text">Celulares</h2></div>
     <div class="contenedor-productos">
-        <div class="galeria-productos">
-            <div class="producto">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
-                <div class="recuadro">
-                    <div class="producto-detalle">
-                        <div class="texto-producto"><h2>Samsung Galaxy S24</h2><h3>$18,499.00</h3></div>
-                        <form action="productoDetalle.html" method="GET">
-                            <input type="hidden" name="producto_id" value="CEL001"><button type="submit" class="comprarproducto">Comprar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="producto">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
-                <div class="recuadro">
-                    <div class="producto-detalle">
-                        <div class="texto-producto"><h2>iPhone 15 Pro</h2><h3>$22,199.00</h3></div>
-                        <form action="productoDetalle.html" method="GET">
-                            <input type="hidden" name="producto_id" value="CEL002"><button type="submit" class="comprarproducto">Comprar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="producto">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="producto" class="imagenproducto">
-                <div class="recuadro">
-                    <div class="producto-detalle">
-                        <div class="texto-producto"><h2>Xiaomi Redmi Note 13</h2><h3>$4,800.00</h3></div>
-                        <form action="productoDetalle.html" method="GET">
-                            <input type="hidden" name="producto_id" value="CEL003"><button type="submit" class="comprarproducto">Comprar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="galeria-productos" id="contenedor-galeria"></div>
     </div>
+
     <footer>
         <div class="linksFooter">
-            <a href="AcercaDe.html"><h3>Acerca de</h3></a>
-            <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
-            <a href="contactoPublico.html"><h3>Contacto</h3></a>
-            <a href="ubicacion.html"><h3>Ubicación</h3></a>
-            <a href="politicaCompra.html"><h3>Políticas</h3></a>
-            <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
+            <a href="/Sistema_Ventas/Frontend/views/publico/AcercaDe.html"><h3>Acerca de</h3></a>
+            <a href="/Sistema_Ventas/Frontend/views/publico/quienessomos.html"><h3>¿Quiénes somos?</h3></a>
+            <a href="/Sistema_Ventas/Frontend/views/publico/contactoPublico.html"><h3>Contacto</h3></a>
+            <a href="/Sistema_Ventas/Frontend/views/publico/ubicacion.html"><h3>Ubicación</h3></a>
+            <a href="/Sistema_Ventas/Frontend/views/publico/politicaCompra.html"><h3>Políticas</h3></a>
+            <a href="/Sistema_Ventas/Frontend/views/publico/preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
         </div>
     </footer>
+    <script src="../../public/js/categorias.js"></script>
 </body>
 </html>

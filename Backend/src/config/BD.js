@@ -1,31 +1,30 @@
-import {createPool} from 'mysql2/promise'
-import dotenv from 'dotenv'
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
 
-//configuramos el acceso a nuestras variables de entorno 
-dotenv.config()
-console.log("Intentando conectar al host:", process.env.DB_HOST);
+dotenv.config(); // Carga las variables del .env o del panel de Vercel
 
-//creamos el pool de coneccion a la base de datos
-const pool =createPool({
-    host:process.env.DB_HOST,
-    user:process.env.DB_USER,
-    password:process.env.DB_PASSWORD,
-    database:process.env.DB_NAME,
-    port:process.env.DB_PORT||3306,
-    waitForConnections:true,
-    connectionLimit:10,
-    queueLimit:0
-})
+const pool = mysql.createPool({
+    // Usamos process.env para que sea seguro y dinámico
+    host: process.env.DB_HOST ,
+    port: 3306,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
+const promisePool = pool.promise();
 
-pool.getConnection()
-  .then(conn => {
-     console.log("✅ Conectado a MySQL");
-     conn.release();
-  })
-  .catch(err => {
-     console.error("❌ Error de conexión:", err.message);
-  });
+// Mantenemos tu prueba de conexión
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('❌ Error en BD:', err.message);
+        return;
+    }
+    console.log('✅ Conexión exitosa a la base de datos');
+    connection.release();
+});
 
-
-export default pool
+export default promisePool;
