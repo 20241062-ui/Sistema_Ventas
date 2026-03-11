@@ -11,11 +11,7 @@ dotenv.config();
 const app = express();
 
 // Configuración de CORS para permitir tu sitio de GitHub Pages
-app.use(cors({
-    origin: ['https://20241062-ui.github.io', 'http://localhost:3000', 'http://127.0.0.1:3000'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 
 app.use(express.json());
 
