@@ -23,30 +23,26 @@
             </nav>
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-                <div class="menu">
-                    <a href="perfil.html">Mi cuenta</a>
-                    <a href="../admin/menuAdministrador.html">Panel de Administración</a>
-                    <a href="../login.html">Iniciar Sesión</a>
-                </div>
+                <div class="menu" id="menu-usuario"></div>
             </div>
         </div>
     </header>
+
     <main class="acerca-container">
         <h1>Nuestras sucursales</h1>
-        <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
-        <select id="sucursalSelect">
-            <option value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3747.3484883445884!2d-98.7358782!3d20.12!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1099684176793%3A0x696f0e4701234567!2sCentro%2C%20Pachuca%2C%20Hgo.!5e0!3m2!1ses-419!2smx!4v1700000000000" data-direccion="Av. Principal #123, Col. Centro" data-ciudad="Pachuca de Soto" data-telefono="7711234567" data-horario="Lunes a Viernes: 9:00 AM - 7:00 PM">Sucursal Pachuca Centro</option>
-            <option value="http://googleusercontent.com/maps.google.com/5" data-direccion="Plaza Universidad, Local 15" data-ciudad="Mineral de la Reforma" data-telefono="7717654321" data-horario="Lunes a Domingo: 10:00 AM - 8:00 PM">Sucursal Plaza Universidad</option>
-        </select>
-        <iframe id="mapaSucursal" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3747.3484883445884!2d-98.7358782!3d20.12!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1099684176793%3A0x696f0e4701234567!2sCentro%2C%20Pachuca%2C%20Hgo.!5e0!3m2!1ses-419!2smx!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
-        <div class="card-contacto" id="cardSucursal">
-            <h2>Sucursal Pachuca Centro</h2>
-            <p><strong>Dirección:</strong> Av. Principal #123, Col. Centro</p>
-            <p><strong>Ciudad:</strong> Pachuca de Soto</p>
-            <p><strong>Teléfono:</strong> 7711234567</p>
-            <p><strong>Horario:</strong> Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+        <p id="mensaje-carga">Cargando información de sucursales...</p>
+        
+        <div id="contenido-ubicacion" style="display: none;">
+            <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
+            <select id="sucursalSelect"></select>
+            
+            <iframe id="mapaSucursal" src="" allowfullscreen="" loading="lazy"></iframe>
+
+            <div class="card-contacto" id="cardSucursal">
+                </div>
         </div>
     </main>
+
     <footer>
         <div class="linksFooter">
             <a href="AcercaDe.html"><h3>Acerca de</h3></a>
@@ -57,15 +53,8 @@
             <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
         </div>
     </footer>
-    <script>
-        const select = document.getElementById('sucursalSelect');
-        const mapa = document.getElementById('mapaSucursal');
-        const card = document.getElementById('cardSucursal');
-        select.addEventListener('change', () => {
-            const opcion = select.selectedOptions[0];
-            mapa.src = opcion.value;
-            card.innerHTML = `<h2>${opcion.textContent}</h2><p><strong>Dirección:</strong> ${opcion.dataset.direccion}</p><p><strong>Ciudad:</strong> ${opcion.dataset.ciudad}</p><p><strong>Teléfono:</strong> ${opcion.dataset.telefono}</p><p><strong>Horario:</strong> ${opcion.dataset.horario}</p>`;
-        });
-    </script>
+
+    <script src="../../public/js/estaticas.js"></script>
+    <script src="../../public/js/ubicacion.js"></script>
 </body>
 </html>

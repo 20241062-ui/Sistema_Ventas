@@ -4,6 +4,7 @@ import cors from 'cors';
 import db from './config/BD.js';
 import productoRoutes from './routes/productoRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import publicRoutes from './src/routes/publicRoutes.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 // RUTAS
 app.use('/api/auth', authRoutes);
 app.use('/api/productos', productoRoutes);
+app.use('/api/public', publicRoutes);
 
 // PRUEBA DE CONEXIÓN
 app.get('/api/prueba-db', async (req, res) => {

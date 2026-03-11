@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    if (usuario) {
+    document.getElementById('link-login').style.display = 'none';
+    const menu = document.getElementById('menu-usuario');
+    menu.innerHTML = `<span>Hola, ${usuario.nombre}</span> <a href="#" id="btn-logout">Cerrar Sesión</a>`;
+    
+        // Si es admin, mostrar link al panel
+        if(usuario.rol === 'Administrador') {
+            menu.innerHTML += `<a href="admin/menuAdministrador.html">Panel Admin</a>`;
+        }
+    }
+
     if (linkLogout) {
         linkLogout.addEventListener('click', (e) => {
             e.preventDefault();
