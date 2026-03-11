@@ -6,9 +6,8 @@ import productoRoutes from './routes/productoRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import publicRoutes from './src/routes/publicRoutes.js';
 
-dotenv.config();
-
 const app = express();
+dotenv.config();
 
 // Configuración de CORS para permitir tu sitio de GitHub Pages
 app.use(cors());
@@ -28,11 +27,6 @@ app.get('/api/prueba-db', async (req, res) => {
     } catch (error) {
         res.status(500).json({ estado: "Error", detalle: error.message });
     }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
 
 export default app;
