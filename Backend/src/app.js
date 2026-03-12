@@ -4,7 +4,7 @@ import cors from 'cors';
 import db from './config/BD.js';
 import productoRoutes from './routes/productoRoutes.js';
 import authRoutes from './routes/authRoutes.js';
-import publicRoutes from './src/routes/publicRoutes.js';
+import publicRoutes from './routes/publicRoutes.js';
 
 const app = express();
 dotenv.config();

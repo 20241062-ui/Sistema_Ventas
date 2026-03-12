@@ -2,7 +2,7 @@ import Usuario from '../models/usuarioModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = "tu_clave_secreta_super_segura"; // En producción, esto va en un archivo .env
+const SECRET_KEY = process.env.JWT_SECRET || "una_clave_por_defecto_solo_para_local";
 
 export const login = async (req, res) => {
     const { user, password } = req.body; // 'user' es el correo según tu PHP

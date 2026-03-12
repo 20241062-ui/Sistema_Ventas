@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = "tu_clave_secreta_super_segura";
+const SECRET_KEY = process.env.JWT_SECRET || "una_clave_por_defecto_solo_para_local";
 
 export const verificarAdmin = (req, res, next) => {
     // El token suele venir en el header como 'Bearer <token>'

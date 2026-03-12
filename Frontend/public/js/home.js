@@ -3,47 +3,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     const heroTexto = document.querySelector('.textohero');
     const heroForm = document.querySelector('.hero form');
 
-    const linkAdmin = document.getElementById('link-admin');
+    // Selectores del menú
+    const menuUsuario = document.getElementById('menu-usuario');
     const linkLogin = document.getElementById('link-login');
     const linkLogout = document.getElementById('link-logout');
-
+    
+    const API_URL = 'https://sistema-ventas-omega.vercel.app/api';
     const rutaDetalle = "publico/productoDetalle.html";
 
+    // --- 1. LÓGICA DE INTERFAZ DE USUARIO (SESIÓN) ---
     const usuario = JSON.parse(localStorage.getItem('usuario'));
+
     if (usuario) {
+        // En lugar de borrar todo el menú, personalizamos lo que ya existe
         if (linkLogin) linkLogin.style.display = 'none';
         if (linkLogout) linkLogout.style.display = 'block';
-        if (usuario.rol === 'Administrador' && linkAdmin) {
-            linkAdmin.style.display = 'block';
+
+        // Insertar saludo al inicio del menú sin borrar "Mi Cuenta"
+        const saludo = document.createElement('span');
+        saludo.style.display = 'block';
+        saludo.style.padding = '10px';
+        saludo.style.fontWeight = 'bold';
+        saludo.style.color = '#333';
+        saludo.textContent = `Hola, ${usuario.nombre}`;
+        menuUsuario.prepend(saludo);
+
+        // Si es Admin, agregamos el link al panel (si no existe)
+        if (usuario.rol === 'Administrador') {
+            const adminLink = document.createElement('a');
+            adminLink.href = 'admin/menuAdministrador.html';
+            adminLink.textContent = 'Panel Admin';
+            adminLink.style.color = 'red'; // Para resaltarlo
+            // Lo insertamos antes del botón de cerrar sesión
+            linkLogout.before(adminLink);
         }
     }
 
-    if (usuario) {
-    document.getElementById('link-login').style.display = 'none';
-    const menu = document.getElementById('menu-usuario');
-    menu.innerHTML = `<span>Hola, ${usuario.nombre}</span> <a href="#" id="btn-logout">Cerrar Sesión</a>`;
-    
-        // Si es admin, mostrar link al panel
-        if(usuario.rol === 'Administrador') {
-            menu.innerHTML += `<a href="admin/menuAdministrador.html">Panel Admin</a>`;
-        }
-    }
-
-    if (linkLogout) {
-        linkLogout.addEventListener('click', (e) => {
+    // Evento único de Cerrar Sesión
+    document.addEventListener('click', (e) => {
+        if (e.target.id === 'link-logout' || e.target.id === 'btn-logout') {
             e.preventDefault();
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
+            alert('Sesión finalizada.');
             window.location.reload();
-        });
-    }
+        }
+    });
 
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api';
-
+    // --- 2. CARGA DE PRODUCTOS (API) ---
     try {
         const response = await fetch(`${API_URL}/productos/home`);
         const data = await response.json();
 
+        // Actualizar Hero
         if (data.hero && heroTexto && heroForm) {
             heroTexto.innerHTML = `
                 <h1>${data.hero.vchNombre} por menos de $${Math.floor(data.hero.floPrecioUnitario).toLocaleString()}</h1>
@@ -53,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             heroForm.action = rutaDetalle;
         }
 
+        // Actualizar Galería
         if (galeria && data.productos) {
             galeria.innerHTML = ''; 
             data.productos.forEach(prod => {
@@ -80,5 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error("Error cargando home:", error);
+        if (galeria) galeria.innerHTML = '<p>Error al cargar los productos.</p>';
     }
 });
