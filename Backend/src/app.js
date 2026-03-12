@@ -5,6 +5,7 @@ import db from './config/BD.js';
 import productoRoutes from './routes/productoRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import publicRoutes from './routes/publicRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/productos', productoRoutes);
 app.use('/api/public', publicRoutes);
+app.use('/api/admin', adminRoutes);
 
 // PRUEBA DE CONEXIÓN
 app.get('/api/prueba-db', async (req, res) => {

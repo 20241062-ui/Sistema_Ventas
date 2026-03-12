@@ -100,5 +100,29 @@ router.get('/detalle/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+// --- RUTA PARA EL DASHBOARD DE ADMIN ---
+router.get('/admin-list', async (req, res) => {
+    try {
+        // 1. Obtener todos los productos para la tabla
+        const [productos] = await db.query('SELECT * FROM tblproductos ORDER BY vchNo_Serie DESC');
+
+        // 2. Obtener conteos para las cards
+        const [counts] = await db.query(`
+            SELECT 
+                COUNT(*) as total,
+                SUM(CASE WHEN Estado = 1 THEN 1 ELSE 0 END) as activos,
+                SUM(CASE WHEN Estado = 0 THEN 1 ELSE 0 END) as inactivos
+            FROM tblproductos
+        `);
+
+        res.json({
+            productos,
+            counts: counts[0],
+            pagination: { totalPages: 1, currentPage: 1 } // Simplificado por ahora
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 export default router;

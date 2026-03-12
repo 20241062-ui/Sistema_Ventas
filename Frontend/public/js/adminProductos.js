@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     const API_URL = 'https://sistema-ventas-omega.vercel.app/api/admin';
-
     // --- 1. PROTECCIÓN DE RUTA Y ROL ---
     if (!token || !usuario || usuario.rol !== 'Administrador') {
         alert("Acceso restringido. Por favor, inicia sesión como administrador.");
+        // Si falla la validación, mandamos al login para que se autentique
         window.location.href = '../login.html';
         return;
     }
@@ -23,9 +23,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('link-logout-admin').addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.clear();
+            localStorage.clear(); // Limpiamos toda la sesión
             alert('Sesión administrativa finalizada.');
-            window.location.href = '../login.html';
+
+            // CORRECCIÓN: Redirigir al INDEX en lugar del login
+            window.location.href = '../index.html';
         });
     }
 
@@ -35,61 +37,88 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const cargarDashboard = async (pagina = 1, buscar = "") => {
         try {
+            // Ajustamos el endpoint: usamos /admin-list (o el nombre que definiste en el backend)
+            // Pasamos los parámetros de paginación y búsqueda
             const res = await fetch(`${API_URL}/productos?pagina=${pagina}&buscar=${buscar}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: {
+                    'Authorization': `Bearer ${token}`, // El token es vital para rutas protegidas
+                    'Content-Type': 'application/json'
+                }
             });
-            
-            if (!res.ok) throw new Error("Error en la respuesta del servidor");
-            
+
+            // Si el servidor responde 404 o 500, lanzamos el error al catch
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.mensaje || "Error en la respuesta del servidor");
+            }
+
             const data = await res.json();
 
-            // Actualizar Cards de estadísticas
-            document.getElementById('count-total').textContent = data.counts?.total || 0;
-            document.getElementById('count-activos').textContent = data.counts?.activos || 0;
-            document.getElementById('count-inactivos').textContent = data.counts?.inactivos || 0;
+            // 1. Actualizar Cards de estadísticas con Safe Navigation (?.)
+            const total = document.getElementById('count-total');
+            const activos = document.getElementById('count-activos');
+            const inactivos = document.getElementById('count-inactivos');
 
-            // Llenar Tabla
+            if (total) total.textContent = data.counts?.total || 0;
+            if (activos) activos.textContent = data.counts?.activos || 0;
+            if (inactivos) inactivos.textContent = data.counts?.inactivos || 0;
+
+            // 2. Llenar Tabla
             const tbody = document.getElementById('tabla-productos-body');
+            if (!tbody) return; // Seguridad si el elemento no existe
+
             tbody.innerHTML = '';
 
-            if (data.productos.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No se encontraron productos.</td></tr>';
+            if (!data.productos || data.productos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No se encontraron productos registrados.</td></tr>';
+                return;
             }
 
             data.productos.forEach(prod => {
                 const tr = document.createElement('tr');
-                if (prod.Estado == 0) tr.classList.add('inactivo');
-                
+                // Aplicamos clase de estilo si está inactivo
+                if (prod.Estado == 0) tr.classList.add('fila-inactiva');
+
                 tr.innerHTML = `
-                    <td><strong>${prod.vchNo_Serie}</strong></td>
-                    <td>${prod.vchNombre}</td>
-                    <td class="descripcion">${prod.vchDescripcion || 'Sin descripción'}</td>
-                    <td>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits:2})}</td>
-                    <td>${prod.intStock}</td>
-                    <td>
-                        <span class="badge ${prod.Estado == 1 ? 'status-active' : 'status-inactive'}">
-                            ${prod.Estado == 1 ? 'Activo' : 'Inactivo'}
-                        </span>
-                    </td>
-                    <td class="acciones">
-                        <button class="btn-edit" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">✏️ Editar</button>
-                        ${prod.Estado == 1 
-                            ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">🚫 Baja</button>`
-                            : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">✅ Alta</button>`
-                        }
-                    </td>
-                `;
+                <td><strong>${prod.vchNo_Serie}</strong></td>
+                <td>${prod.vchNombre}</td>
+                <td class="descripcion">${prod.vchDescripcion || 'Sin descripción'}</td>
+                <td>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
+                <td>${prod.intStock || 0}</td>
+                <td>
+                    <span class="badge ${prod.Estado == 1 ? 'status-active' : 'status-inactive'}">
+                        ${prod.Estado == 1 ? 'Activo' : 'Inactivo'}
+                    </span>
+                </td>
+                <td class="acciones">
+                    <button class="btn-edit" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">✏️ Editar</button>
+                    ${prod.Estado == 1
+                        ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">🚫 Baja</button>`
+                        : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">✅ Alta</button>`
+                    }
+                </td>
+            `;
                 tbody.appendChild(tr);
             });
 
-            // Paginación
+            // 3. Actualizar estado de paginación
             paginaActual = pagina;
-            renderPaginacion(data.pagination);
+            if (typeof renderPaginacion === "function") {
+                renderPaginacion(data.pagination);
+            }
 
         } catch (error) {
-            console.error("Error cargando dashboard:", error);
+            console.error("Error detallado en cargarDashboard:", error);
             const tbody = document.getElementById('tabla-productos-body');
-            if (tbody) tbody.innerHTML = '<tr><td colspan="7">Error al conectar con el servidor.</td></tr>';
+            if (tbody) {
+                tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" style="color: red; text-align: center; padding: 20px;">
+                        ⚠️ Error al conectar con el servidor: ${error.message}<br>
+                        <small>Verifica que el Backend esté activo y la ruta sea correcta.</small>
+                    </td>
+                </tr>`;
+            }
         }
     };
 
@@ -97,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cont = document.getElementById('contenedor-paginacion');
         if (!cont || !nav) return;
         cont.innerHTML = '';
-        
+
         for (let i = 1; i <= nav.totalPages; i++) {
             const a = document.createElement('a');
             a.className = `pagina ${i === nav.currentPage ? 'activa' : ''}`;
@@ -138,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const res = await fetch(`${API_URL}/productos/estado/${id}`, {
                 method: 'PATCH',
-                headers: { 
+                headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
@@ -155,6 +184,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // Carga inicial
     cargarDashboard();
 });
