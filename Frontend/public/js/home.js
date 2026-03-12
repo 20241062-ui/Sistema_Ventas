@@ -7,46 +7,64 @@ document.addEventListener('DOMContentLoaded', async () => {
     const menuUsuario = document.getElementById('menu-usuario');
     const linkLogin = document.getElementById('link-login');
     const linkLogout = document.getElementById('link-logout');
+    const linkPerfil = document.querySelector('a[href*="perfil.html"]'); // Selector flexible para Mi Cuenta
     
     const API_URL = 'https://sistema-ventas-omega.vercel.app/api';
     const rutaDetalle = "publico/productoDetalle.html";
 
     // --- 1. LÓGICA DE INTERFAZ DE USUARIO (SESIÓN) ---
     const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const token = localStorage.getItem('token');
 
-    if (usuario) {
-        // En lugar de borrar todo el menú, personalizamos lo que ya existe
+    if (token && usuario) {
+        // --- ESTADO: SESIÓN INICIADA ---
         if (linkLogin) linkLogin.style.display = 'none';
         if (linkLogout) linkLogout.style.display = 'block';
+        if (linkPerfil) linkPerfil.style.display = 'block';
 
-        // Insertar saludo al inicio del menú sin borrar "Mi Cuenta"
-        const saludo = document.createElement('span');
-        saludo.style.display = 'block';
-        saludo.style.padding = '10px';
-        saludo.style.fontWeight = 'bold';
-        saludo.style.color = '#333';
-        saludo.textContent = `Hola, ${usuario.nombre}`;
-        menuUsuario.prepend(saludo);
+        // Insertar saludo si no existe ya
+        if (menuUsuario && !document.getElementById('user-greeting')) {
+            const saludo = document.createElement('span');
+            saludo.id = 'user-greeting';
+            saludo.style.display = 'block';
+            saludo.style.padding = '10px';
+            saludo.style.fontWeight = 'bold';
+            saludo.style.color = '#333';
+            saludo.textContent = `Hola, ${usuario.nombre}`;
+            menuUsuario.prepend(saludo);
+        }
 
-        // Si es Admin, agregamos el link al panel (si no existe)
-        if (usuario.rol === 'Administrador') {
+        // Si es Admin, agregamos el link al panel (solo si no existe)
+        if (usuario.rol === 'Administrador' && !document.getElementById('link-admin-panel')) {
             const adminLink = document.createElement('a');
+            adminLink.id = 'link-admin-panel';
             adminLink.href = 'admin/menuAdministrador.html';
             adminLink.textContent = 'Panel Admin';
-            adminLink.style.color = 'red'; // Para resaltarlo
-            // Lo insertamos antes del botón de cerrar sesión
-            linkLogout.before(adminLink);
+            adminLink.style.color = 'red';
+            if (linkLogout) linkLogout.before(adminLink);
         }
+    } else {
+        // --- ESTADO: SIN SESIÓN ---
+        if (linkLogin) linkLogin.style.display = 'block';
+        if (linkLogout) linkLogout.style.display = 'none';
+        if (linkPerfil) linkPerfil.style.display = 'none'; // OCULTA MI CUENTA
     }
 
-    // Evento único de Cerrar Sesión
+    // Evento único de Cerrar Sesión (Delegado)
     document.addEventListener('click', (e) => {
         if (e.target.id === 'link-logout' || e.target.id === 'btn-logout') {
             e.preventDefault();
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
             alert('Sesión finalizada.');
-            window.location.reload();
+            
+            // Redirección inteligente según la carpeta actual
+            const path = window.location.pathname;
+            if (path.includes('publico/') || path.includes('admin/')) {
+                window.location.href = '../index.html';
+            } else {
+                window.location.reload();
+            }
         }
     });
 
@@ -61,7 +79,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <h1>${data.hero.vchNombre} por menos de $${Math.floor(data.hero.floPrecioUnitario).toLocaleString()}</h1>
                 <h3>Sólo en Comercializadora Doble L</h3>
             `;
-            heroForm.querySelector('input[name="producto_id"]').value = data.hero.vchNo_Serie;
+            const inputId = heroForm.querySelector('input[name="producto_id"]');
+            if (inputId) inputId.value = data.hero.vchNo_Serie;
             heroForm.action = rutaDetalle;
         }
 
@@ -93,6 +112,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error("Error cargando home:", error);
-        if (galeria) galeria.innerHTML = '<p>Error al cargar los productos.</p>';
+        if (galeria) galeria.innerHTML = '<p style="text-align:center;">Error al cargar los productos.</p>';
     }
 });
