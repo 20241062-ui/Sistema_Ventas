@@ -10,12 +10,21 @@ import adminRoutes from './routes/adminRoutes.js';
 const app = express();
 dotenv.config();
 
-// Configuración de CORS para permitir tu sitio de GitHub Pages
-app.use(cors());
+// 1. Configuración de CORS única y específica
+const corsOptions = {
+    origin: 'https://20241062-ui.github.io', 
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+
+// 2. Aplicar CORS antes que las rutas
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Maneja las peticiones de preflight
 
 app.use(express.json());
 
-// RUTAS
+// 3. RUTAS
 app.use('/api/auth', authRoutes);
 app.use('/api/productos', productoRoutes);
 app.use('/api/public', publicRoutes);
