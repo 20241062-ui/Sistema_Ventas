@@ -45,3 +45,17 @@ export const getProductoDetalle = async (req, res) => {
         res.status(500).json({ mensaje: "Error al obtener el detalle", detalle: error.message });
     }
 };
+export const cambiarEstadoProducto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
+        await db.query("UPDATE tblproductos SET Estado = ? WHERE vchNo_Serie = ?", [estado, id]);
+        res.json({ mensaje: "Estado actualizado correctamente" });
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al cambiar estado", detalle: error.message });
+    }
+};
+
+// También asegúrate de exportar estas aunque estén vacías por ahora para que no truene el router:
+export const agregarProducto = async (req, res) => { /* tu lógica */ };
+export const eliminarProducto = async (req, res) => { /* tu lógica */ };
