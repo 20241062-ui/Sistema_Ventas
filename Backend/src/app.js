@@ -30,13 +30,19 @@ app.use('/api/productos', productoRoutes);
 app.use('/api/public', publicRoutes);
 app.use('/api/admin', adminRoutes);
 
-// PRUEBA DE CONEXIÓN
 app.get('/api/prueba-db', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT "Conexión Exitosa" AS mensaje');
-        res.json({ estado: "OK", db: rows[0].mensaje });
+        // Intenta una consulta súper simple
+        const [rows] = await db.query('SELECT 1 + 1 AS resultado');
+        res.json({ 
+            estado: "Conexión Exitosa", 
+            db: rows[0].resultado === 2 ? "Base de datos respondiendo" : "Error inesperado" 
+        });
     } catch (error) {
-        res.status(500).json({ estado: "Error", detalle: error.message });
+        res.status(500).json({ 
+            estado: "Error de Conexión", 
+            detalle: error.message 
+        });
     }
 });
 
