@@ -12,7 +12,6 @@ import comprasRoutes from "./routes/comprasRoutes.js";
 const app = express();
 dotenv.config();
 
-// 1. Configuración de CORS única y específica
 const corsOptions = {
     origin: 'https://20241062-ui.github.io', 
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
@@ -20,23 +19,22 @@ const corsOptions = {
     credentials: true
 };
 
-// 2. Aplicar CORS antes que las rutas
+
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Maneja las peticiones de preflight
+app.options('*', cors(corsOptions)); 
 
 app.use(express.json());
 
-// 3. RUTAS
 app.use('/api/auth', authRoutes);
-app.use('/api/productos', productoRoutes);
 app.use('/api/public', publicRoutes);
 app.use('/api/compras', comprasRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/ventas', ventaRoutes);
+app.use('/api/productos', productoRoutes);
 
 app.get('/api/prueba-db', async (req, res) => {
     try {
-        // Intenta una consulta súper simple
+        
         const [rows] = await db.query('SELECT 1 + 1 AS resultado');
         res.json({ 
             estado: "Conexión Exitosa", 
