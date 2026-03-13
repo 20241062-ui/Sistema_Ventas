@@ -32,7 +32,7 @@ app.use('/api/productos', productoRoutes);
 app.use('/api/public', publicRoutes);
 app.use('/api/compras', comprasRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/admin', ventaRoutes);
+app.use('/api/ventas', ventaRoutes);
 
 app.get('/api/prueba-db', async (req, res) => {
     try {

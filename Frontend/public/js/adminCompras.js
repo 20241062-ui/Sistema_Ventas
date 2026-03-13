@@ -5,15 +5,12 @@ async function cargarCompras() {
     const totalElemento = document.querySelector("#total-compras");
 
     try {
-        const res = await fetch("https://sistema-ventas-omega.vercel.app/api/admin");
-        
+        const res = await fetch("https://sistema-ventas-omega.vercel.app/api/compras");
         if (!res.ok) {
             throw new Error(`Error en la petición: ${res.status}`);
         }
-
         const data = await res.json();
 
-       
         tabla.innerHTML = "";
 
         if (!data.compras || data.compras.length === 0) {
