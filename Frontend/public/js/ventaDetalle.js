@@ -20,8 +20,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const venta = data.venta;
     const detalle = data.detalle;
 
+    document.getElementById("titulo-venta").textContent = `Detalle de la Venta #${id}`;
     document.getElementById("cliente").textContent = venta.nombre_cliente;
     document.getElementById("fecha").textContent = venta.Fecha_Venta;
+    document.getElementById("total-productos").textContent = detalle.length;
     document.getElementById("total").textContent = `$${venta.Total_Venta}`;
 
     const tbody = document.getElementById("tabla-detalle");

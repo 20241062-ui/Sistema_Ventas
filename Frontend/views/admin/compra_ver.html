@@ -41,22 +41,22 @@
 
 <div class="container">
     <main class="main">
-        <h2>Detalle de la Compra #542</h2> <div class="cards">
+        <h2 id="titulo-compra">Detalle de la Compra</h2> <div class="cards">
             <div class="card">
                 <h3>ID Compra</h3>
-                <p class="big">542</p>
+                <p class="big" id="id-compra">-</p>
             </div>
             <div class="card">
                 <h3>Proveedor (RFC)</h3>
-                <p class="big">ABC123456T12</p>
+                <p class="big" id="proveedor">-</p>
             </div>
             <div class="card">
                 <h3>Fecha</h3>
-                <p class="big">2026-03-03</p>
+                <p class="big" id="fecha">-</p>
             </div>
             <div class="card success">
                 <h3>Total Compra</h3>
-                <p class="big">$24,350.00</p>
+                <p class="big" id="total">$0</p>
             </div>
         </div>
 
@@ -72,22 +72,9 @@
                         <th>Subtotal</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabla-detalle-compra">
                     <tr>
-                        <td>VCH-X200</td>
-                        <td>Samsung Galaxy S23</td>
-                        <td>Gama alta 256GB</td>
-                        <td>$12,000.00</td>
-                        <td>2</td>
-                        <td>$24,000.00</td>
-                    </tr>
-                    <tr>
-                        <td>ACC-45</td>
-                        <td>Funda Silicona</td>
-                        <td>Transparente reforzada</td>
-                        <td>$175.00</td>
-                        <td>2</td>
-                        <td>$350.00</td>
+                        <td colspan="6" style="text-align:center;">Cargando productos...</td>
                     </tr>
                 </tbody>
             </table>
@@ -104,6 +91,8 @@
         <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
     </div>
 </footer>
+
+<script src="../../public/js/compraDetalle.js"></script>
 
 </body>
 </html>

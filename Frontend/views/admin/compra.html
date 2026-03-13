@@ -43,17 +43,13 @@
     <main class="main">
         <h2>Registro de compras</h2>
 
-        <div class="cards">
-            <div class="card">
-                <h3>Total de compras</h3>
-                <p class="big">12</p> </div>
-        </div>
+        <div class="cards"> <div class="card"> <h3>Total de compras</h3> <p class="big" id="total-compras">0</p> </div> </div>
 
         <div class="productos-superior">
             <button class="btn-superior" onclick="window.location.href='compra_nueva.html'">Registrar Compra</button>
 
             <div class="productos-buscar">
-                <input type="search" placeholder="Buscar por ID o proveedor">
+                <input type="search" id="buscar-compra" placeholder="Buscar por ID o proveedor">
                 <button type="button" class="btn-superior buscar">🔍 Buscar</button>
             </div>
         </div>
@@ -69,26 +65,7 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>542</td>
-                        <td>ABC123456T12</td>
-                        <td>$24,350.00</td>
-                        <td>2026-03-01</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='compra_ver.html'">Ver</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>541</td>
-                        <td>PROV980706A1</td>
-                        <td>$12,100.00</td>
-                        <td>2026-02-25</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='compra_ver.html'">Ver</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="tabla-compras-body"> <tr> <td colspan="5" style="text-align:center;"> Cargando compras... </td> </tr> </tbody>
             </table>
         </div>
 
@@ -100,6 +77,8 @@
         <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
     </div>
 </footer>
+
+<script src="../../public/js/adminCompras.js"></script>
 
 </body>
 </html>

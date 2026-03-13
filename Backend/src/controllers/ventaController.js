@@ -37,7 +37,6 @@ export const obtenerVentas = async (req, res) => {
 };
 
 
-
 /* DETALLE DE VENTA */
 export const obtenerDetalleVenta = async (req, res) => {
 

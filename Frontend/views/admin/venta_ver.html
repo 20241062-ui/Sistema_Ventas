@@ -39,24 +39,24 @@
 
 <div class="container">
     <main class="main">
-        <h2> Detalle de la Venta #1025</h2>
+        <h2 id="titulo-venta">Detalle de la Venta</h2>
 
         <div class="cards">
             <div class="card">
                 <h3>Cliente</h3>
-                <p class="big">Juan Carlos Pérez</p>
+                <p class="big" id="cliente">Cargando...</p>
             </div>
             <div class="card">
                 <h3>Fecha Venta</h3>
-                <p class="big">2026-03-04 14:20:00</p>
+                <p class="big" id="fecha">Cargando...</p>
             </div>
             <div class="card">
                 <h3>Total Productos</h3>
-                <p class="big">3</p>
+                <p class="big" id="total-productos">0</p>
             </div>
             <div class="card success">
                 <h3>Total Venta</h3>
-                <p class="big">$23,498.00</p>
+                <p class="big" id="total">$0</p>
             </div>
         </div>
 
@@ -72,22 +72,9 @@
                         <th>Subtotal</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabla-detalle">
                     <tr>
-                        <td>VCH2007100</td>
-                        <td>iPhone 15 Pro</td>
-                        <td>Acabado Titanio, 128GB</td>
-                        <td>$21,999.00</td>
-                        <td>1</td>
-                        <td>$21,999.00</td>
-                    </tr>
-                    <tr>
-                        <td>ACC-502</td>
-                        <td>Funda de Silicón</td>
-                        <td>Protección contra caídas, Transparente</td>
-                        <td>$749.50</td>
-                        <td>2</td>
-                        <td>$1,499.00</td>
+                        <td colspan="6" style="text-align:center;">Cargando productos...</td>
                     </tr>
                 </tbody>
             </table>
@@ -108,5 +95,6 @@
     </div>
 </footer>
 
+<script src="../../public/js/ventaDetalle.js"></script>
 </body>
 </html>
