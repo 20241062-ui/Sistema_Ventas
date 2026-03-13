@@ -13,7 +13,7 @@ async function cargarCompras() {
 
         const data = await res.json();
 
-        // Limpiar tabla
+       
         tabla.innerHTML = "";
 
         if (!data.compras || data.compras.length === 0) {
