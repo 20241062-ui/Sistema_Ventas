@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>Completada</td>
                 <td>
                     <button class="guardar"
-                    onclick="window.location.href='ventas_detalle.html?id=${v.id_Ventas}'">
+                    onclick="window.location.href='venta_ver.html?id=${v.id_Ventas}'">
                     Ver
                     </button>
                 </td>
