@@ -5,7 +5,7 @@ async function cargarCompras() {
     const totalElemento = document.querySelector("#total-compras");
 
     try {
-        const res = await fetch("http://localhost:3000/api/compras");
+        const res = await fetch("https://sistema-ventas-omega.vercel.app/api/admin");
         
         if (!res.ok) {
             throw new Error(`Error en la petición: ${res.status}`);
@@ -52,5 +52,5 @@ async function cargarCompras() {
 
 function verCompra(id) {
     window.location.href = `compra_ver.html?id=${id}`; 
-    // Nota: En tu imagen el archivo se llama "compra_ver.html", no "detalle_compra.html"
+   
 }
