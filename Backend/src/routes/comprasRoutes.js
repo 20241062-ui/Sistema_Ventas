@@ -1,10 +1,12 @@
-import express from "express"
-import { listarCompras, verCompra } from "../controllers/comprasController.js"
+import express from "express";
+import { listarCompras, verCompra } from "../controllers/comprasController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/compras", listarCompras)
+// Esto ahora responde a GET /api/compras
+router.get("/", listarCompras);
 
-router.get("/compras/:id", verCompra)
+// Esto ahora responde a GET /api/compras/:id
+router.get("/:id", verCompra);
 
-export default router
+export default router;

@@ -7,7 +7,7 @@ import authRoutes from './routes/authRoutes.js';
 import publicRoutes from './routes/publicRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import ventaRoutes from './routes/ventaRoutes.js';
-import comprasRoutes from "./routes/comprasRoutes.js"
+import comprasRoutes from "./routes/comprasRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -30,9 +30,9 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/productos', productoRoutes);
 app.use('/api/public', publicRoutes);
+app.use('/api/compras', comprasRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', ventaRoutes);
-app.use("/api", comprasRoutes)
 
 app.get('/api/prueba-db', async (req, res) => {
     try {
