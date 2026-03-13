@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
 
-    const API_URL = "https://sistema-ventas-omega.vercel.app/api/admin";
+    const API_URL = "https://sistema-ventas-omega.vercel.app/api";
 
     if (!token || usuario.rol !== "Administrador") {
         alert("Acceso restringido");

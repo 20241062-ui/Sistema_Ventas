@@ -2,15 +2,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     const API_URL = 'https://sistema-ventas-omega.vercel.app/api/admin';
-    // --- 1. PROTECCIÓN DE RUTA Y ROL ---
+    
     if (!token || !usuario || usuario.rol !== 'Administrador') {
         alert("Acceso restringido. Por favor, inicia sesión como administrador.");
-        // Si falla la validación, mandamos al login para que se autentique
         window.location.href = '../login.html';
         return;
     }
 
-    // --- 2. CONFIGURACIÓN DEL MENÚ DE USUARIO ADMIN ---
     const menuUsuario = document.getElementById('menu-usuario-admin');
     if (menuUsuario) {
         menuUsuario.innerHTML = `
@@ -23,38 +21,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('link-logout-admin').addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.clear(); // Limpiamos toda la sesión
+            localStorage.clear(); 
             alert('Sesión administrativa finalizada.');
-
-            // CORRECCIÓN: Redirigir al INDEX en lugar del login
             window.location.href = '../index.html';
         });
     }
 
-    // --- 3. VARIABLES DE ESTADO Y CARGA DE DATOS ---
+    
     let paginaActual = 1;
     let busquedaActual = "";
 
     const cargarDashboard = async (pagina = 1, buscar = "") => {
         try {
-            // Ajustamos el endpoint: usamos /admin-list (o el nombre que definiste en el backend)
-            // Pasamos los parámetros de paginación y búsqueda
             const res = await fetch(`${API_URL}/productos?pagina=${pagina}&buscar=${buscar}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`, // El token es vital para rutas protegidas
+                    'Authorization': `Bearer ${token}`, 
                     'Content-Type': 'application/json'
                 }
             });
 
-            // Si el servidor responde 404 o 500, lanzamos el error al catch
             if (!res.ok) {
                 const errorData = await res.json();
                 throw new Error(errorData.mensaje || "Error en la respuesta del servidor");
             }
-
             const data = await res.json();
 
-            // 1. Actualizar Cards de estadísticas con Safe Navigation (?.)
             const total = document.getElementById('count-total');
             const activos = document.getElementById('count-activos');
             const inactivos = document.getElementById('count-inactivos');
@@ -63,9 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (activos) activos.textContent = data.counts?.activos || 0;
             if (inactivos) inactivos.textContent = data.counts?.inactivos || 0;
 
-            // 2. Llenar Tabla
             const tbody = document.getElementById('tabla-productos-body');
-            if (!tbody) return; // Seguridad si el elemento no existe
+            if (!tbody) return; 
 
             tbody.innerHTML = '';
 
@@ -76,7 +66,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             data.productos.forEach(prod => {
                 const tr = document.createElement('tr');
-                // Aplicamos clase de estilo si está inactivo
                 if (prod.Estado == 0) tr.classList.add('fila-inactiva');
 
                 tr.innerHTML = `
@@ -91,17 +80,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </span>
                 </td>
                 <td class="acciones">
-                    <button class="btn-edit" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">✏️ Editar</button>
+                    <button class="btn-edit" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'"> Editar</button>
                     ${prod.Estado == 1
-                        ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">🚫 Baja</button>`
-                        : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">✅ Alta</button>`
+                        ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)"> Baja</button>`
+                        : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)"> Alta</button>`
                     }
                 </td>
             `;
                 tbody.appendChild(tr);
             });
 
-            // 3. Actualizar estado de paginación
             paginaActual = pagina;
             if (typeof renderPaginacion === "function") {
                 renderPaginacion(data.pagination);
@@ -114,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tbody.innerHTML = `
                 <tr>
                     <td colspan="7" style="color: red; text-align: center; padding: 20px;">
-                        ⚠️ Error al conectar con el servidor: ${error.message}<br>
+                         Error al conectar con el servidor: ${error.message}<br>
                         <small>Verifica que el Backend esté activo y la ruta sea correcta.</small>
                     </td>
                 </tr>`;
@@ -137,7 +125,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- 4. EVENTOS DE BÚSQUEDA ---
     const btnBuscar = document.getElementById('btn-buscar');
     const btnLimpiar = document.getElementById('btn-limpiar');
     const inputBuscar = document.getElementById('input-buscar');
@@ -159,7 +146,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
     }
 
-    // --- 5. FUNCIONES GLOBALES ---
     window.cambiarEstado = async (id, nuevoEstado) => {
         const accion = nuevoEstado === 1 ? 'Activar' : 'Dar de baja';
         if (!confirm(`¿Seguro que desea ${accion} este producto?`)) return;

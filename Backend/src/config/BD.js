@@ -1,10 +1,10 @@
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
 
-dotenv.config(); // Carga las variables del .env o del panel de Vercel
+dotenv.config(); 
 
 const pool = mysql.createPool({
-    // Usamos process.env para que sea seguro y dinámico
+    
     host: process.env.DB_HOST ,
     port: 3306,
     user: process.env.DB_USER,
@@ -17,13 +17,11 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
-// Mantenemos tu prueba de conexión
 pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('❌ Error en BD:', err.message);
+    if (err) {console.error('Error en BD:', err.message);
         return;
     }
-    console.log('✅ Conexión exitosa a la base de datos');
+    console.log('Conexión exitosa a la base de datos');
     connection.release();
 });
 
