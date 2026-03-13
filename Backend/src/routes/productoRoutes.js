@@ -6,34 +6,86 @@ const router = express.Router();
 // 1. RUTA PARA EL INICIO (INDEX)
 router.get('/home', async (req, res) => {
     try {
-        const [hero] = await db.query('SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE vchNo_Serie = "VCH2007100" AND Estado = 1 LIMIT 1');
-        const [productos] = await db.query('SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 AND vchNo_Serie <> "VCH2007100" ORDER BY vchNo_Serie DESC LIMIT 8');
-        res.json({ hero: hero[0], productos });
+        // 1. Intentamos traer el producto que tú quieres como destacado
+        const [heroResult] = await db.query(
+            'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE vchNo_Serie = ? AND Estado = 1 LIMIT 1', 
+            ["VCH2007100"]
+        );
+
+        let hero = heroResult[0];
+
+        // 2. PLAN B: Si el producto específico no existe o está desactivado, 
+        // tomamos el producto más nuevo de la base de datos como Hero.
+        if (!hero) {
+            const [backup] = await db.query(
+                'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 ORDER BY vchNo_Serie DESC LIMIT 1'
+            );
+            hero = backup[0];
+        }
+
+        // 3. Traemos el resto de los productos, asegurándonos de NO repetir el que ya está en el Hero
+        // Usamos el ID del hero que hayamos encontrado (el original o el de respaldo)
+        const heroIdParaExcluir = hero ? hero.vchNo_Serie : "";
+        
+        const [productos] = await db.query(
+            'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 AND vchNo_Serie <> ? ORDER BY vchNo_Serie DESC LIMIT 8', 
+            [heroIdParaExcluir]
+        );
+
+        res.json({ hero, productos });
+
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error en /home:", error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
 });
 
-// 2. RUTA PARA CATEGORÍAS (CELULARES, ACCESORIOS, ETC)
+// 2. RUTA PARA CATEGORÍAS (CELULARES, ACCESORIOS, ETC) - CON RESPALDO
 router.get('/categoria/:id', async (req, res) => {
     const { id } = req.params;
-    // Mapeo de productos destacados (Hero) por categoría según tu lógica PHP
+    
+    // Mapeo de productos deseados
     const heroIds = {
-        "1": "VCH2007200", // Hero de Celulares (POCO X7)
-        "2": "VCH2007101", // Hero de Accesorios (Gamer Pro)
-        "3": "ELE001"      // Hero de Electrodomésticos (Freidora)
+        "1": "VCH2007200", // Hero de Celulares
+        "2": "VCH2007101", // Hero de Accesorios
+        "3": "ELE001"      // Hero de Electrodomésticos
     };
-    const currentHeroId = heroIds[id] || "";
+    
+    const targetHeroId = heroIds[id] || "";
 
     try {
-        const [heroResult] = await db.query('SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE vchNo_Serie = ? AND Estado = 1 LIMIT 1', [currentHeroId]);
-        const [productosResult] = await db.query('SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 AND intid_Categoria = ? AND vchNo_Serie <> ? ORDER BY vchNo_Serie DESC', [id, currentHeroId]);
+        // 1. Intentamos obtener el Hero específico de la categoría
+        const [heroResult] = await db.query(
+            'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE vchNo_Serie = ? AND intid_Categoria = ? AND Estado = 1 LIMIT 1', 
+            [targetHeroId, id]
+        );
+        
+        let heroFinal = heroResult[0];
+
+        // 2. PLAN B: Si el Hero específico no existe, tomamos el producto más nuevo DE ESA CATEGORÍA
+        if (!heroFinal) {
+            const [fallback] = await db.query(
+                'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 AND intid_Categoria = ? ORDER BY vchNo_Serie DESC LIMIT 1', 
+                [id]
+            );
+            heroFinal = fallback[0];
+        }
+
+        const currentHeroId = heroFinal ? heroFinal.vchNo_Serie : "";
+
+        // 3. Obtenemos el resto de productos de la categoría (excluyendo el Hero encontrado)
+        const [productosResult] = await db.query(
+            'SELECT vchNo_Serie, vchNombre, floPrecioUnitario, vchImagen FROM tblproductos WHERE Estado = 1 AND intid_Categoria = ? AND vchNo_Serie <> ? ORDER BY vchNo_Serie DESC', 
+            [id, currentHeroId]
+        );
         
         res.json({
-            hero: heroResult[0] || null,
+            hero: heroFinal || null,
             productos: productosResult
         });
+
     } catch (error) {
+        console.error(`Error en categoría ${id}:`, error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -44,6 +96,30 @@ router.get('/detalle/:id', async (req, res) => {
         const [rows] = await db.query('SELECT * FROM tblproductos WHERE vchNo_Serie = ? AND Estado = 1', [req.params.id]);
         if (rows.length === 0) return res.status(404).json({ mensaje: "Producto no encontrado" });
         res.json(rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+// --- RUTA PARA EL DASHBOARD DE ADMIN ---
+router.get('/admin-list', async (req, res) => {
+    try {
+        // 1. Obtener todos los productos para la tabla
+        const [productos] = await db.query('SELECT * FROM tblproductos ORDER BY vchNo_Serie DESC');
+
+        // 2. Obtener conteos para las cards
+        const [counts] = await db.query(`
+            SELECT 
+                COUNT(*) as total,
+                SUM(CASE WHEN Estado = 1 THEN 1 ELSE 0 END) as activos,
+                SUM(CASE WHEN Estado = 0 THEN 1 ELSE 0 END) as inactivos
+            FROM tblproductos
+        `);
+
+        res.json({
+            productos,
+            counts: counts[0],
+            pagination: { totalPages: 1, currentPage: 1 } // Simplificado por ahora
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

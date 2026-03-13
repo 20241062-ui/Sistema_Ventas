@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Celulares - Doble L</title>
     <link rel="stylesheet" href="../../public/css/home.css">
 </head>
-<body data-categoria="1"> 
+
+<body data-categoria="1">
     <header>
         <div class="contenedor-header">
             <a href="/Sistema_Ventas/Frontend/index.html">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo">
             </a>
             <nav>
                 <a href="../index.html" class="nav-link">Inicio</a>
-                <a href="celulares.html" class="nav-link activo">Celulares</a>
+                <a href="celulares.html" class="nav-link">Celulares</a>
                 <a href="Accesorios.html" class="nav-link">Accesorios</a>
                 <a href="Electrodomesticos.html" class="nav-link">Electrodomésticos</a>
             </nav>
             <div class="user-menu">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-                <div class="menu" id="menu-usuario"></div>
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
+                <div class="menu" id="menu-usuario">
+                    <a href="perfil.html" id="link-perfil">Mi cuenta</a>
+                    <a href="../login.html" id="link-login">Iniciar Sesión</a>
+                    <a href="#" id="link-logout" style="display: none;">Cerrar Sesión</a>
+                </div>
             </div>
         </div>
     </header>
 
     <div class="hero-div-celulares">
         <div class="hero">
-            <div class="textohero"><h1>Cargando oferta...</h1></div>
+            <div class="textohero">
+                <h1>Cargando oferta...</h1>
+            </div>
             <form action="productoDetalle.html" method="GET">
                 <input type="hidden" name="producto_id" value="">
                 <button type="submit" class="comprar">Comprar</button>
@@ -35,21 +45,37 @@
         </div>
     </div>
 
-    <div><h2 class="featured-text">Celulares</h2></div>
+    <div>
+        <h2 class="featured-text">Celulares</h2>
+    </div>
     <div class="contenedor-productos">
         <div class="galeria-productos" id="contenedor-galeria"></div>
     </div>
 
     <footer>
         <div class="linksFooter">
-            <a href="/Sistema_Ventas/Frontend/views/publico/AcercaDe.html"><h3>Acerca de</h3></a>
-            <a href="/Sistema_Ventas/Frontend/views/publico/quienessomos.html"><h3>¿Quiénes somos?</h3></a>
-            <a href="/Sistema_Ventas/Frontend/views/publico/contactoPublico.html"><h3>Contacto</h3></a>
-            <a href="/Sistema_Ventas/Frontend/views/publico/ubicacion.html"><h3>Ubicación</h3></a>
-            <a href="/Sistema_Ventas/Frontend/views/publico/politicaCompra.html"><h3>Políticas</h3></a>
-            <a href="/Sistema_Ventas/Frontend/views/publico/preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
+            <a href="AcercaDe.html">
+                <h3>Acerca de</h3>
+            </a>
+            <a href="quienessomos.html">
+                <h3>¿Quiénes somos?</h3>
+            </a>
+            <a href="contactoPublico.html">
+                <h3>Contacto</h3>
+            </a>
+            <a href="ubicacion.html">
+                <h3>Ubicación</h3>
+            </a>
+            <a href="politicaCompra.html">
+                <h3>Políticas</h3>
+            </a>
+            <a href="preguntasFrecuentesPublic.html">
+                <h3>Preguntas Frecuentes</h3>
+            </a>
         </div>
     </footer>
     <script src="../../public/js/categorias.js"></script>
+    <script src="../../public/js/home.js"></script>
 </body>
+
 </html>
