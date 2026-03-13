@@ -46,7 +46,7 @@
         <div class="cards">
             <div class="card">
                 <h3>Total de ventas</h3>
-                <p class="big">150</p>
+                <p class="big" id="total-ventas">0</p>
             </div>
         </div>
 
@@ -76,29 +76,10 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>V-1025</td>
-                        <td>Juan Carlos Pérez</td>
-                        <td>3</td>
-                        <td>$23,498.00</td>
-                        <td>2026-03-04 14:20:00</td>
-                        <td>Completada</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='ventas_detalle.html'">Ver Detalle</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>V-1024</td>
-                        <td>María García López</td>
-                        <td>1</td>
-                        <td>$1,200.50</td>
-                        <td>2026-03-03 10:15:30</td>
-                        <td>Completada</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='ventas_detalle.html'">Ver Detalle</button>
-                        </td>
-                    </tr>
+                <tbody id="tabla-ventas-body">
+                <tr>
+                <td colspan="7">Cargando ventas...</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -106,13 +87,13 @@
     </main>
 </div>
 
-
-
 <footer>
     <div class="linksFooter">  
         <a>© 2026 FlashCode — Sistema de Ventas</a>
     </div>
 </footer>
+
+<script src="../../public/js/adminVentas.js"></script>
 
 </body>
 </html>
