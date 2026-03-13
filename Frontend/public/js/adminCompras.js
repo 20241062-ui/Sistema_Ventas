@@ -2,32 +2,49 @@ document.addEventListener("DOMContentLoaded", cargarCompras)
 
 async function cargarCompras(){
 
-    const res = await fetch("http://localhost:3000/api/compras")
+    try{
 
-    const data = await res.json()
+        const res = await fetch("http://localhost:3000/api/compras")
 
-    const tabla = document.querySelector("#tabla-compras-body")
+        const data = await res.json()
 
-    tabla.innerHTML = ""
+        const tabla = document.querySelector("#tabla-compras-body")
 
-    data.compras.forEach(c => {
+        tabla.innerHTML = ""
 
-        const fila = document.createElement("tr")
+        data.compras.forEach(c => {
 
-        fila.innerHTML = `
-            <td>${c.id_Compra}</td>
-            <td>${c.RFC}</td>
-            <td>$${c.TotalCompra}</td>
-            <td>${c.Fecha}</td>
-            <td>
-                <button class="guardar" onclick="verCompra(${c.id_Compra})">
-                Ver
-                </button>
-            </td>
-        `
+            const fila = document.createElement("tr")
 
-        tabla.appendChild(fila)
+            fila.innerHTML = `
+                <td>${c.id_Compra}</td>
+                <td>${c.RFC}</td>
+                <td>$${c.TotalCompra}</td>
+                <td>${c.Fecha}</td>
+                <td>
+                    <button class="guardar" onclick="verCompra(${c.id_Compra})">
+                        Ver
+                    </button>
+                </td>
+            `
 
-    })
+            tabla.appendChild(fila)
+
+        })
+
+        document.querySelector("#total-compras").textContent = data.total
+
+    }catch(error){
+
+        console.error("Error cargando compras:",error)
+
+    }
+
+}
+
+
+function verCompra(id){
+
+    window.location.href = `detalle_compra.html?id=${id}`
 
 }

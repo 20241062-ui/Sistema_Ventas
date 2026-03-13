@@ -13,6 +13,7 @@ const obtenerCompras = async () => {
     `)
 
     return rows
+
 }
 
 const obtenerCompraPorId = async (id) => {
@@ -32,6 +33,7 @@ const obtenerCompraPorId = async (id) => {
     `,[id])
 
     return rows
+
 }
 
 export {

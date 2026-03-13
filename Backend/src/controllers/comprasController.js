@@ -7,8 +7,8 @@ const listarCompras = async (req,res) => {
         const compras = await comprasModel.obtenerCompras()
 
         res.json({
-            total: compras.length,
-            compras: compras
+            total:compras.length,
+            compras:compras
         })
 
     }catch(error){
