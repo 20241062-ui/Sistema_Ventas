@@ -1,4 +1,4 @@
-const db = require("../config/BD")
+import db from "../config/BD.js"
 
 const obtenerCompras = async () => {
 
@@ -34,7 +34,7 @@ const obtenerCompraPorId = async (id) => {
     return rows
 }
 
-module.exports = {
+export {
     obtenerCompras,
     obtenerCompraPorId
 }

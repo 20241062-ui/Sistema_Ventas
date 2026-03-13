@@ -1,4 +1,4 @@
-const comprasModel = require("../models/comprasModel")
+import * as comprasModel from "../models/comprasModel.js"
 
 const listarCompras = async (req,res) => {
 
@@ -41,7 +41,7 @@ const verCompra = async (req,res) => {
 
 }
 
-module.exports = {
+export {
     listarCompras,
     verCompra
 }

@@ -1,58 +1,43 @@
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", cargarDetalle)
 
-    const token = localStorage.getItem('token');
+async function cargarDetalle(){
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+    const params = new URLSearchParams(window.location.search)
 
-    const API_URL = "https://sistema-ventas-omega.vercel.app/api/admin";
+    const id = params.get("id")
 
-    try {
+    const res = await fetch(`http://localhost:3000/api/compras/${id}`)
 
-        const res = await fetch(`${API_URL}/compras/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+    const data = await res.json()
 
-        if(!res.ok){
-            alert("No se pudo cargar la compra");
-            return;
-        }
+    const compra = data.compra
+    const detalle = data.detalle
 
-        const data = await res.json();
+    // llenar tarjetas
+    document.querySelector("#id-compra").textContent = compra.id_Compra
+    document.querySelector("#proveedor").textContent = compra.RFC
+    document.querySelector("#fecha").textContent = compra.Fecha
+    document.querySelector("#total").textContent = "$" + compra.TotalCompra
 
-        const compra = data.compra;
-        const detalle = data.detalle;
+    const tbody = document.querySelector("#tabla-detalle-compra")
 
-        document.getElementById("titulo-compra").textContent = `Detalle de la Compra #${id}`;
-        document.getElementById("id-compra").textContent = compra.ID_Compra;
-        document.getElementById("proveedor").textContent = compra.RFC_Proveedor;
-        document.getElementById("fecha").textContent = compra.Fecha_Compra;
-        document.getElementById("total").textContent = `$${compra.Total_Compra}`;
+    tbody.innerHTML = ""
 
-        const tbody = document.getElementById("tabla-detalle-compra");
-        tbody.innerHTML = "";
+    detalle.forEach(d => {
 
-        detalle.forEach(p => {
+        const fila = document.createElement("tr")
 
-            const tr = document.createElement("tr");
+        fila.innerHTML = `
+            <td>${d.No_Serie}</td>
+            <td>${d.producto}</td>
+            <td>${d.descripcion}</td>
+            <td>$${d.PrecioCompra}</td>
+            <td>${d.Cantidad}</td>
+            <td>$${d.subtotal}</td>
+        `
 
-            tr.innerHTML = `
-            <td>${p.No_Serie}</td>
-            <td>${p.producto}</td>
-            <td>${p.descripcion}</td>
-            <td>$${p.PrecioCompra}</td>
-            <td>${p.Cantidad}</td>
-            <td>$${p.Subtotal}</td>
-            `;
+        tbody.appendChild(fila)
 
-            tbody.appendChild(tr);
+    })
 
-        });
-
-    } catch(error){
-        console.error("Error cargando compra:", error);
-    }
-
-});
+}
