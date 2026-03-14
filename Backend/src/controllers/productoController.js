@@ -1,8 +1,7 @@
-import db from '../config/BD.js';
 import {
     obtenerHero,
     obtenerProductos,
-    obtenerProductoPorId,
+    obtenerDashboardProductos,
     actualizarEstado
 } from '../models/productoModel.js';
 
@@ -20,67 +19,20 @@ export const getHomeProductos = async (req, res) => {
         });
 
     } catch (error) {
+
         res.status(500).json({
             mensaje: "Error en servidor",
             detalle: error.message
         });
-    }
-};
-
-export const getProductoDetalle = async (req, res) => {
-    try {
-
-        const { id } = req.params;
-        const rows = await obtenerProductoPorId(id);
-
-        if (rows.length === 0) {
-            return res.status(404).json({ mensaje: "Producto no encontrado" });
-        }
-
-        res.json(rows[0]);
-
-    } catch (error) {
-
-        res.status(500).json({
-            mensaje: "Error al obtener producto",
-            detalle: error.message
-        });
 
     }
 };
 
-export const cambiarEstadoProducto = async (req, res) => {
+export const dashboardProductos = async (req, res) => {
+
     try {
 
-        const { id } = req.params;
-        const { estado } = req.body;
-
-        await actualizarEstado(estado, id);
-
-        res.json({ mensaje: "Estado actualizado" });
-
-    } catch (error) {
-
-        res.status(500).json({
-            mensaje: "Error al cambiar estado",
-            detalle: error.message
-        });
-
-    }
-};
-
-export const obtenerDashboardProductos = async (req, res) => {
-    try {
-
-        const [rows] = await db.query(`
-            SELECT vchNo_Serie,
-                   vchNombre,
-                   vchDescripcion,
-                   floPrecioUnitario,
-                   intStock,
-                   Estado
-            FROM tblproductos
-        `);
+        const rows = await obtenerDashboardProductos();
 
         res.json({
             counts: {
@@ -92,9 +44,36 @@ export const obtenerDashboardProductos = async (req, res) => {
         });
 
     } catch (error) {
+
         res.status(500).json({
             mensaje: "Error al obtener productos",
             detalle: error.message
         });
+
     }
+
+};
+
+export const cambiarEstadoProducto = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+        const { estado } = req.body;
+
+        await actualizarEstado(estado, id);
+
+        res.json({
+            mensaje: "Estado actualizado correctamente"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            mensaje: "Error al cambiar estado",
+            detalle: error.message
+        });
+
+    }
+
 };

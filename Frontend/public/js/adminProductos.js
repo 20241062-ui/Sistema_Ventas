@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const cargarDashboard = async (pagina = 1, buscar = "") => {
         try {
-            const res = await fetch(`${API_URL}/productos?pagina=${pagina}&buscar=${buscar}`, {
+            const res = await fetch(`${API_URL}?pagina=${pagina}&buscar=${buscar}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`, 
                     'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!confirm(`¿Seguro que desea ${accion} este producto?`)) return;
 
         try {
-            const res = await fetch(`${API_URL}/productos/estado/${id}`, {
+            const res = await fetch(`${API_URL}/estado/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`,
