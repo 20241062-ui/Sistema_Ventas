@@ -3,7 +3,7 @@ import { obtenerDashboardProductos, cambiarEstadoProducto } from '../controllers
 
 const router = express.Router();
 
-router.get('/productos', obtenerDashboardProductos);
-router.patch('/productos/estado/:id', cambiarEstadoProducto);
+router.get('/', obtenerDashboardProductos);
+router.patch('/estado/:id', cambiarEstadoProducto);
 
 export default router;
