@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api/user';
+    const API_URL = 'https://sv-backend-api.vercel.app/api';
     const form = document.getElementById('form-actualizar-perfil');
 
     if (!token) { window.location.href = '../login.html'; return; }
 
-    // 1. Cargar datos actuales en el formulario
     try {
         const response = await fetch(`${API_URL}/perfil`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('vchTelefono').value = user.vchTelefono || '';
     } catch (e) { console.error(e); }
 
-    // 2. Manejar el envío de cambios
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (err) { alert('Error de conexión'); }
     });
 
-    // Validación de solo números para teléfono
     document.getElementById('vchTelefono').onkeypress = (e) => {
         if (e.which < 48 || e.which > 57) e.preventDefault();
     };

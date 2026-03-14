@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api/public';
+    const API_URL = 'https://sv-backend-api.vercel.app/api/public';
 
-    // 1. Cargar Información de Contacto
     try {
         const response = await fetch(`${API_URL}/contacto-info`);
         const info = await response.json();
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error al cargar info de contacto:', error);
     }
 
-    // 2. Manejar envío del formulario
     const form = document.getElementById('form-contacto');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();

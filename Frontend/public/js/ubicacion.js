@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const mensajeCarga = document.getElementById('mensaje-carga');
     const contenido = document.getElementById('contenido-ubicacion');
 
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api/public/sucursales';
+    const API_URL = 'https://sv-backend-api.vercel.app/api/public/sucursales';
 
     try {
         const response = await fetch(API_URL);
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const option = document.createElement('option');
                 option.value = s.vchlink_mapa;
                 option.textContent = s.vchnombre;
-                // Guardamos los datos en el dataset
                 option.dataset.direccion = s.vchdireccion;
                 option.dataset.ciudad = s.vchciudad;
                 option.dataset.telefono = s.vchtelefono;
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 select.appendChild(option);
             });
 
-            // Función para actualizar la vista
             const actualizarVista = (s) => {
                 mapa.src = s.value;
                 card.innerHTML = `
@@ -39,10 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `;
             };
 
-            // Cargar la primera por defecto
             actualizarVista(select.options[0]);
 
-            // Evento de cambio
             select.addEventListener('change', () => {
                 actualizarVista(select.selectedOptions[0]);
             });

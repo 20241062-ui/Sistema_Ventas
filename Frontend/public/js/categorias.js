@@ -4,15 +4,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const heroForm = document.querySelector('.hero form');
     const catId = document.body.dataset.categoria;
 
-    // ELEMENTOS DE SESIÓN
     const linkAdmin = document.getElementById('link-admin');
     const linkLogin = document.getElementById('link-login');
     const linkLogout = document.getElementById('link-logout');
 
-    // LÓGICA DE RUTAS: Ya estamos en views/publico/, el detalle es un archivo hermano
     const rutaDetalle = "productoDetalle.html";
 
-    // GESTIÓN DE USUARIO
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario) {
         if (linkLogin) linkLogin.style.display = 'none';
@@ -31,13 +28,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api';
+    const API_URL = 'https://sv-backend-api.vercel.app/api';
 
     try {
         const response = await fetch(`${API_URL}/productos/categoria/${catId}`);
         const data = await response.json();
 
-        // CARGAR HERO
         if (data.hero && heroTexto && heroForm) {
             heroTexto.innerHTML = `
                 <h1>${data.hero.vchNombre} $${parseFloat(data.hero.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h1>
@@ -47,7 +43,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             heroForm.action = rutaDetalle;
         }
 
-        // CARGAR GALERÍA
         if (galeria) {
             if (data.productos && data.productos.length > 0) {
                 galeria.innerHTML = ''; 

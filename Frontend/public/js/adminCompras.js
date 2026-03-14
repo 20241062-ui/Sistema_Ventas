@@ -5,7 +5,7 @@ async function cargarCompras() {
     const totalElemento = document.querySelector("#total-compras");
 
     try {
-        const res = await fetch("https://sistema-ventas-omega.vercel.app/api/compras");
+        const res = await fetch("https://sv-backend-api.vercel.app/api/compras");
         if (!res.ok) {
             throw new Error(`Error en la petición: ${res.status}`);
         }
@@ -22,7 +22,6 @@ async function cargarCompras() {
         data.compras.forEach(c => {
             const fila = document.createElement("tr");
             
-            // Formatear fecha para que no se vea como ISO string
             const fechaFormateada = new Date(c.Fecha).toLocaleDateString('es-MX');
 
             fila.innerHTML = `
@@ -49,5 +48,4 @@ async function cargarCompras() {
 
 function verCompra(id) {
     window.location.href = `compra_ver.html?id=${id}`; 
-   
 }

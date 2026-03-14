@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api/user/perfil';
+    const API_URL = 'https://sv-backend-api.vercel.app/api/user/perfil';
 
     if (!token) {
         window.location.href = '../login.html';
@@ -17,10 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const user = await response.json();
         const apellidos = `${user.vchApellido_Paterno} ${user.vchApellido_Materno}`;
 
-        // Llenar datos en el menú lateral
         document.getElementById('menu-user-name').innerHTML = `${user.vchNombre} ${apellidos}<br><small>${user.vchCorreo}</small>`;
 
-        // Llenar datos en la info central
         document.getElementById('info-nombre').textContent = user.vchNombre;
         document.getElementById('info-apellidos').textContent = apellidos;
         document.getElementById('info-correo').textContent = user.vchCorreo;
@@ -32,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '../login.html';
     }
 
-    // Lógica de logout específica
     document.getElementById('btn-logout-perfil').addEventListener('click', (e) => {
         e.preventDefault();
         localStorage.removeItem('token');

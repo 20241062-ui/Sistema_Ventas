@@ -6,7 +6,7 @@ async function cargarDetalle(){
 
     const id = params.get("id")
 
-    const res = await fetch(`http://localhost:3000/api/compras/${id}`)
+    const res = await fetch(`https://sv-backend-api.vercel.app/api/compras/${id}`)
 
     const data = await res.json()
 

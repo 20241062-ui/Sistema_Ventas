@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
-    const API_URL = 'https://sistema-ventas-omega.vercel.app/api/productos';
+    const API_URL = 'https://sv-backend-api.vercel.app/api/productos';
     
     if (!token || !usuario || usuario.rol !== 'Administrador') {
         alert("Acceso restringido. Por favor, inicia sesión como administrador.");
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tbody.innerHTML = `
                 <tr>
                     <td colspan="7" style="color: red; text-align: center; padding: 20px;">
-                         Error al conectar con el servidor: ${error.message}<br>
+                        Error al conectar con el servidor: ${error.message}<br>
                         <small>Verifica que el Backend esté activo y la ruta sea correcta.</small>
                     </td>
                 </tr>`;
