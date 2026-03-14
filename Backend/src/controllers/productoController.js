@@ -7,19 +7,18 @@ export const getDashboard = async (req, res) => {
         const limite = 10;
         const offset = (pagina - 1) * limite;
 
-        const data = await Producto.obtenerTodos(buscar, offset, limite);
+        const result = await Producto.obtenerTodos(buscar, offset, limite);
         
         res.json({
-            status: 'success',
-            data: data.productos,
-            stats: data.stats,
+            productos: result.productos, 
+            counts: result.stats,
             pagination: {
-                totalPaginas: Math.ceil(data.totalFiltrados / limite),
-                paginaActual: pagina
+                totalPages: Math.ceil(result.totalFiltrados / limite), 
+                currentPage: pagina
             }
         });
     } catch (error) {
-        res.status(500).json({ status: 'error', message: error.message });
+        res.status(500).json({ mensaje: error.message });
     }
 };
 
