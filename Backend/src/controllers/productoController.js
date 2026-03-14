@@ -1,4 +1,10 @@
 import db from '../config/BD.js';
+import {
+    obtenerHero,
+    obtenerProductos,
+    obtenerProductoPorId,
+    actualizarEstado
+} from '../models/productoModel.js';
 
 export const getHomeProductos = async (req, res) => {
     try {
