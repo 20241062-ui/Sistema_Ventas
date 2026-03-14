@@ -1,35 +1,38 @@
-import { obtenerDashboardProductos, actualizarEstado } from '../models/productoModel.js';
+import Producto from '../models/productoModel.js';
 
-export const dashboardProductos = async (req, res) => {
+export const getDashboard = async (req, res) => {
     try {
-        const pagina = parseInt(req.query.pagina) || 1;
         const buscar = req.query.buscar || "";
+        const pagina = parseInt(req.query.pagina) || 1;
         const limite = 10;
         const offset = (pagina - 1) * limite;
 
-        const data = await obtenerDashboardProductos(buscar, offset, limite);
-
+        const data = await Producto.obtenerTodos(buscar, offset, limite);
+        
         res.json({
-            counts: data.counts,
-            productos: data.productos,
+            status: 'success',
+            data: data.productos,
+            stats: data.stats,
             pagination: {
-                currentPage: pagina,
-                totalPages: Math.ceil(data.totalFiltrados / limite),
-                totalRecords: data.totalFiltrados
+                totalPaginas: Math.ceil(data.totalFiltrados / limite),
+                paginaActual: pagina
             }
         });
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al obtener productos", detalle: error.message });
+        res.status(500).json({ status: 'error', message: error.message });
     }
 };
 
-export const cambiarEstadoProducto = async (req, res) => {
+export const updateEstado = async (req, res) => {
     try {
         const { id } = req.params;
         const { estado } = req.body;
-        await actualizarEstado(estado, id);
-        res.json({ mensaje: "Estado actualizado correctamente" });
+        
+        const usuario = { nombre: req.user.nombre, rol: req.user.rol };
+
+        await Producto.cambiarEstado(id, estado, usuario);
+        res.json({ status: 'success', message: 'Estado actualizado' });
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al cambiar estado", detalle: error.message });
+        res.status(500).json({ status: 'error', message: error.message });
     }
 };

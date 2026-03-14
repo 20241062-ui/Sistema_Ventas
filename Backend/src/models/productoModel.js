@@ -1,38 +1,49 @@
 import db from '../config/BD.js';
 
-export const obtenerDashboardProductos = async (buscar = '', offset = 0, limite = 10) => {
-    const queryBusqueda = `%${buscar}%`;
+const Producto = {
     
+    obtenerTodos: async (buscar, offset, limite) => {
+        const queryBusqueda = `%${buscar}%`;
+        const [productos] = await db.query('CALL sp_obtener_productos(?, ?, ?)', [buscar, offset, limite]);
+        const [total] = await db.query('CALL sp_contar_productos(?)', [buscar]);
+        
+        
+        const [totalP] = await db.query('SELECT fn_contar_productos_por_estado(-1) AS total');
+        const [activos] = await db.query('SELECT fn_contar_productos_por_estado(1) AS activos');
+        const [inactivos] = await db.query('SELECT fn_contar_productos_por_estado(0) AS inactivos');
+
+        return {
+            productos: productos[0],
+            totalFiltrados: total[0][0].total,
+            stats: {
+                total: totalP[0].total,
+                activos: activos[0].activos,
+                inactivos: inactivos[0].inactivos
+            }
+        };
+    },
+
     
-    const [productos] = await db.query(`
-        SELECT vchNo_Serie, vchNombre, vchDescripcion, floPrecioUnitario, intStock, Estado
-        FROM tblproductos
-        WHERE vchNombre LIKE ? OR vchNo_Serie LIKE ?
-        LIMIT ? OFFSET ?
-    `, [queryBusqueda, queryBusqueda, limite, offset]);
+    crear: async (datos) => {
+        const { vchNo_Serie, vchNombre, vchDescripcion, floPrecioUnitario, floPrecioCompra, intStock, intid_Categoria, intid_Marca, vchImagen } = datos;
+        const sql = `INSERT INTO tblproductos (vchNo_Serie, vchNombre, vchDescripcion, floPrecioUnitario, floPrecioCompra, intStock, intid_Categoria, intid_Marca, vchImagen, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`;
+        return await db.query(sql, [vchNo_Serie, vchNombre, vchDescripcion, floPrecioUnitario, floPrecioCompra, intStock, intid_Categoria, intid_Marca, vchImagen]);
+    },
 
-   
-    const [counts] = await db.query(`
-        SELECT 
-            COUNT(*) as total,
-            SUM(CASE WHEN Estado = 1 THEN 1 ELSE 0 END) as activos,
-            SUM(CASE WHEN Estado = 0 THEN 1 ELSE 0 END) as inactivos
-        FROM tblproductos
-    `);
+    actualizar: async (id, datos, usuario) => {
+        const { intid_Marca, intid_Categoria, vchNombre, vchDescripcion, vchImagen, intStock, floPrecioCompra, floPrecioUnitario } = datos;
+        
+        
+        await db.query(`UPDATE tblproductos SET intid_Marca=?, intid_Categoria=?, vchNombre=?, vchDescripcion=?, vchImagen=?, intStock=?, floPrecioCompra=? WHERE vchNo_Serie=?`, 
+            [intid_Marca, intid_Categoria, vchNombre, vchDescripcion, vchImagen, intStock, floPrecioCompra, id]);
+        return await db.query('CALL sp_actualizar_precio(?, ?, ?, ?)', [id, floPrecioUnitario, usuario.nombre, usuario.rol]);
+    },
 
-   
-    const [totalFiltrado] = await db.query(`
-        SELECT COUNT(*) as total FROM tblproductos 
-        WHERE vchNombre LIKE ? OR vchNo_Serie LIKE ?
-    `, [queryBusqueda, queryBusqueda]);
-
-    return {
-        productos,
-        counts: counts[0],
-        totalFiltrados: totalFiltrado[0].total
-    };
+    
+    cambiarEstado: async (id, estado, usuario) => { 
+        await db.query('SET @usuario_sistema = ?, @rol_usuario = ?', [usuario.nombre, usuario.rol]);
+        return await db.query('UPDATE tblproductos SET Estado = ? WHERE vchNo_Serie = ?', [estado, id]);
+    }
 };
 
-export const actualizarEstado = async (estado, id) => {
-    await db.query('UPDATE tblproductos SET Estado = ? WHERE vchNo_Serie = ?', [estado, id]);
-};
+export default Producto;
