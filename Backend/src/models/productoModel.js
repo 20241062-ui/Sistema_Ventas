@@ -16,17 +16,6 @@ export const obtenerProductos = async (serie) => {
     return rows;
 };
 
-export const obtenerProductoPorId = async (id) => {
-    const [rows] = await db.query(
-        `SELECT p.vchNo_Serie, p.vchNombre, p.vchDescripcion, p.floPrecioUnitario, p.vchImagen, m.vchNombre AS Marca 
-        FROM tblproductos p
-        INNER JOIN tblmarcas m ON p.intid_Marca = m.intid_Marca
-        WHERE p.vchNo_Serie = ? AND p.Estado = 1`,
-        [id]
-    );
-
-    return rows;
-};
 
 export const actualizarEstado = async (estado, id) => {
     await db.query(
