@@ -28,7 +28,6 @@ export const getHomeProductos = async (req, res) => {
 };
 
 export const getProductoDetalle = async (req, res) => {
-
     try {
 
         const { id } = req.params;
@@ -48,11 +47,9 @@ export const getProductoDetalle = async (req, res) => {
         });
 
     }
-
 };
 
 export const cambiarEstadoProducto = async (req, res) => {
-
     try {
 
         const { id } = req.params;
@@ -70,7 +67,6 @@ export const cambiarEstadoProducto = async (req, res) => {
         });
 
     }
-
 };
 
 export const obtenerDashboardProductos = async (req, res) => {
