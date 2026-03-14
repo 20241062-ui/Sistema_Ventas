@@ -66,3 +66,33 @@ export const cambiarEstadoProducto = async (req, res) => {
     }
 
 };
+
+export const obtenerDashboardProductos = async (req, res) => {
+    try {
+
+        const [rows] = await db.query(`
+            SELECT vchNo_Serie,
+                   vchNombre,
+                   vchDescripcion,
+                   floPrecioUnitario,
+                   intStock,
+                   Estado
+            FROM tblproductos
+        `);
+
+        res.json({
+            counts: {
+                total: rows.length,
+                activos: rows.filter(p => p.Estado == 1).length,
+                inactivos: rows.filter(p => p.Estado == 0).length
+            },
+            productos: rows
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            mensaje: "Error al obtener productos",
+            detalle: error.message
+        });
+    }
+};
