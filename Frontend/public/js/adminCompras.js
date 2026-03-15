@@ -5,7 +5,7 @@ async function cargarCompras() {
     const totalElemento = document.querySelector("#total-compras");
 
     try {
-        const res = await fetch("https://sv-backend-api.vercel.app/api/compras");
+        const res = await fetch("https://sistemaventasback.vercel.app/api/compras");
         if (!res.ok) {
             throw new Error(`Error en la petición: ${res.status}`);
         }

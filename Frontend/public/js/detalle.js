@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:3000/api'
-        : 'https://sv-backend-api.vercel.app/api';
+        : 'https://sistemaventasback.vercel.app/api';
 
     try {
         const response = await fetch(`${API_URL}/productos/detalle/${productoId}`);

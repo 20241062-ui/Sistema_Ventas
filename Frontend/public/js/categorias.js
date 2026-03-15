@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    const API_URL = 'https://sv-backend-api.vercel.app/api';
+    const API_URL = 'https://sistemaventasback.vercel.app/api';
 
     try {
         const response = await fetch(`${API_URL}/productos/categoria/${catId}`);

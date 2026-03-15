@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const API_URL = "https://sv-backend-api.vercel.app/api/admin";
+    const API_URL = "https://sistemaventasback.vercel.app//api/admin";
 
     const res = await fetch(`${API_URL}/ventas/${id}`, {
 

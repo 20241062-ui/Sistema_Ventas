@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_URL = 'https://sv-backend-api.vercel.app/api/public';
+    const API_URL = 'https://sistemaventasback.vercel.app/api/public';
 
     try {
         const response = await fetch(`${API_URL}/contacto-info`);

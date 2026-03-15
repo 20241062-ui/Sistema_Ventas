@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
-    const API_URL = 'https://sv-backend-api.vercel.app/api/productos';
+    const API_URL = 'https://sistemaventasback.vercel.app/api/productos';
     
     if (!token || !usuario || usuario.rol !== 'Administrador') {
         alert("Acceso restringido. Por favor, inicia sesión como administrador.");

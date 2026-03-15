@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    const API_URL = 'https://sv-backend-api.vercel.app/api';
+    const API_URL = 'https://sistemaventasback.vercel.app/api';
     const form = document.getElementById('form-actualizar-perfil');
 
     if (!token) { window.location.href = '../login.html'; return; }

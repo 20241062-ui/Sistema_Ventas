@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
-    const API_URL = 'https://sv-backend-api.vercel.app/api';
+    const API_URL = 'https://sistemaventasback.vercel.app/api';
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
