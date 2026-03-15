@@ -66,19 +66,19 @@
     <label>Precio Compra:</label>
     <input type="number" name="floPrecioCompra" id="floPrecioCompra" required>
 
-    <label>Stock Actual:</label>
+    <label>Stock:</label>
     <input type="number" name="intStock" id="intStock" required>
 
     <label>Imagen Actual:</label>
     <div class="preview">
-        <img id="imagen-preview" src="" width="150" alt="Vista previa">
+        <img id="imagen-preview" src="" width="150" alt="Vista previa de imagen">
     </div>
 
-    <label>Cambiar imagen (opcional):</label>
+    <label>Nueva imagen (opcional):</label>
     <input type="file" id="vchImagen" name="vchImagen" accept="image/*" onchange="validarImagen(this);">
 
     <div class="botones">
-        <button type="submit" class="guardar">Guardar Cambios</button>
+        <button type="submit" class="guardar">Actualizar Producto</button>
         <button type="button" class="cancelar" onclick="window.location.href='menuAdministrador.html'">Cancelar</button>
     </div>
 </form>
