@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const linkLogout = document.getElementById('link-logout');
     const linkPerfil = document.getElementById('link-perfil') || document.querySelector('a[href*="perfil.html"]');
     
-    const API_URL = 'https://sistemaventasback.vercel.app/api';
+    const API_URL = 'https://sistemaventasback.vercel.app/api/public/home';
 
     const esSubcarpeta = window.location.pathname.includes('/publico/');
     const rutaDetalle = esSubcarpeta ? "productoDetalle.html" : "publico/productoDetalle.html";
