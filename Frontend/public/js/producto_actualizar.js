@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
-    const idProducto = params.get('id'); // Obtiene el ID de la URL
+    const idProducto = params.get('id');
     const token = localStorage.getItem('token');
     const API_BASE = 'https://sistemaventasback.vercel.app/api';
 
@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 1. Cargar las Marcas y Categorías reales de la base de datos
+    // 1. Cargar las Marcas y Categorías reales
     const cargarCatalogos = async () => {
         try {
             const [resMarcas, resCats] = await Promise.all([
-                fetch(`${API_BASE}/public/marcas`), // Asegúrate de tener estas rutas
+                fetch(`${API_BASE}/public/marcas`),
                 fetch(`${API_BASE}/public/categorias`)
             ]);
             
@@ -23,6 +23,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const selectMarca = document.getElementById('intid_Marca');
             const selectCat = document.getElementById('intid_Categoria');
+
+            // Limpiar opciones estáticas si las hubiera
+            selectMarca.innerHTML = '<option value="">Seleccione Marca</option>';
+            selectCat.innerHTML = '<option value="">Seleccione Categoría</option>';
 
             marcas.forEach(m => {
                 selectMarca.innerHTML += `<option value="${m.intid_Marca}">${m.vchNombre}</option>`;
@@ -35,45 +39,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // 2. Cargar los datos actuales del producto para rellenar el formulario
+    // 2. Cargar todos los campos del producto
     const cargarDatosProducto = async () => {
         try {
             const res = await fetch(`${API_BASE}/productos/detalle/${idProducto}`);
-            if (!res.ok) throw new Error("Producto no encontrado");
+            if (!res.ok) throw new Error("Producto no encontrado en la base de datos");
             
             const prod = await res.json();
 
-            // Rellenar los campos del formulario
+            // Rellenar campos básicos
             document.getElementById('vchNo_Serie').value = prod.vchNo_Serie;
             document.getElementById('vchNombre').value = prod.vchNombre;
             document.getElementById('floPrecioUnitario').value = prod.floPrecioUnitario;
             
-            // Seleccionar la marca y categoría correcta
+            // Rellenar campos adicionales (Los que hacían falta)
+            document.getElementById('vchDescripcion').value = prod.vchDescripcion || "";
+            document.getElementById('floPrecioCompra').value = prod.floPrecioCompra || 0;
+            document.getElementById('intStock').value = prod.intStock || 0;
+
+            // Seleccionar Marca y Categoría (Esto funciona porque cargamos catálogos antes)
             document.getElementById('intid_Marca').value = prod.intid_Marca;
             document.getElementById('intid_Categoria').value = prod.intid_Categoria;
 
-            // Si tienes el campo de imagen, actualiza la previa
+            // Actualizar vista previa de imagen
             const preview = document.getElementById('imagen-preview');
-            if (preview && prod.vchImagen) {
-                preview.src = `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`;
+            if (preview) {
+                preview.src = prod.vchImagen 
+                    ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
+                    : `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png`;
             }
+
         } catch (error) {
             alert(error.message);
             window.location.href = 'menuAdministrador.html';
         }
     };
 
-    // Ejecutar cargas iniciales
+    // Orden de ejecución CRÍTICO
     await cargarCatalogos();
     await cargarDatosProducto();
 
-    // 3. Manejar el envío del formulario (UPDATE)
+    // 3. Manejar el envío (UPDATE)
     document.getElementById('form-actualizar-producto').addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = new FormData(e.target);
-        // Agregamos manualmente el No. Serie porque es readonly y a veces no se incluye en FormData
         const data = Object.fromEntries(formData.entries());
+        
+        // Aseguramos que el ID se envíe aunque el input sea readonly
         data.vchNo_Serie = idProducto;
 
         try {
@@ -91,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.location.href = 'menuAdministrador.html';
             } else {
                 const err = await res.json();
-                alert("Error al actualizar: " + err.mensaje);
+                alert("Error: " + (err.mensaje || "No se pudo actualizar"));
             }
         } catch (error) {
             alert("Error de conexión con el servidor.");
