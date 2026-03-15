@@ -5,22 +5,22 @@
 /* Definición de fuentes */
 @font-face {
   font-family: 'SF';
-  src: url('./fonts/sfui.woff') format('woff');
+  src: url('../fonts/sfui.woff') format('woff');
 }
 
 @font-face {
   font-family: 'SFBlack';
-  src: url('./fonts/sfuiblack.woff') format('woff');
+  src: url('../fonts/sfuiblack.woff') format('woff');
 }
 
 @font-face {
   font-family: 'SFBold';
-  src: url('./fonts/sfuibold.woff') format('woff');
+  src: url('../fonts/sfuibold.woff') format('woff');
 }
 
 @font-face {
   font-family: 'SFSembibold';
-  src: url('./fonts/sfuisemibold.woff') format('woff');
+  src: url('../fonts/sfuisemibold.woff') format('woff');
 }
 
 /* Variables de tema (Unificado: Público + Privado) */
