@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 1. CARGAR CATÁLOGOS (Marcas y Categorías)
     const cargarCatalogos = async () => {
         try {
             const [resMarcas, resCats] = await Promise.all([
@@ -26,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const selectMarca = document.getElementById('intid_Marca');
             const selectCat = document.getElementById('intid_Categoria');
 
+            selectMarca.innerHTML = '<option value="">Seleccione Marca</option>';
             marcas.forEach(m => {
                 const opt = document.createElement('option');
                 opt.value = m.intid_Marca;
@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectMarca.appendChild(opt);
             });
 
+            selectCat.innerHTML = '<option value="">Seleccione Categoría</option>';
             cats.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c.intid_Categoria;
@@ -45,7 +46,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // 2. CARGAR DATOS DEL PRODUCTO
     const cargarDatosProducto = async () => {
         try {
             const res = await fetch(`${API_BASE}/productos/detalle/${idProducto}`);
@@ -54,18 +54,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const prod = await res.json();
             console.log("📦 Datos recibidos del servidor:", prod);
 
-            // FUNCIÓN DE ASIGNACIÓN SEGURA
             const llenar = (id, valor) => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.value = valor !== undefined && valor !== null ? valor : "";
-                    console.log(`Asignado ${id} = ${valor}`);
                 } else {
                     console.error(`⚠️ No se encontró el ID '${id}' en el HTML`);
                 }
             };
 
-            // Mapeo exacto de los campos
             llenar('vchNo_Serie', prod.vchNo_Serie);
             llenar('vchNombre', prod.vchNombre);
             llenar('vchDescripcion', prod.vchDescripcion);
@@ -75,10 +72,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             llenar('intid_Marca', prod.intid_Marca);
             llenar('intid_Categoria', prod.intid_Categoria);
 
-            // Imagen
             const imgPreview = document.getElementById('imagen-preview');
-            if (imgPreview && prod.vchImagen) {
-                imgPreview.src = `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`;
+            if (imgPreview) {
+                imgPreview.src = prod.vchImagen 
+                    ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
+                    : `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png`;
             }
 
         } catch (error) {
@@ -86,7 +84,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // EJECUCIÓN EN ORDEN
+    const configurarFormulario = () => {
+        const form = document.getElementById('form-actualizar-producto');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            data.vchNo_Serie = idProducto;
+
+            try {
+                const res = await fetch(`${API_BASE}/admin/productos/${idProducto}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+
+                if (res.ok) {
+                    alert("¡Producto actualizado exitosamente!");
+                    window.location.href = 'menuAdministrador.html';
+                } else {
+                    alert("Error: " + (result.mensaje || "No se pudo actualizar el producto"));
+                }
+            } catch (error) {
+                console.error("❌ Error en la petición PUT:", error);
+                alert("Error de conexión con el servidor.");
+            }
+        });
+    };
+
+    // EJECUCIÓN SECUENCIAL
     await cargarCatalogos();
     await cargarDatosProducto();
+    configurarFormulario();
 });
