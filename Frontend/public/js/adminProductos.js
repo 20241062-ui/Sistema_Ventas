@@ -172,3 +172,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     cargarDashboard();
 });
+window.cambiarEstado = async (id, nuevoEstado) => {
+    const accion = nuevoEstado === 1 ? 'Activar' : 'Dar de baja';
+    if (!confirm(`¿Seguro que desea ${accion} este producto?`)) return;
+
+    try {
+        const res = await fetch(`${API_URL}/estado/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ estado: nuevoEstado })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert(data.mensaje); 
+            cargarDashboard(paginaActual, busquedaActual); 
+        } else {
+            alert("Error: " + data.mensaje);
+        }
+    } catch (error) {
+        console.error("Error al cambiar estado:", error);
+    }
+};

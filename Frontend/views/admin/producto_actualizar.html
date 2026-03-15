@@ -42,51 +42,26 @@
 <div class="container">
 <main class="main">
 
-<form class="panelP-formularioProductos" action="menuAdministrador.html" method="GET" enctype="multipart/form-data">
+<form id="form-actualizar-producto" class="panelP-formularioProductos">
     <h2>Editar producto</h2>
 
     <label>No. Serie:</label>
-    <input type="text" value="VCH2007100" readonly>
-
-    <label>Marca:</label>
-    <select name="intid_Marca" required>
-        <option value="1" selected>Apple</option>
-        <option value="2">Samsung</option>
-        <option value="3">Sony</option>
-    </select>
+    <input type="text" id="vchNo_Serie" readonly> <label>Marca:</label>
+    <select name="intid_Marca" id="intid_Marca" required>
+        </select>
 
     <label>Categoría:</label>
-    <select name="intid_Categoria" required>
-        <option value="1" selected>Celulares</option>
-        <option value="2">Accesorios</option>
-        <option value="3">Laptop</option>
-    </select>
+    <select name="intid_Categoria" id="intid_Categoria" required>
+        </select>
 
     <label>Nombre:</label>
-    <input type="text" name="vchNombre" value="iPhone 15 Pro" required>
-
-    <label>Descripción:</label>
-    <textarea name="vchDescripcion" rows="3">Pantalla Super Retina XDR, acabado en titanio de grado aeroespacial.</textarea>
-
-    <label>Imagen actual:</label>
-    <div class="preview">
-        <img id="imagen-preview" src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/iphone15.jpg" width="150" alt="Vista previa">
-    </div>
-
-    <label>Nueva imagen (opcional):</label>
-    <input type="file" id="vchImagen" name="vchImagen" accept="image/jpeg, image/png, image/gif, image/webp" onchange="validarImagen(this);">
+    <input type="text" name="vchNombre" id="vchNombre" required>
 
     <label>Precio Unitario:</label>
-    <input type="number" step="1" min="0" name="floPrecioUnitario" value="21999" required>
-
-    <label>Stock:</label>
-    <input type="number" name="intStock" value="15" required>
-
-    <label>Precio Compra:</label>
-    <input type="number" step="1" min="0" name="floPrecioCompra" value="18500" required>
-
+    <input type="number" name="floPrecioUnitario" id="floPrecioUnitario" required>
+    
     <div class="botones">
-        <button type="submit" class="guardar">Guardar</button>
+        <button type="submit" class="guardar">Actualizar</button>
         <button type="button" class="cancelar" onclick="window.location.href='menuAdministrador.html'">Cancelar</button>
     </div>
 </form>
