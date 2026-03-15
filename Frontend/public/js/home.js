@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const rutaAdmin = esSubcarpeta ? "../admin/menuAdministrador.html" : "admin/menuAdministrador.html";
     const rutaLogin = esSubcarpeta ? "../login.html" : "login.html";
 
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     const token = localStorage.getItem('token');
 
     if (token && usuario) {
