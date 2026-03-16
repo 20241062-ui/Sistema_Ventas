@@ -5,9 +5,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const API_URL = "https://sistemaventasback.vercel.app/api/compras";
 
+    // Solo ejecuta si hay un ID (Detalle)
     if (!id) {
-        alert("ID de compra no proporcionado");
-        return;
+        // Si no hay ID, verificamos si estamos en la página de lista
+        // para no molestar al usuario con alertas innecesarias.
+        const esPaginaDetalle = window.location.pathname.includes('compra_ver.html');
+        if (esPaginaDetalle) {
+            alert("ID de compra no proporcionado");
+        }
+        return; // Se detiene sin hacer el fetch
     }
 
     try {
@@ -20,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!res.ok) throw new Error("No se pudo obtener el detalle de la compra");
 
         const data = await res.json();
-        
+
         // --- 1. Llenar Información de la Cabecera ---
         // data.compra contiene los datos generales (RFC, Fecha, Total)
         const compra = data.compra;
@@ -29,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById("titulo-compra").textContent = `Detalle de Compra #${id}`;
         document.getElementById("rfc-proveedor").textContent = compra.RFC;
         document.getElementById("fecha-compra").textContent = new Date(compra.Fecha).toLocaleDateString('es-MX');
-        document.getElementById("total-monto").textContent = `$${parseFloat(compra.TotalCompra).toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
+        document.getElementById("total-monto").textContent = `$${parseFloat(compra.TotalCompra).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`;
 
         // --- 2. Llenar la Tabla de Productos ---
         const tbody = document.getElementById("tabla-detalle-body");
