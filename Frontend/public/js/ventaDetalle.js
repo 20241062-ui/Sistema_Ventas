@@ -1,48 +1,87 @@
 document.addEventListener('DOMContentLoaded', async () => {
-
     const token = localStorage.getItem('token');
-
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const API_URL = "https://sistemaventasback.vercel.app//api/admin";
+    // URL corregida: Apunta al prefijo /api/ventas que definimos en index.js
+    const API_URL = "https://sistemaventasback.vercel.app/api/ventas";
 
-    const res = await fetch(`${API_URL}/ventas/${id}`, {
-
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-
-    });
-
-    const data = await res.json();
-
-    const venta = data.venta;
-    const detalle = data.detalle;
-
-    document.getElementById("titulo-venta").textContent = `Detalle de la Venta #${id}`;
-    document.getElementById("cliente").textContent = venta.nombre_cliente;
-    document.getElementById("fecha").textContent = venta.Fecha_Venta;
-    document.getElementById("total-productos").textContent = detalle.length;
-    document.getElementById("total").textContent = `$${venta.Total_Venta}`;
+    if (!id) {
+        console.error("No se encontró el ID de la venta en la URL");
+        alert("ID de venta no proporcionado.");
+        return;
+    }
 
     const tbody = document.getElementById("tabla-detalle");
 
-    detalle.forEach(p => {
+    try {
+        const res = await fetch(`${API_URL}/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
 
-        const tr = document.createElement("tr");
+        if (!res.ok) {
+            throw new Error(`Error en el servidor: ${res.status}`);
+        }
 
-        tr.innerHTML = `
-        <td>${p.No_Serie}</td>
-        <td>${p.producto}</td>
-        <td>${p.descripcion}</td>
-        <td>$${p.PrecioUnitario}</td>
-        <td>${p.Cantidad}</td>
-        <td>$${p.Subtotal}</td>
-        `;
+        const data = await res.json();
 
-        tbody.appendChild(tr);
+        // Extraemos los datos según la estructura del VentaModel (result[0] y result[1])
+        const venta = data.venta;
+        const detalle = data.detalle || [];
 
-    });
+        if (!venta) {
+            alert("No se encontró la información de esta venta.");
+            return;
+        }
 
+        // --- 1. Llenar Encabezado y Datos Generales ---
+        document.getElementById("titulo-venta").textContent = `Detalle de la Venta #${id}`;
+        
+        // Usamos alternativas de nombres de columnas por si acaso
+        document.getElementById("cliente").textContent = venta.vchNombreCliente || venta.nombre_cliente || "N/A";
+        document.getElementById("fecha").textContent = venta.dtFechaVenta || venta.Fecha_Venta || "N/A";
+        document.getElementById("total-productos").textContent = detalle.length;
+        
+        // Formateo de moneda
+        const totalVenta = parseFloat(venta.floTotalVenta || venta.Total_Venta || 0);
+        document.getElementById("total").textContent = `$${totalVenta.toFixed(2)}`;
+
+        // --- 2. Llenar la Tabla de Productos ---
+        if (tbody) {
+            tbody.innerHTML = ""; // Limpiar el "Cargando..."
+
+            if (detalle.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay productos registrados en esta venta.</td></tr>';
+                return;
+            }
+
+            detalle.forEach(p => {
+                const tr = document.createElement("tr");
+                
+                // Formateo de precios por fila
+                const precio = parseFloat(p.floPrecioUnitario || p.PrecioUnitario || 0).toFixed(2);
+                const subtotal = parseFloat(p.floSubtotal || p.Subtotal || 0).toFixed(2);
+
+                tr.innerHTML = `
+                    <td>${p.vchNo_Serie || p.No_Serie || 'N/A'}</td>
+                    <td>${p.vchNombre || p.producto || 'Sin nombre'}</td>
+                    <td>${p.vchDescripcion || p.descripcion || ''}</td>
+                    <td>$${precio}</td>
+                    <td>${p.intCantidad || p.Cantidad || 0}</td>
+                    <td>$${subtotal}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+    } catch (error) {
+        console.error("Error en el detalle:", error);
+        if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="6" style="color:red; text-align:center;">Error al cargar: ${error.message}</td></tr>`;
+        }
+    }
 });
