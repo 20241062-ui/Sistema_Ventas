@@ -9,39 +9,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 1. Cargar proveedores en el Select
 async function cargarProveedores() {
+    const select = document.getElementById("vchRFC");
     try {
-        const res = await fetch(`${API_BASE}/public/proveedores`); // Ajusta a tu ruta de proveedores
+        // Nueva ruta centralizada
+        const res = await fetch("https://sistemaventasback.vercel.app/api/compras/aux/proveedores");
         const proveedores = await res.json();
-        const select = document.getElementById("vchRFC");
-        
+
         select.innerHTML = '<option value="">Seleccione un proveedor...</option>';
         proveedores.forEach(p => {
             const opt = document.createElement("option");
             opt.value = p.vchRFC;
-            opt.textContent = `${p.vchNombre} ${p.vchApellido_Paterno} (${p.vchRazon_Social || 'Sin Razón Social'})`;
+            opt.textContent = p.vchRazon_Social || p.vchNombre;
             select.appendChild(opt);
         });
     } catch (error) {
-        console.error("Error cargando proveedores:", error);
+        select.innerHTML = '<option value="">Error al cargar proveedores</option>';
     }
 }
 
 // 2. Cargar productos en el Select
 async function cargarProductos() {
+    const select = document.getElementById("select-producto");
     try {
-        const res = await fetch(`${API_BASE}/productos`); // Usamos tu ruta de productos ya configurada
-        const data = await res.json();
-        const select = document.getElementById("select-producto");
-        
+        // Nueva ruta centralizada
+        const res = await fetch("https://sistemaventasback.vercel.app/api/compras/aux/productos");
+        const productos = await res.json();
+
         select.innerHTML = '<option value="">Seleccione un producto...</option>';
-        data.productos.forEach(p => {
+        productos.forEach(p => {
             const opt = document.createElement("option");
             opt.value = p.vchNo_Serie;
             opt.textContent = p.vchNombre;
             select.appendChild(opt);
         });
     } catch (error) {
-        console.error("Error cargando productos:", error);
+        select.innerHTML = '<option value="">Error al cargar productos</option>';
     }
 }
 
