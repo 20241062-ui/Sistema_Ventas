@@ -31,18 +31,22 @@ async function cargarProveedores() {
 async function cargarProductos() {
     const select = document.getElementById("select-producto");
     try {
-        // Nueva ruta centralizada
         const res = await fetch("https://sistemaventasback.vercel.app/api/compras/aux/productos");
-        const productos = await res.json();
+        const productos = await res.json(); // Aquí recibes el array []
 
         select.innerHTML = '<option value="">Seleccione un producto...</option>';
-        productos.forEach(p => {
-            const opt = document.createElement("option");
-            opt.value = p.vchNo_Serie;
-            opt.textContent = p.vchNombre;
-            select.appendChild(opt);
-        });
+        
+        // Verifica que 'productos' sea un array antes de iterar
+        if (Array.isArray(productos)) {
+            productos.forEach(p => {
+                const opt = document.createElement("option");
+                opt.value = p.vchNo_Serie; // Asegúrate que el nombre coincida con tu SQL
+                opt.textContent = p.vchNombre;
+                select.appendChild(opt);
+            });
+        }
     } catch (error) {
+        console.error("Error al cargar productos:", error);
         select.innerHTML = '<option value="">Error al cargar productos</option>';
     }
 }
