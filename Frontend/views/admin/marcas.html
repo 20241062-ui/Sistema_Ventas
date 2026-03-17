@@ -15,10 +15,10 @@
 
             <nav class="nav-admin">
                 <a href="menuAdministrador.html">Productos</a>
-                <a href="ventas.html" class="active">Ventas</a>
+                <a href="ventas.html">Ventas</a>
                 <a href="compra.html">Compras</a>
                 <a href="categorias.html">Categorías</a>
-                <a href="marcas.html">Marcas</a>
+                <a href="marcas.html" class="active">Marcas</a>
                 <a href="proveedores.html">Proveedores</a>
                 <a href="listaSucursales.html">Sucursales</a>
                 <a href="informacionEmpresa.html">Información</a>
@@ -33,7 +33,7 @@
                 <div class="menu">
                     <a href="perfilAdmin.html">Mi cuenta</a>
                     <a href="../publico/index.html">Inicio</a>
-                    <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+                    <a href="#" id="btn-logout">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -46,10 +46,10 @@
             <div class="productos-superior">
                 <button class="btn-superior" onclick="window.location.href='marca_nueva.html'">Nueva marca</button>
 
-                <form action="marcas.html" method="GET" class="productos-buscar">
-                    <input type="search" name="buscar" placeholder="Buscar por ID o nombre...">
-                    <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
-                </form>
+                <div class="productos-buscar">
+                    <input type="search" id="inputBuscar" placeholder="Buscar por ID o nombre...">
+                    <button type="button" id="btnBuscar" class="btn-superior buscar">🔍 Buscar</button>
+                </div>
             </div>
 
             <div class="panel table-wrap">
@@ -61,32 +61,8 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Apple</td>
-                            <td>
-                                <button class="guardar" onclick="window.location.href='marca_actualizar.html'">Editar</button>
-                                <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar esta marca?')) window.location.href='marcas.html'">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Samsung</td>
-                            <td>
-                                <button class="guardar" onclick="window.location.href='marca_actualizar.html'">Editar</button>
-                                <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar esta marca?')) window.location.href='marcas.html'">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sony</td>
-                            <td>
-                                <button class="guardar" onclick="window.location.href='marca_actualizar.html'">Editar</button>
-                                <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar esta marca?')) window.location.href='marcas.html'">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabla-marcas">
+                        </tbody>
                 </table>
             </div>
         </main>
@@ -97,5 +73,7 @@
             <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
         </div>
     </footer>
+
+    <script src="../../public/js/marcas.js"></script>
 </body>
 </html>

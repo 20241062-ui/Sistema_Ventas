@@ -15,18 +15,18 @@
     </a>
 
     <nav class="nav-admin">
-            <a href="menuAdministrador.html">Productos</a>
-            <a href="ventas.html">Ventas</a>
-            <a href="compra.html">Compras</a>
-            <a href="categorias.html">Categorías</a>
-            <a href="marcas.html" class="active">Marcas</a>
-            <a href="proveedores.html">Proveedores</a>
-            <a href="listaSucursales.html">Sucursales</a>
-            <a href="informacionEmpresa.html">Información</a>
-            <a href="clientes.html">Clientes</a>
-            <a href="preguntasFrecuentes.html">FAQ</a>
-            <a href="contactoLista.html">Contacto</a>
-            <a href="usuarios.html">Usuarios</a>
+        <a href="menuAdministrador.html">Productos</a>
+        <a href="ventas.html">Ventas</a>
+        <a href="compra.html">Compras</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="marcas.html" class="active">Marcas</a>
+        <a href="proveedores.html">Proveedores</a>
+        <a href="listaSucursales.html">Sucursales</a>
+        <a href="informacionEmpresa.html">Información</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="preguntasFrecuentes.html">FAQ</a>
+        <a href="contactoLista.html">Contacto</a>
+        <a href="usuarios.html">Usuarios</a>
     </nav>
 
     <div class="user-menu">
@@ -34,22 +34,22 @@
         <div class="menu">
             <a href="perfilAdmin.html">Mi cuenta</a>
             <a href="../publico/index.html">Inicio</a>
-            <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            <a href="#" id="btn-logout">Cerrar Sesión</a>
         </div>
     </div>
   </div>
 </header>
 
-<form class="panelP-formularioProductos" action="marcas.html" method="GET">
-          <h2>Registrar nueva marca</h2>
+<form class="panelP-formularioProductos" id="formNuevaMarca">
+    <h2>Registrar nueva marca</h2>
 
-          <label for="vchNombre">Nombre de marca:</label>
-          <input type="text" id="vchNombre" name="vchNombre" placeholder="Ej. Sony, Apple, LG..." pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" maxlength="40" required>
+    <label for="vchNombre">Nombre de marca:</label>
+    <input type="text" id="vchNombre" name="vchNombre" placeholder="Ej. Sony, Apple, LG..." pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" maxlength="40" required>
 
-          <div class="botones">
-              <button type="submit" class="guardar">Guardar</button>
-              <button type="button" class="cancelar" onclick="window.location.href='marcas.html'">Cancelar</button>
-          </div>
+    <div class="botones">
+        <button type="submit" class="guardar">Guardar</button>
+        <button type="button" class="cancelar" onclick="window.location.href='marcas.html'">Cancelar</button>
+    </div>
 </form>
 
 <footer>
@@ -58,5 +58,6 @@
     </div>
 </footer>
 
+    <script src="../../public/js/marca_form.js"></script>
 </body>
 </html>
