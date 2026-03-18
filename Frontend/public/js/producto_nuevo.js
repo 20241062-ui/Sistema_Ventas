@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectCat = document.getElementById('intid_Categoria');
     const form = document.getElementById('form-nuevo-producto');
 
-    // --- FUNCIÓN PARA LLENAR SELECTORES ---
+    // --- 1. FUNCIÓN PARA CARGAR SELECTORES DESDE LA BD ---
     async function cargarSelectores() {
         try {
-            // Cargar Marcas
+            // Cargar Marcas Reales
             const resMarcas = await fetch(`${API_BASE}/marcas`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectMarca.innerHTML += `<option value="${m.intid_Marca}">${m.vchNombre}</option>`;
             });
 
-            // Cargar Categorías (Asegúrate de tener esta ruta creada en el backend)
+            // Cargar Categorías Reales
             const resCat = await fetch(`${API_BASE}/categorias`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -31,54 +31,59 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectCat.innerHTML += `<option value="${c.intid_Categoria}">${c.vchNombre}</option>`;
             });
 
+            console.log("Selectores cargados con éxito");
         } catch (error) {
             console.error("Error cargando selectores:", error);
+            alert("Error al cargar marcas/categorías. Verifica tu conexión.");
         }
     }
 
-    // --- EVENTO GUARDAR ---
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    // --- 2. EVENTO PARA GUARDAR EL PRODUCTO ---
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        // Extraer nombre de imagen (Simplificado para tu modelo actual)
-        const imagenInput = document.getElementById('vchImagen');
-        const nombreImagen = imagenInput.files[0] ? imagenInput.files[0].name : 'default.jpg';
+            // Capturamos el nombre de la imagen
+            const imagenInput = document.getElementById('vchImagen');
+            const nombreImagen = imagenInput.files[0] ? imagenInput.files[0].name : 'default.jpg';
 
-        const producto = {
-            vchNo_Serie: document.getElementById('vchNo_Serie').value.trim(),
-            vchNombre: document.getElementById('vchNombre').value.trim(),
-            vchDescripcion: document.getElementById('vchDescripcion').value.trim(),
-            floPrecioCompra: parseFloat(document.getElementById('floPrecioCompra').value),
-            floPrecioUnitario: parseFloat(document.getElementById('floPrecioUnitario').value),
-            intStock: parseInt(document.getElementById('intStock').value) || 0,
-            intid_Categoria: parseInt(selectCat.value),
-            intid_Marca: parseInt(selectMarca.value),
-            vchImagen: nombreImagen
-        };
+            // Armamos el objeto con los nombres EXACTOS del Modelo
+            const producto = {
+                vchNo_Serie: document.getElementById('vchNo_Serie').value.trim(),
+                vchNombre: document.getElementById('vchNombre').value.trim(),
+                vchDescripcion: document.getElementById('vchDescripcion').value.trim(),
+                floPrecioCompra: parseFloat(document.getElementById('floPrecioCompra').value),
+                floPrecioUnitario: parseFloat(document.getElementById('floPrecioUnitario').value),
+                intStock: parseInt(document.getElementById('intStock').value) || 0,
+                intid_Categoria: parseInt(selectCat.value),
+                intid_Marca: parseInt(selectMarca.value),
+                vchImagen: nombreImagen
+            };
 
-        try {
-            const response = await fetch(`${API_BASE}/productos`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(producto)
-            });
+            try {
+                const response = await fetch(`${API_BASE}/productos`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(producto)
+                });
 
-            const result = await response.json();
+                const result = await response.json();
 
-            if (response.ok) {
-                alert("✅ ¡Producto 26 registrado con éxito!");
-                window.location.href = 'adminProductos.html';
-            } else {
-                alert("❌ Error: " + result.mensaje);
+                if (response.ok) {
+                    alert("✅ ¡Producto registrado con éxito!");
+                    window.location.href = 'menuAdministrador.html';
+                } else {
+                    alert("❌ Error: " + (result.mensaje || "No se pudo guardar"));
+                }
+            } catch (error) {
+                alert("⚠️ Error de conexión con el servidor.");
             }
-        } catch (error) {
-            alert("⚠️ Error de conexión con el servidor.");
-        }
-    });
+        });
+    }
 
-    // Ejecutar carga inicial
+    // Ejecutamos la carga de datos al abrir la página
     cargarSelectores();
 });
