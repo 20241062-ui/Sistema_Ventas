@@ -30,10 +30,10 @@
 
             <div class="user-menu">
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-               <div class="menu">
+                <div class="menu">
                     <a href="perfilAdmin.html">Mi cuenta</a>
                     <a href="../publico/index.html">Inicio</a>
-                    <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+                    <a href="#" id="link-logout">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -46,15 +46,16 @@
             <div class="cards">
                 <div class="card">
                     <h3>Total categorías</h3>
-                    <p class="big">3</p> </div>
+                    <p class="big" id="total-categorias">0</p> 
+                </div>
             </div>
 
             <div class="productos-superior">
                 <button class="btn-superior" onclick="window.location.href='categoria_nueva.html'">Nueva categoría</button>
 
                 <div class="productos-buscar">
-                    <input type="search" placeholder="Buscar por ID o nombre...">
-                    <button type="button" class="btn-superior buscar">🔍 Buscar</button>
+                    <input type="search" id="input-buscar" placeholder="Buscar por ID o nombre...">
+                    <button type="button" id="btn-buscar" class="btn-superior buscar">🔍 Buscar</button>
                 </div>
             </div>
 
@@ -67,32 +68,8 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Celulares</td>
-                            <td>
-                                <button class="guardar" onclick="window.location.href='categoria_actualizar.html'">Editar</button>
-                                <button class="cancelar" onclick="confirm('¿Seguro de eliminar esta categoría?')">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Accesorios</td>
-                            <td>
-                                <button class="guardar" onclick="window.location.href='categoria_actualizar.html'">Editar</button>
-                                <button class="cancelar" onclick="confirm('¿Seguro de eliminar esta categoría?')">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Laptops</td>
-                            <td>
-                                <button class="guardar" onclick="window.location.href='categoria_actualizar.html'">Editar</button>
-                                <button class="cancelar" onclick="confirm('¿Seguro de eliminar esta categoría?')">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabla-categorias-body">
+                        </tbody>
                 </table>
             </div>
         </main>
@@ -103,5 +80,6 @@
             <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
         </div>
     </footer>
+    <script src="../../public/js/adminCategorias.js"></script>
 </body>
 </html>

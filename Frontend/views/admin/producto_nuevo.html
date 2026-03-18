@@ -12,7 +12,6 @@
         <a href="menuAdministrador.html">
             <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
         </a>
-
         <nav class="nav-admin">
             <a href="menuAdministrador.html">Productos</a>
             <a href="ventas.html">Ventas</a>
@@ -27,7 +26,6 @@
             <a href="contactoLista.html">Contacto</a>
             <a href="usuarios.html">Usuarios</a>
         </nav>
-
         <div class="user-menu">
             <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
             <div class="menu">
@@ -41,8 +39,7 @@
 
 <div class="container">
     <main class="main">
-
-        <form class="panelP-formularioProductos" action="menuAdministrador.html" method="GET" enctype="multipart/form-data">
+        <form id="form-nuevo-producto" class="panelP-formularioProductos">
             <h2>Registrar nuevo producto</h2>
 
             <label for="vchNo_Serie">Número de serie:</label>
@@ -51,44 +48,36 @@
             <label for="vchNombre">Nombre:</label>
             <input type="text" id="vchNombre" name="vchNombre" placeholder="Nombre comercial del producto" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s0-9]+" required>
 
-            <label for="vchDescripcion">Descripción:</label>
+            <label for="vchDescription">Descripción:</label>
             <textarea id="vchDescripcion" name="vchDescripcion" rows="3" placeholder="Detalles técnicos, color, modelo..."></textarea>
 
             <label for="floPrecioCompra">Precio de compra:</label>
-            <input type="number" step="1" min="0" id="floPrecioCompra" name="floPrecioCompra" placeholder="0" required>
+            <input type="number" step="0.01" min="0" id="floPrecioCompra" name="floPrecioCompra" placeholder="0.00" required>
 
             <label for="floPrecioUnitario">Precio de venta:</label>
-            <input type="number" step="1" min="0" id="floPrecioUnitario" name="floPrecioUnitario" placeholder="0" required>
+            <input type="number" step="0.01" min="0" id="floPrecioUnitario" name="floPrecioUnitario" placeholder="0.00" required>
 
             <label for="intStock">Stock inicial:</label>
             <input type="number" step="1" min="0" id="intStock" name="intStock" value="0">
 
             <label for="intid_Categoria">Categoría:</label>
             <select id="intid_Categoria" name="intid_Categoria" required>
-                <option value="">-- Selecciona --</option>
-                <option value="1">Celulares</option>
-                <option value="2">Accesorios</option>
-                <option value="3">Electrodomésticos</option>
+                <option value="">-- Cargando categorías... --</option>
             </select>
 
             <label for="intid_Marca">Marca:</label>
             <select id="intid_Marca" name="intid_Marca" required>
-                <option value="">-- Selecciona --</option>
-                <option value="1">Apple</option>
-                <option value="2">Samsung</option>
-                <option value="3">Sony</option>
-                <option value="4">LG</option>
+                <option value="">-- Cargando marcas... --</option>
             </select>
 
             <label for="vchImagen">Imagen del producto:</label>
-            <input type="file" id="vchImagen" name="vchImagen" accept="image/jpeg, image/png, image/gif, image/webp" required onchange="validarImagen(this);">
+            <input type="file" id="vchImagen" name="vchImagen" accept="image/*" required>
 
             <div class="botones">
                 <button type="submit" class="guardar">Guardar</button>
-                <button type="button" class="cancelar" onclick="window.location.href='menuAdministrador.html'">Cancelar</button>
+                <button type="button" class="cancelar" onclick="window.location.href='adminProductos.html'">Cancelar</button>
             </div>
         </form>
-
     </main>
 </div>
 
@@ -98,30 +87,6 @@
     </div>
 </footer>
 
-<script>
-    function validarImagen(input) {
-        const tiposPermitidos = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-        const archivo = input.files[0];
-    
-        if (archivo) {
-            const nombreArchivo = archivo.name.toLowerCase();
-            let esValido = false;
-            
-            for (let i = 0; i < tiposPermitidos.length; i++) {
-                if (nombreArchivo.endsWith(tiposPermitidos[i])) {
-                    esValido = true;
-                    break;
-                }
-            }
-                
-            if (!esValido) {
-                alert('Error: Solo se permiten archivos de imagen (JPG, PNG, GIF o WEBP).');
-                input.value = ""; 
-                return false;
-            }
-        }
-        return true;
-    }
-</script>
+<script src="../../public/js/producto_nuevo.js"></script>
 </body>
 </html>
