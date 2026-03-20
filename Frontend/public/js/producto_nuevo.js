@@ -36,10 +36,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- 1. FUNCIÓN PARA CARGAR SELECTORES DESDE LA BD ---
+    
     async function cargarSelectores() {
         try {
-            // Cargar Marcas Reales
+            
             const resMarcas = await fetch(`${API_BASE}/marcas`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectMarca.innerHTML += `<option value="${m.intid_Marca}">${m.vchNombre}</option>`;
             });
 
-            // Cargar Categorías Reales
+            
             const resCat = await fetch(`${API_BASE}/categorias`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -68,16 +68,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 2. EVENTO PARA GUARDAR EL PRODUCTO ---
+   
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Capturamos el nombre de la imagen
+            
             const imagenInput = document.getElementById('vchImagen');
             const nombreImagen = imagenInput.files[0] ? imagenInput.files[0].name : 'default.jpg';
 
-            // Armamos el objeto con los nombres EXACTOS del Modelo
+            
             const producto = {
                 vchNo_Serie: document.getElementById('vchNo_Serie').value.trim(),
                 vchNombre: document.getElementById('vchNombre').value.trim(),
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Ejecutamos la carga de datos al abrir la página
+    
     cargarSelectores();
     obtenerTasaDolar();
 });
