@@ -5,6 +5,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectMarca = document.getElementById('intid_Marca');
     const selectCat = document.getElementById('intid_Categoria');
     const form = document.getElementById('form-nuevo-producto');
+    const API_KEY_EXCHANGE = '71098f7428e3c5c09e430a12'; 
+    let tasaActual = 0;
+
+    async function obtenerTasaDolar() {
+        try {
+            const res = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY_EXCHANGE}/pair/USD/MXN`);
+            const data = await res.json();
+            if (data.result === "success") {
+                tasaActual = data.conversion_rate;
+                tasaTexto.textContent = `Tasa de hoy: 1 USD = $${tasaActual.toFixed(2)} MXN`;
+            } else {
+                tasaTexto.textContent = "Tasa no disponible actualmente.";
+            }
+        } catch (error) {
+            tasaTexto.textContent = "Error al conectar con la API de moneda.";
+        }
+    }
+
+    document.getElementById('btn-convertir').addEventListener('click', () => {
+        if (tasaActual === 0) {
+            alert("Aún no tenemos la tasa de cambio. Intenta de nuevo en un momento.");
+            return;
+        }
+        const usd = prompt("Ingrese el costo en Dólares (USD):");
+        if (usd && !isNaN(usd)) {
+            const mxn = (parseFloat(usd) * tasaActual).toFixed(2);
+            document.getElementById('floPrecioCompra').value = mxn;
+            alert(`Convertido: $${usd} USD -> $${mxn} MXN`);
+        }
+    });
 
     // --- 1. FUNCIÓN PARA CARGAR SELECTORES DESDE LA BD ---
     async function cargarSelectores() {
@@ -86,4 +116,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Ejecutamos la carga de datos al abrir la página
     cargarSelectores();
+    obtenerTasaDolar();
 });

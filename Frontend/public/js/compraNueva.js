@@ -7,22 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
 });
 
-// 1. Cargar proveedores en el Select
+// 1. Cargar proveedores en el Select (MODIFICADO para incluir dataset)
 async function cargarProveedores() {
     const select = document.getElementById("vchRFC");
     try {
-        // Nueva ruta centralizada
-        const res = await fetch("https://sistemaventasback.vercel.app/api/compras/aux/proveedores");
+        const res = await fetch(`${API_BASE}/compras/aux/proveedores`);
         const proveedores = await res.json();
 
         select.innerHTML = '<option value="">Seleccione un proveedor...</option>';
         proveedores.forEach(p => {
             const opt = document.createElement("option");
             opt.value = p.vchRFC;
+            
+            // Guardamos nombre y correo en el dataset para usarlos al finalizar la compra
+            opt.dataset.correo = p.vchCorreo || ""; 
+            opt.dataset.nombre = p.vchRazon_Social || p.vchNombre;
+            
             opt.textContent = p.vchRazon_Social || p.vchNombre;
             select.appendChild(opt);
         });
     } catch (error) {
+        console.error("Error al cargar proveedores:", error);
         select.innerHTML = '<option value="">Error al cargar proveedores</option>';
     }
 }
@@ -31,16 +36,15 @@ async function cargarProveedores() {
 async function cargarProductos() {
     const select = document.getElementById("select-producto");
     try {
-        const res = await fetch("https://sistemaventasback.vercel.app/api/compras/aux/productos");
-        const productos = await res.json(); // Aquí recibes el array []
+        const res = await fetch(`${API_BASE}/compras/aux/productos`);
+        const productos = await res.json();
 
         select.innerHTML = '<option value="">Seleccione un producto...</option>';
         
-        // Verifica que 'productos' sea un array antes de iterar
         if (Array.isArray(productos)) {
             productos.forEach(p => {
                 const opt = document.createElement("option");
-                opt.value = p.vchNo_Serie; // Asegúrate que el nombre coincida con tu SQL
+                opt.value = p.vchNo_Serie; 
                 opt.textContent = p.vchNombre;
                 select.appendChild(opt);
             });
@@ -107,15 +111,27 @@ window.quitarDelCarrito = function(index) {
     actualizarTabla();
 };
 
-// 4. Enviar todo al Backend (Finalizar)
+// 4. Enviar todo al Backend (MODIFICADO para incluir datos del proveedor para el correo)
 window.finalizarCompra = async function() {
-    const rfc = document.getElementById("vchRFC").value;
+    const selectProv = document.getElementById("vchRFC");
+    const rfc = selectProv.value;
 
     if (!rfc) return alert("Debe seleccionar un proveedor.");
     if (carrito.length === 0) return alert("El carrito está vacío.");
 
+    // Extraemos los datos del dataset de la opción seleccionada
+    const selectedOption = selectProv.options[selectProv.selectedIndex];
+    const correoProveedor = selectedOption.dataset.correo;
+    const nombreProveedor = selectedOption.dataset.nombre;
+
+    if (!correoProveedor) {
+        alert("El proveedor seleccionado no tiene un correo electrónico registrado. No se podrá enviar la notificación.");
+    }
+
     const datosCompra = {
         rfc: rfc,
+        nombreProveedor: nombreProveedor, // Se envía al back para el correo
+        correoProveedor: correoProveedor, // Se envía al back para el correo
         total: carrito.reduce((sum, item) => sum + item.subtotal, 0),
         productos: carrito
     };
@@ -131,13 +147,14 @@ window.finalizarCompra = async function() {
         });
 
         if (res.ok) {
-            alert("✅ Compra registrada y stock actualizado con éxito.");
+            alert("✅ Compra registrada y notificación enviada al proveedor con éxito.");
             window.location.href = "compra.html";
         } else {
             const error = await res.json();
             alert("Error: " + error.mensaje);
         }
     } catch (error) {
+        console.error("Error al finalizar compra:", error);
         alert("No se pudo conectar con el servidor.");
     }
 };
