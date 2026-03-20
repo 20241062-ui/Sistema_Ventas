@@ -41,13 +41,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // Función global para la Baja Lógica (Estado = 0)
+    
     window.eliminarLogico = async (id) => {
         if (!confirm('¿Seguro que desea eliminar esta categoría?')) return;
         
         try {
-            // Usamos el método DELETE que configuramos en el adminRoutes
-            // El cual ejecuta: UPDATE tblcategoria SET Estado = 0 ...
+            
             const res = await fetch(`${API_URL}/${id}`, {
                 method: 'DELETE', 
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -55,8 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const data = await res.json();
             if (res.ok) {
-                alert(data.mensaje); // "Categoría eliminada correctamente"
-                cargarCategorias(); // Recargar la lista
+                alert(data.mensaje); 
+                cargarCategorias(); 
             } else {
                 alert("Error: " + data.mensaje);
             }

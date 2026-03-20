@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    // URL corregida: Apunta al prefijo /api/ventas que definimos en index.js
     const API_URL = "https://sistemaventasback.vercel.app/api/ventas";
 
     if (!id) {
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const data = await res.json();
 
-        // Extraemos los datos según la estructura del VentaModel (result[0] y result[1])
         const venta = data.venta;
         const detalle = data.detalle || [];
 
@@ -38,21 +36,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // --- 1. Llenar Encabezado y Datos Generales ---
+        
         document.getElementById("titulo-venta").textContent = `Detalle de la Venta #${id}`;
         
-        // Usamos alternativas de nombres de columnas por si acaso
+        
         document.getElementById("cliente").textContent = venta.vchNombreCliente || venta.nombre_cliente || "N/A";
         document.getElementById("fecha").textContent = venta.dtFechaVenta || venta.Fecha_Venta || "N/A";
         document.getElementById("total-productos").textContent = detalle.length;
         
-        // Formateo de moneda
+       
         const totalVenta = parseFloat(venta.floTotalVenta || venta.Total_Venta || 0);
         document.getElementById("total").textContent = `$${totalVenta.toFixed(2)}`;
 
-        // --- 2. Llenar la Tabla de Productos ---
+       
         if (tbody) {
-            tbody.innerHTML = ""; // Limpiar el "Cargando..."
+            tbody.innerHTML = ""; 
 
             if (detalle.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay productos registrados en esta venta.</td></tr>';
@@ -62,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             detalle.forEach(p => {
                 const tr = document.createElement("tr");
                 
-                // Formateo de precios por fila
+                
                 const precio = parseFloat(p.floPrecioUnitario || p.PrecioUnitario || 0).toFixed(2);
                 const subtotal = parseFloat(p.floSubtotal || p.Subtotal || 0).toFixed(2);
 

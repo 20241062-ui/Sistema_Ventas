@@ -4,7 +4,7 @@ const token = localStorage.getItem('token');
 document.addEventListener('DOMContentLoaded', () => {
     cargarMarcas();
 
-    // Configurar el buscador
+   
     const btnBuscar = document.getElementById('btnBuscar');
     const inputBuscar = document.getElementById('inputBuscar');
 
@@ -63,7 +63,7 @@ async function eliminarMarca(id) {
         const result = await response.json();
         if (result.status === "success") {
             alert(result.mensaje);
-            cargarMarcas(); // Recargar la lista
+            cargarMarcas(); 
         }
     } catch (error) {
         alert("Error al eliminar la marca");
