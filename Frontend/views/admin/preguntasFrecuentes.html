@@ -44,10 +44,9 @@
       <h2>Preguntas Frecuentes</h2>
 
       <div class="productos-superior">
-        <button class="btn-superior" onclick="window.location.href='preguntaNueva.html'">Nueva pregunta</button>
-
-        <form action="preguntasFrecuentes.html" method="GET" class="productos-buscar">
-            <input type="search" name="buscar" placeholder="Buscar por ID o pregunta...">
+        <button class="btn-superior" onclick="window.location.href='preguntaFormulario.html'">Nueva pregunta</button>
+        <form id="formBuscarFAQ" class="productos-buscar">
+            <input type="search" id="inputBuscar" placeholder="Buscar por ID o pregunta...">
             <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
         </form>
       </div>
@@ -64,29 +63,8 @@
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>¿Hacen envíos a todo México?</td>
-              <td class="descripcion">Sí, realizamos envíos nacionales a través de DHL y Fedex con un tiempo estimado de 3 a 5 días hábiles.</td>
-              <td>Activo</td>
-              <td>2026-03-01 14:30:00</td>
-              <td>
-                  <button class="guardar" onclick="window.location.href='preguntaActualizar.html'">Editar</button>
-                  <button class="cancelar" onclick="if(confirm('¿Desactivar esta pregunta?')) window.location.href='preguntasFrecuentes.html'">Baja</button>
-              </td>
-            </tr>
-            <tr class="inactivo">
-              <td>2</td>
-              <td>¿Tienen tienda física en CDMX?</td>
-              <td class="descripcion">Actualmente solo contamos con sucursales en Pachuca y Mineral de la Reforma.</td>
-              <td>Inactivo</td>
-              <td>2026-02-15 10:00:00</td>
-              <td>
-                  <button class="guardar" onclick="window.location.href='preguntaActualizar.html'">Editar</button>
-                  <button class="activar" onclick="if(confirm('¿Activar esta pregunta?')) window.location.href='preguntasFrecuentes.html'">Activar</button>
-              </td>
-            </tr>
+          <tbody id="tablaFAQBody">
+            <tr><td colspan="6" style="text-align: center;">Cargando preguntas...</td></tr>
           </tbody>
         </table>
       </div>
@@ -98,5 +76,6 @@
         <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
     </div>
 </footer>
+<script src="../../public/js/faq.js"></script>
 </body>
 </html>
