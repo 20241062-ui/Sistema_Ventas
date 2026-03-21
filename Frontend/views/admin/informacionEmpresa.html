@@ -46,23 +46,23 @@
         <div class="cards">
             <div class="card">
                 <h3>Total información</h3>
-                <p class="big">2</p>
+                <p class="big" id="countTotal">-</p>
             </div>
             <div class="card success">
                 <h3>Activas</h3>
-                <p class="big">2</p>
+                <p class="big" id="countActivas">-</p>
             </div>
             <div class="card warning">
                 <h3>Inactivas</h3>
-                <p class="big">0</p>
+                <p class="big" id="countInactivas">-</p>
             </div>
         </div>
 
         <div class="productos-superior">
-            <button class="btn-superior" onclick="window.location.href='informacionNueva.html'">Nueva información</button>
+            <button class="btn-superior" onclick="window.location.href='informacionFormulario.html'">Nueva información</button>
 
-            <form action="informacionEmpresa.html" method="GET" class="productos-buscar">
-                <input type="search" name="buscar" placeholder="Buscar por ID o título..."> 
+            <form id="formBuscarInfo" class="productos-buscar">
+                <input type="search" name="buscar" id="inputBuscar" placeholder="Buscar por ID o título..."> 
                 <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
             </form>
         </div>
@@ -79,28 +79,9 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tablaInformacionBody">
                     <tr>
-                        <td>1</td>
-                        <td>Misión</td>
-                        <td class="descripcion">Ofrecer productos tecnológicos de alta calidad...</td>
-                        <td>Activo</td>
-                        <td>2026-01-15 10:30:00</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='informacionActualizar.html'">Editar</button>
-                            <button class="cancelar" onclick="if(confirm('¿Quieres desactivar esta información?')) window.location.href='informacionEmpresa.html'">Baja</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Visión</td>
-                        <td class="descripcion">Ser la comercializadora líder en el mercado regional...</td>
-                        <td>Activo</td>
-                        <td>2026-01-15 10:35:00</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='informacionActualizar.html'">Editar</button>
-                            <button class="cancelar" onclick="if(confirm('¿Quieres desactivar esta información?')) window.location.href='informacionEmpresa.html'">Baja</button>
-                        </td>
+                        <td colspan="6" style="text-align: center; padding: 20px;">Cargando información...</td>
                     </tr>
                 </tbody>
             </table>
@@ -113,5 +94,7 @@
         <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
     </div>
 </footer>
+
+<script src="../../public/js/informacion.js"></script>
 </body>
 </html>

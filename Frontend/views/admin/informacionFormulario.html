@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Actualizar Información - Doble L</title>
+    <title>Gestión de Información - Doble L</title>
     <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
 </head>
 <body>
@@ -39,21 +39,27 @@
     </div>
 </header>
 
-<form class="panelP-formularioProductos" action="informacionEmpresa.html" method="GET">
-    
-    <h2>Actualizar Información de la Empresa</h2>
+<div class="container">
+    <main class="main">
+        <form id="formInformacion" class="panelP-formularioProductos">
+            
+            <h2 id="tituloFormulario">Registrar Nueva Información</h2>
 
-    <label for="vchtitulo">Título (Misión o Visión):</label>
-    <input type="text" id="vchtitulo" name="vchtitulo" value="Misión" required>
+            <input type="hidden" name="intid" id="intid">
 
-    <label for="vchcontenido">Contenido:</label>
-    <textarea id="vchcontenido" name="vchcontenido" rows="5">Ofrecer a nuestros clientes los mejores productos tecnológicos con la más alta calidad y un servicio excepcional, impulsando la innovación en cada hogar.</textarea>
+            <label for="vchtitulo">Título (Misión o Visión):</label>
+            <input type="text" id="vchtitulo" name="vchtitulo" placeholder="Ej. Valores Corporativos" required>
 
-    <div class="botones">
-      <button type="submit" class="guardar">Guardar</button>
-      <button type="button" class="cancelar" onclick="window.location.href='informacionEmpresa.html'">Cancelar</button>
-    </div>
-</form>
+            <label for="vchcontenido">Contenido:</label>
+            <textarea id="vchcontenido" name="vchcontenido" rows="8" placeholder="Escribe aquí el texto detallado..." required></textarea>
+
+            <div class="botones">
+                <button type="submit" id="btnGuardar" class="guardar">Guardar</button>
+                <button type="button" class="cancelar" onclick="window.location.href='informacionEmpresa.html'">Cancelar</button>
+            </div>
+        </form>
+    </main>
+</div>
 
 <footer>
     <div class="linksFooter">  
@@ -61,5 +67,6 @@
     </div>
 </footer>
 
+<script src="../../public/js/informacion.js"></script>
 </body>
 </html>
