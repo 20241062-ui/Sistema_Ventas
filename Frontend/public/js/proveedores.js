@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarProveedores(buscar = "") {
     try {
-        const url = buscar ? `${API_URL}?buscar=${buscar}` : API_URL;
+        const url = buscar ? `${API_URL}?buscar=${encodeURIComponent(buscar)}` : API_URL;
         const res = await fetch(url);
         const proveedores = await res.json();
         
