@@ -1,4 +1,4 @@
-const API_URL = "/api/proveedores";
+const API_URL = "https://sistemaventasback.vercel.app/api/proveedores";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formProveedor");
