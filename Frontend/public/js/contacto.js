@@ -1,46 +1,67 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const API_URL = 'https://sistemaventasback.vercel.app/api/public';
+const API_URL = "https://sistemaventasback.vercel.app/api/contacto";
 
-    try {
-        const response = await fetch(`${API_URL}/contacto-info`);
-        const info = await response.json();
+document.addEventListener("DOMContentLoaded", () => {
+    const tablaBody = document.getElementById("tablaContactoBody");
+    const form = document.getElementById("formContacto");
+    const params = new URLSearchParams(window.location.search);
+    const editId = params.get("id");
 
-        document.getElementById('info-tel').textContent = info.telefono || info.teléfono || 'No disponible';
-        document.getElementById('info-correo').textContent = info.correo || 'No disponible';
-        
-        if(info.facebook) document.getElementById('link-fb').href = info.facebook;
-        if(info.instagram) document.getElementById('link-ig').href = info.instagram;
-        if(info.x) document.getElementById('link-x').href = info.x;
-    } catch (error) {
-        console.error('Error al cargar info de contacto:', error);
+    if (editId && form) {
+        document.getElementById("tituloFormulario").innerText = "Actualizar Contacto";
+        fetch(`${API_URL}/${editId}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("intid").value = data.intid;
+                document.getElementById("vchcampo").value = data.vchcampo;
+                document.getElementById("vchvalor").value = data.vchvalor;
+            });
     }
 
-    const form = document.getElementById('form-contacto');
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = {
-            nombre: form.nombre.value,
-            correo: form.correo.value,
-            mensaje: form.mensaje.value
-        };
+    if (tablaBody) {
+        cargarContactos();
+        document.getElementById("formBuscarContacto").addEventListener("submit", (e) => {
+            e.preventDefault();
+            cargarContactos(document.getElementById("inputBuscar").value);
+        });
+    }
 
-        try {
-            const response = await fetch(`${API_URL}/enviar-mensaje`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+    if (form) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(form).entries());
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
             });
-            const result = await response.json();
-
-            if(result.success) {
-                alert(result.message);
-                form.reset();
-            } else {
-                alert('Error: ' + result.message);
-            }
-        } catch (error) {
-            alert('Error de conexión al enviar el mensaje.');
-        }
-    });
+            if (res.ok) window.location.href = "contacto.html";
+        });
+    }
 });
+
+async function cargarContactos(buscar = "") {
+    const url = buscar ? `${API_URL}?buscar=${buscar}` : API_URL;
+    const res = await fetch(url);
+    const datos = await res.json();
+    const tabla = document.getElementById("tablaContactoBody");
+    if (!tabla) return;
+
+    tabla.innerHTML = datos.map(c => `
+        <tr>
+            <td>${c.intid}</td>
+            <td>${c.vchcampo}</td>
+            <td>${c.vchvalor}</td>
+            <td>
+                <button class="guardar" onclick="window.location.href='contacto_formulario.html?id=${c.intid}'">Editar</button>
+                <button class="cancelar" onclick="eliminarContacto(${c.intid})">Eliminar</button>
+            </td>
+        </tr>
+    `).join("");
+}
+
+async function eliminarContacto(id) {
+    if (confirm("¿Seguro que deseas eliminar este contacto permanentemente?")) {
+        const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        if (res.ok) cargarContactos();
+    }
+}
