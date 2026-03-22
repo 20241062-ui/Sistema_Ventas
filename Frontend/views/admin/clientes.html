@@ -42,25 +42,16 @@
         <h2>Clientes registrados</h2>
 
         <div class="cards">
-            <div class="card">
-                <h3>Total clientes</h3>
-                <p class="big">25</p>
-            </div>
-            <div class="card success">
-                <h3>Activos</h3>
-                <p class="big">20</p>
-            </div>
-            <div class="card warning">
-                <h3>Inactivos</h3>
-                <p class="big">5</p>
-            </div>
+            <div class="card"><h3>Total clientes</h3><p class="big" id="countTotal">-</p></div>
+            <div class="card success"><h3>Activos</h3><p class="big" id="countActivos">-</p></div>
+            <div class="card warning"><h3>Inactivos</h3><p class="big" id="countInactivos">-</p></div>
         </div>
 
         <div class="productos-superior">
-            <div class="productos-buscar">
-                <input type="search" placeholder="Buscar por nombre, apellidos o correo...">
-                <button type="button" class="btn-superior buscar">🔍 Buscar</button>
-            </div>
+            <form id="formBuscarCliente" class="productos-buscar">
+                <input type="search" id="inputBuscar" placeholder="Buscar por nombre, apellidos o correo...">
+                <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
+            </form>
         </div>
 
         <div class="panel table-wrap">
@@ -75,26 +66,9 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tablaClientesBody">
                     <tr>
-                        <td>101</td>
-                        <td>Juan</td>
-                        <td>Pérez García</td>
-                        <td>juan.perez@ejemplo.com</td>
-                        <td>Activo</td>
-                        <td>
-                            <button class="cancelar" onclick="confirm('¿Desactivar este cliente?')">Baja</button>
-                        </td>
-                    </tr>
-                    <tr class="inactivo" style="background-color: #f9f9f9; opacity: 0.7;">
-                        <td>102</td>
-                        <td>María</td>
-                        <td>López Torres</td>
-                        <td>m.lopez@ejemplo.com</td>
-                        <td>Inactivo</td>
-                        <td>
-                            <button class="activar" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Activar</button>
-                        </td>
+                        <td colspan="6" style="text-align: center; padding: 20px;">Cargando clientes registrados...</td>
                     </tr>
                 </tbody>
             </table>
@@ -107,6 +81,8 @@
         <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
     </div>
 </footer>
+
+<script src="../../public/js/clientes.js"></script>
 
 </body>
 </html>

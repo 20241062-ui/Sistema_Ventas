@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Nuevo Contacto - Doble L</title>
-  <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+    <meta charset="UTF-8">
+    <title>Gestión de Información - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
 </head>
-
 <body>
 
 <header class="header-admin">
@@ -22,10 +21,10 @@
             <a href="marcas.html">Marcas</a>
             <a href="proveedores.html">Proveedores</a>
             <a href="listaSucursales.html">Sucursales</a>
-            <a href="informacionEmpresa.html">Información</a>
+            <a href="informacionEmpresa.html" class="active">Información</a>
             <a href="clientes.html">Clientes</a>
             <a href="preguntasFrecuentes.html">FAQ</a>
-            <a href="contactoLista.html" class="active">Contacto</a>
+            <a href="contactoLista.html">Contacto</a>
             <a href="usuarios.html">Usuarios</a>
         </nav>
 
@@ -40,26 +39,34 @@
     </div>
 </header>
 
-  <form class="panelP-formularioProductos" action="contactoLista.html" method="GET">
-    <h2>Registrar nuevo contacto</h2>
+<div class="container">
+    <main class="main">
+        <form id="formInformacion" class="panelP-formularioProductos">
+            
+            <h2 id="tituloFormulario">Registrar Nueva Información</h2>
 
-    <label for="campo">Campo:</label>
-    <input type="text" id="campo" name="campo" placeholder="Ej. WhatsApp Soporte" required>
+            <input type="hidden" name="intid" id="intid">
 
-    <label for="valor">Valor:</label>
-    <input type="text" id="valor" name="valor" placeholder="Ej. +52 555 123 4567" required>
+            <label for="vchtitulo">Título (Misión o Visión):</label>
+            <input type="text" id="vchtitulo" name="vchtitulo" placeholder="Ej. Valores Corporativos" required>
 
-    <div class="botones">
-      <button type="submit" class="guardar">Guardar</button>
-      <button type="button" class="cancelar" onclick="window.location.href='contactoLista.html'">Cancelar</button>
-    </div>
-  </form>
+            <label for="vchcontenido">Contenido:</label>
+            <textarea id="vchcontenido" name="vchcontenido" rows="8" placeholder="Escribe aquí el texto detallado..." required></textarea>
+
+            <div class="botones">
+                <button type="submit" id="btnGuardar" class="guardar">Guardar</button>
+                <button type="button" class="cancelar" onclick="window.location.href='informacionEmpresa.html'">Cancelar</button>
+            </div>
+        </form>
+    </main>
+</div>
 
 <footer>
     <div class="linksFooter">  
-        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+        <a>© 2026 Comercializadora Doble L — Sistema de Gestión</a>
     </div>
 </footer>
 
+<script src="../../public/js/informacion.js"></script>
 </body>
 </html>

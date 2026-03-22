@@ -14,19 +14,19 @@
         </a>
 
         <nav class="nav-admin">
-                <a href="menuAdministrador.html">Productos</a>
-                <a href="ventas.html" class="active">Ventas</a>
-                <a href="compra.html">Compras</a>
-                <a href="categorias.html">Categorías</a>
-                <a href="marcas.html">Marcas</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="listaSucursales.html">Sucursales</a>
-                <a href="informacionEmpresa.html">Información</a>
-                <a href="clientes.html">Clientes</a>
-                <a href="preguntasFrecuentes.html">FAQ</a>
-                <a href="contactoLista.html">Contacto</a>
-                <a href="usuarios.html">Usuarios</a>
-            </nav>
+            <a href="menuAdministrador.html">Productos</a>
+            <a href="ventas.html">Ventas</a>
+            <a href="compra.html">Compras</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="marcas.html">Marcas</a>
+            <a href="proveedores.html" class="active">Proveedores</a>
+            <a href="listaSucursales.html">Sucursales</a>
+            <a href="informacionEmpresa.html">Información</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="preguntasFrecuentes.html">FAQ</a>
+            <a href="contactoLista.html">Contacto</a>
+            <a href="usuarios.html">Usuarios</a>
+        </nav>
 
         <div class="user-menu">
             <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
@@ -44,10 +44,10 @@
         <h2>Proveedores registrados</h2>
 
         <div class="productos-superior">
-            <button class="btn-superior" onclick="window.location.href='proveedor_nuevo.html'">Nuevo proveedor</button>
+            <button class="btn-superior" onclick="window.location.href='proveedor_formulario.html'">Nuevo proveedor</button>
 
-            <form action="proveedores.html" method="GET" class="productos-buscar">
-                <input type="search" name="buscar" placeholder="Buscar proveedor...">
+            <form id="formBuscarProveedor" class="productos-buscar">
+                <input type="search" id="inputBuscar" name="buscar" placeholder="Buscar por nombre, RFC o Razón Social...">
                 <button type="submit" class="btn-superior buscar">🔍 Buscar</button>
             </form>
         </div>
@@ -64,28 +64,9 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tablaProveedoresBody">
                     <tr>
-                        <td>GOG123456ABC</td>
-                        <td>Google México S. de R.L.</td>
-                        <td>5512345678</td>
-                        <td>proveedores@google.com</td>
-                        <td>Google México S. de R.L. de C.V.</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='proveedor_actualizar.html'">Editar</button>
-                            <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar este proveedor?')) window.location.href='proveedores.html'">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>SAM987654XYZ</td>
-                        <td>Samsung Electronics México</td>
-                        <td>5587654321</td>
-                        <td>ventas@samsung.mx</td>
-                        <td>Samsung Electronics México S.A. de C.V.</td>
-                        <td>
-                            <button class="guardar" onclick="window.location.href='proveedor_actualizar.html'">Editar</button>
-                            <button class="cancelar" onclick="if(confirm('¿Seguro de eliminar este proveedor?')) window.location.href='proveedores.html'">Eliminar</button>
-                        </td>
+                        <td colspan="6" style="text-align: center; padding: 20px;">Cargando proveedores...</td>
                     </tr>
                 </tbody>
             </table>
@@ -93,13 +74,13 @@
     </main>
 </div>
 
-
-
 <footer>
     <div class="linksFooter">  
         <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
     </div>
 </footer>
+
+<script src="../../public/js/proveedores.js"></script>
 
 </body>
 </html>

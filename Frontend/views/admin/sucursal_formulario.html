@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Sucursal - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+    <header class="header-admin">
+        <div class="contenedor-header">
+            <a href="menuAdministrador.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo">
+            </a>
+            <nav class="nav-admin">
+                <a href="menuAdministrador.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compra.html">Compras</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="marcas.html">Marcas</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="listaSucursales.html" class="active">Sucursales</a>
+                <a href="informacionEmpresa.html">Información</a>
+                <a href="clientes.html">Clientes</a>
+                <a href="preguntasFrecuentes.html">FAQ</a>
+                <a href="contactoLista.html">Contacto</a>
+                <a href="usuarios.html">Usuarios</a>
+            </nav>
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
+                <div class="menu">
+                    <a href="perfilAdmin.html">Mi cuenta</a>
+                    <a href="../publico/index.html">Inicio</a>
+                    <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main">
+            <form id="formSucursal" class="panelP-formularioProductos">
+
+                <h2 id="tituloFormulario">Registrar Nueva Sucursal</h2>
+
+                <input type="hidden" name="intid" id="intid">
+
+                <label for="vchnombre">Nombre de la sucursal:</label>
+                <input type="text" id="vchnombre" name="vchnombre" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" maxlength="100"
+                    placeholder="Ej. Sucursal Centro" required>
+
+                <label for="vchdireccion">Dirección:</label>
+                <input type="text" id="vchdireccion" name="vchdireccion" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s#.,-]+"
+                    maxlength="200" placeholder="Calle, número y colonia" required>
+
+                <label for="vchciudad">Ciudad:</label>
+                <input type="text" id="vchciudad" name="vchciudad" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" maxlength="100"
+                    placeholder="Ej. Pachuca" required>
+
+                <label for="vchtelefono">Teléfono:</label>
+                <input type="text" id="vchtelefono" name="vchtelefono" pattern="[0-9]{10}" maxlength="10"
+                    placeholder="10 dígitos">
+
+                <label for="vchhorario">Horario:</label>
+                <input type="text" id="vchhorario" name="vchhorario" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s:.-]+"
+                    maxlength="50" placeholder="Ej. Lun-Sab 9am - 6pm">
+
+                <label for="vchlink_mapa">Link de Google Maps:</label>
+                <input type="text" id="vchlink_mapa" name="vchlink_mapa" maxlength="300"
+                    placeholder="https://goo.gl/maps/...">
+
+                <div class="botones">
+                    <button type="submit" id="btnGuardar" class="guardar">Guardar</button>
+                    <button type="button" class="cancelar" onclick="window.location.href='listaSucursales.html'">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <div class="linksFooter">
+            <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+        </div>
+    </footer>
+
+    <script src="../../public/js/sucursales.js"></script>
+</body>
+
+</html>

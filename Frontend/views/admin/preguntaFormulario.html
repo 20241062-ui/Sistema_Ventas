@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Gestión de FAQ - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+
+<body>
+    <header class="header-admin">
+    </header>
+
+    <div class="container">
+        <main class="main">
+            <form id="formFAQ" class="panelP-formularioProductos">
+                <h2 id="tituloFormulario">Registrar Pregunta Frecuente</h2>
+
+                <input type="hidden" name="intid" id="intid">
+
+                <label for="vchpregunta">Pregunta:</label>
+                <input type="text" id="vchpregunta" name="vchpregunta" placeholder="Ej. ¿Tienen envíos a domicilio?"
+                    required>
+
+                <label for="vchrespuesta">Respuesta:</label>
+                <textarea id="vchrespuesta" name="vchrespuesta" rows="6"
+                    placeholder="Escribe la respuesta detallada aquí..." required></textarea>
+
+                <div class="botones">
+                    <button type="submit" id="btnGuardar" class="guardar">Guardar</button>
+                    <button type="button" class="cancelar"
+                        onclick="window.location.href='preguntasFrecuentes.html'">Cancelar</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <div class="linksFooter"><a>© 2026 Comercializadora Doble L</a></div>
+    </footer>
+    <script src="../../public/js/faq.js"></script>
+</body>
+
+</html>
