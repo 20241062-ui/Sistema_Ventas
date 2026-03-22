@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
-            if (res.ok) window.location.href = "contacto.html";
+            if (res.ok) window.location.href = "contactoLista.html";
         });
     }
 });
