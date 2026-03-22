@@ -111,7 +111,6 @@ window.quitarDelCarrito = function(index) {
     actualizarTabla();
 };
 
-// 4. Enviar todo al Backend (MODIFICADO para incluir datos del proveedor para el correo)
 window.finalizarCompra = async function() {
     const selectProv = document.getElementById("vchRFC");
     const rfc = selectProv.value;
@@ -119,24 +118,36 @@ window.finalizarCompra = async function() {
     if (!rfc) return alert("Debe seleccionar un proveedor.");
     if (carrito.length === 0) return alert("El carrito está vacío.");
 
-    // Extraemos los datos del dataset de la opción seleccionada
     const selectedOption = selectProv.options[selectProv.selectedIndex];
     const correoProveedor = selectedOption.dataset.correo;
     const nombreProveedor = selectedOption.dataset.nombre;
 
-    if (!correoProveedor) {
-        alert("El proveedor seleccionado no tiene un correo electrónico registrado. No se podrá enviar la notificación.");
+    // Validación extra antes de disparar el fetch
+    if (!correoProveedor || correoProveedor === "") {
+        const confirmar = confirm("⚠️ El proveedor no tiene correo registrado. La compra se guardará pero NO se enviará notificación. ¿Desea continuar?");
+        if (!confirmar) return;
     }
 
     const datosCompra = {
         rfc: rfc,
-        nombreProveedor: nombreProveedor, // Se envía al back para el correo
-        correoProveedor: correoProveedor, // Se envía al back para el correo
+        nombreProveedor: nombreProveedor,
+        correoProveedor: correoProveedor,
         total: carrito.reduce((sum, item) => sum + item.subtotal, 0),
-        productos: carrito
+        productos: carrito.map(p => ({
+            no_serie: p.no_serie,
+            nombre: p.nombre,
+            cantidad: p.cantidad,
+            precio: p.precio
+        }))
     };
 
     try {
+        // Mostramos un mensaje de "Procesando"
+        const btn = document.querySelector(".guardar");
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "Procesando...";
+
         const res = await fetch(`${API_BASE}/compras`, {
             method: 'POST',
             headers: {
@@ -146,15 +157,18 @@ window.finalizarCompra = async function() {
             body: JSON.stringify(datosCompra)
         });
 
+        const respuestaServer = await res.json();
+
         if (res.ok) {
-            alert("✅ Compra registrada y notificación enviada al proveedor con éxito.");
+            alert("✅ Compra registrada con éxito.");
             window.location.href = "compra.html";
         } else {
-            const error = await res.json();
-            alert("Error: " + error.mensaje);
+            alert("❌ Error del servidor: " + (respuestaServer.mensaje || respuestaServer.error));
+            btn.disabled = false;
+            btn.textContent = originalText;
         }
     } catch (error) {
         console.error("Error al finalizar compra:", error);
-        alert("No se pudo conectar con el servidor.");
+        alert("💥 Error crítico: No se pudo conectar con el servidor.");
     }
 };
