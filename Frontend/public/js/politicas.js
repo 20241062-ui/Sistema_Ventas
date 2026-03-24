@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const politicas = await response.json();
 
         if (politicas.length > 0) {
-            // Limpiamos el mensaje de carga, pero mantenemos el H1
+            
             contenedor.innerHTML = '<h1>Políticas de la Empresa</h1>';
 
             politicas.forEach(item => {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 h2.textContent = item.vchtitulo;
 
                 const p = document.createElement('p');
-                // nl2br de PHP equivale a reemplazar los saltos de línea por <br>
+                
                 p.innerHTML = item.vchcontenido.replace(/\n/g, '<br>');
 
                 contenedor.appendChild(h2);

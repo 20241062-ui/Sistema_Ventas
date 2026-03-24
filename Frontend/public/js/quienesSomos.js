@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 h2.textContent = sec.titulo;
 
                 const p = document.createElement('p');
-                // Respetamos los saltos de línea de la base de datos
+                
                 p.innerHTML = sec.contenido.replace(/\n/g, '<br>');
 
                 contenedor.appendChild(h2);

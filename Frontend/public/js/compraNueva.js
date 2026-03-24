@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
 });
 
-// 1. Cargar proveedores en el Select (MODIFICADO para incluir dataset)
+
 async function cargarProveedores() {
     const select = document.getElementById("vchRFC");
     try {
@@ -19,7 +19,7 @@ async function cargarProveedores() {
             const opt = document.createElement("option");
             opt.value = p.vchRFC;
             
-            // Guardamos nombre y correo en el dataset para usarlos al finalizar la compra
+            
             opt.dataset.correo = p.vchCorreo || ""; 
             opt.dataset.nombre = p.vchRazon_Social || p.vchNombre;
             
@@ -32,7 +32,7 @@ async function cargarProveedores() {
     }
 }
 
-// 2. Cargar productos en el Select
+
 async function cargarProductos() {
     const select = document.getElementById("select-producto");
     try {
@@ -55,7 +55,7 @@ async function cargarProductos() {
     }
 }
 
-// 3. Añadir producto a la lista temporal (Carrito)
+
 window.añadirAlCarrito = function() {
     const select = document.getElementById("select-producto");
     const inputCant = document.getElementById("cantidad");
@@ -77,7 +77,7 @@ window.añadirAlCarrito = function() {
     carrito.push(item);
     actualizarTabla();
     
-    // Limpiar campos de entrada
+    
     inputCant.value = "";
     inputPrecio.value = "";
     select.value = "";
@@ -111,6 +111,10 @@ window.quitarDelCarrito = function(index) {
     actualizarTabla();
 };
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9f39999d82492330576dd97306d07b8074e9c090
 window.finalizarCompra = async function() {
     const selectProv = document.getElementById("vchRFC");
     const rfc = selectProv.value;
@@ -118,6 +122,10 @@ window.finalizarCompra = async function() {
     if (!rfc) return alert("Debe seleccionar un proveedor.");
     if (carrito.length === 0) return alert("El carrito está vacío.");
 
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 9f39999d82492330576dd97306d07b8074e9c090
     const selectedOption = selectProv.options[selectProv.selectedIndex];
     const correoProveedor = selectedOption.dataset.correo;
     const nombreProveedor = selectedOption.dataset.nombre;
@@ -130,8 +138,13 @@ window.finalizarCompra = async function() {
 
     const datosCompra = {
         rfc: rfc,
+<<<<<<< HEAD
+        nombreProveedor: nombreProveedor, 
+        correoProveedor: correoProveedor, 
+=======
         nombreProveedor: nombreProveedor,
         correoProveedor: correoProveedor,
+>>>>>>> 9f39999d82492330576dd97306d07b8074e9c090
         total: carrito.reduce((sum, item) => sum + item.subtotal, 0),
         productos: carrito.map(p => ({
             no_serie: p.no_serie,

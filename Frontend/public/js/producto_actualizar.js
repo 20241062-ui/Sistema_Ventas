@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     };
 
-    // EJECUCIÓN SECUENCIAL
+    
     await cargarCatalogos();
     await cargarDatosProducto();
     configurarFormulario();

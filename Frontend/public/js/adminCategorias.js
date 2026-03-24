@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>${cat.vchNombre}</td>
                     <td>
                         <button class="guardar" onclick="window.location.href='categoria_actualizar.html?id=${cat.intid_Categoria}'">Editar</button>
-                        <button class="cancelar" onclick="eliminarLogico(${cat.intid_Categoria})">Eliminar</button>
+                        <button class="cancelar" onclick="eliminarLogico(${cat.intid_Categoria})">Baja</button>
                     </td>
                 `;
                 tablaBody.appendChild(tr);
@@ -41,13 +41,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // Función global para la Baja Lógica (Estado = 0)
+    
     window.eliminarLogico = async (id) => {
-        if (!confirm('¿Seguro que desea eliminar esta categoría?')) return;
+        if (!confirm('¿Seguro que desea dar de baja esta categoría?')) return;
         
         try {
-            // Usamos el método DELETE que configuramos en el adminRoutes
-            // El cual ejecuta: UPDATE tblcategoria SET Estado = 0 ...
+            
             const res = await fetch(`${API_URL}/${id}`, {
                 method: 'DELETE', 
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -55,13 +54,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const data = await res.json();
             if (res.ok) {
-                alert(data.mensaje); // "Categoría eliminada correctamente"
-                cargarCategorias(); // Recargar la lista
+                alert(data.mensaje); 
+                cargarCategorias(); 
             } else {
                 alert("Error: " + data.mensaje);
             }
         } catch (error) {
-            alert("Error de conexión al intentar eliminar.");
+            alert("Error de conexión al intentar dar de baja la categoría.");
         }
     };
 

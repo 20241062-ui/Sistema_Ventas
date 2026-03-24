@@ -13,7 +13,7 @@ async function cargarDetalle(){
     const compra = data.compra
     const detalle = data.detalle
 
-    // llenar tarjetas
+    
     document.querySelector("#id-compra").textContent = compra.id_Compra
     document.querySelector("#proveedor").textContent = compra.RFC
     document.querySelector("#fecha").textContent = compra.Fecha

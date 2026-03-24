@@ -49,7 +49,7 @@ async function cargarCompras() {
     }
 }
 
-// Función global para redireccionar
+
 window.irADetalle = function(id) {
     window.location.href = `compra_ver.html?id=${id}`;
 };
