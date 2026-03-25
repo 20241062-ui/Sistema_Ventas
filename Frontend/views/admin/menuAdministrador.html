@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Productos - Sistema de Ventas</title>
     <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
 </head>
+
 <body>
     <header class="header-admin">
         <div class="contenedor-header">
             <a href="menuAdministrador.html">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo">
             </a>
             <nav class="nav-admin">
                 <a href="menuAdministrador.html">Productos</a>
@@ -27,9 +30,10 @@
                 <a href="usuarios.html">Usuarios</a>
             </nav>
             <div class="user-menu">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
                 <div class="menu" id="menu-usuario-admin">
-                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -54,12 +58,31 @@
             </div>
 
             <div class="productos-superior">
-                <button class="btn-superior" onclick="window.location.href='producto_nuevo.html'">Nuevo producto</button>
+                <button class="btn-superior" onclick="window.location.href='producto_nuevo.html'">
+                    Nuevo producto
+                </button>
 
                 <div class="productos-buscar">
                     <input type="search" id="input-buscar" placeholder="Buscar producto...">
                     <button type="button" id="btn-buscar" class="btn-superior buscar">🔍 Buscar</button>
-                    <button type="button" id="btn-limpiar" class="btn-superior limpiar" style="display:none;">Limpiar</button>
+                    <button type="button" id="btn-limpiar" class="btn-superior limpiar"
+                        style="display:none;">Limpiar</button>
+
+                    <button type="button" class="btn-superior" onclick="abrirSimulacion()"
+                        style="background-color: #2c3e50; margin-left: 5px;">
+                        📊 Simulación
+                    </button>
+                </div>
+            </div>
+
+            <div id="seccionSimulacion" class="panel" style="display:none; margin-top: 20px; padding: 20px;">
+                <h3>Reporte de Modelo Predictivo (Ecuaciones Diferenciales)</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <canvas id="graficaStock"></canvas>
+                    </div>
+                    <div id="tablaResultados" style="flex: 1; min-width: 300px;">
+                    </div>
                 </div>
             </div>
 
@@ -77,20 +100,22 @@
                         </tr>
                     </thead>
                     <tbody id="tabla-productos-body">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
 
             <div class="paginacion" id="contenedor-paginacion">
-                </div>
+            </div>
         </main>
     </div>
 
     <div class="accesibilidad">
         <button class="btn-accessibility" onclick="toggleAccesibilidad()">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Accesibilidad" style="width: 40px; border-radius: 50%;">
+            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg"
+                alt="Accesibilidad" style="width: 40px; border-radius: 50%;">
         </button>
-        <div class="panel-accesibilidad" id="panelAccesibilidad" style="display: none; flex-direction: column; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; z-index: 1000;">
+        <div class="panel-accesibilidad" id="panelAccesibilidad"
+            style="display: none; flex-direction: column; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; z-index: 1000;">
             <button onclick="cambiarTexto(1)">Aumentar Texto</button>
             <button onclick="cambiarTexto(-1)">Disminuir Texto</button>
             <button onclick="restaurarTexto()">Restaurar</button>
@@ -107,5 +132,8 @@
     </footer>
 
     <script src="../../public/js/adminProductos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../public/js/analisisPredictivo.js"></script>
 </body>
+
 </html>
