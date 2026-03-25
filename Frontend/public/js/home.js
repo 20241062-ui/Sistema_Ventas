@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const galeria = document.getElementById('contenedor-galeria');
     const heroTexto = document.querySelector('.textohero');
     const heroForm = document.querySelector('.hero form');
+    const contenedorPaginacion = document.getElementById('contenedor-paginacion');
 
     const menuUsuario = document.getElementById('menu-usuario');
     const linkLogin = document.getElementById('link-login');
@@ -18,7 +19,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     const token = localStorage.getItem('token');
 
-    if (token && usuario) {
+    let categoriaActual = 'todas';
+
+    if (token && usuario.nombre) {
         if (linkLogin) linkLogin.style.display = 'none';
         if (linkLogout) linkLogout.style.display = 'block';
         if (linkPerfil) linkPerfil.style.display = 'block';
@@ -26,10 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (menuUsuario && !document.getElementById('user-greeting')) {
             const saludo = document.createElement('span');
             saludo.id = 'user-greeting';
-            saludo.style.display = 'block';
-            saludo.style.padding = '10px';
-            saludo.style.fontWeight = 'bold';
-            saludo.style.color = '#333';
+            saludo.style = 'display:block; padding:10px; font-weight:bold; color:#333;';
             saludo.textContent = `Hola, ${usuario.nombre}`;
             menuUsuario.prepend(saludo);
         }
@@ -42,28 +42,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             adminLink.style.color = 'red';
             if (linkLogout) linkLogout.before(adminLink);
         }
-    } else {
-        if (linkLogin) linkLogin.style.display = 'block';
-        if (linkLogout) linkLogout.style.display = 'none';
-        if (linkPerfil) linkPerfil.style.display = 'none'; 
     }
 
-    document.addEventListener('click', (e) => {
-        if (e.target.id === 'link-logout' || e.target.id === 'btn-logout') {
-            e.preventDefault();
-            localStorage.removeItem('token');
-            localStorage.removeItem('usuario');
-            alert('Sesión finalizada.');
-            window.location.href = rutaLogin;
-        }
-    });
-
-    if (galeria || (heroTexto && heroForm)) { 
+    async function cargarCatalogo(pagina = 1, categoria = 'todas') {
+        if (!galeria) return;
+        
+        galeria.innerHTML = '<p style="text-align:center; width:100%;">Cargando catálogo...</p>';
+        
         try {
-            const response = await fetch(`${API_URL}/productos/home`);
+            const url = `${API_URL}/productos/home?pagina=${pagina}&categoria=${categoria}`;
+            const response = await fetch(url);
             const data = await response.json();
 
-            if (data.hero && heroTexto && heroForm) {
+            if (data.hero && heroTexto && heroForm && pagina === 1) {
                 heroTexto.innerHTML = `
                     <h1>${data.hero.vchNombre} por menos de $${Math.floor(data.hero.floPrecioUnitario).toLocaleString()}</h1>
                     <h3>Sólo en Comercializadora Doble L</h3>
@@ -73,8 +64,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 heroForm.action = rutaDetalle;
             }
 
-            if (galeria && data.productos) {
-                galeria.innerHTML = ''; 
+            galeria.innerHTML = ''; 
+            if (data.productos && data.productos.length > 0) {
                 data.productos.forEach(prod => {
                     const imgUrl = prod.vchImagen 
                         ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
@@ -97,10 +88,48 @@ document.addEventListener('DOMContentLoaded', async () => {
                             </div>
                         </div>`;
                 });
+            } else {
+                galeria.innerHTML = '<p style="text-align:center; width:100%;">No hay productos disponibles en esta sección.</p>';
             }
+
+            renderizarPaginacion(data.pagination);
+
         } catch (error) {
             console.error("Error cargando productos:", error);
-            if (galeria) galeria.innerHTML = '<p style="text-align:center;">Error al cargar los productos.</p>';
+            galeria.innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con el servidor.</p>';
         }
     }
+
+    function renderizarPaginacion(pagination) {
+        if (!contenedorPaginacion) return;
+        contenedorPaginacion.innerHTML = '';
+
+        for (let i = 1; i <= pagination.totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.innerText = i;
+            btn.className = (i === pagination.currentPage) ? 'btn-pag activa' : 'btn-pag';
+            btn.onclick = () => {
+                cargarCatalogo(i, categoriaActual);
+                window.scrollTo({ top: 400, behavior: 'smooth' });
+            };
+            contenedorPaginacion.appendChild(btn);
+        }
+    }
+
+    window.aplicarFiltro = (idCat) => {
+        categoriaActual = idCat;
+        cargarCatalogo(1, idCat);
+    };
+
+    document.addEventListener('click', (e) => {
+        if (e.target.id === 'link-logout' || e.target.id === 'btn-logout') {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('usuario');
+            alert('Sesión finalizada.');
+            window.location.href = rutaLogin;
+        }
+    });
+
+    cargarCatalogo();
 });
