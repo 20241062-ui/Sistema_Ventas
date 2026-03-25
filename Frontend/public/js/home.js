@@ -65,11 +65,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             galeria.innerHTML = ''; 
+            /*   ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
+                : 'https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png';
+            */
             if (data.productos && data.productos.length > 0) {
                 data.productos.forEach(prod => {
-                    const imgUrl = prod.vchImagen 
-                        ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
-                        : 'https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png';
+                    const imgUrl = prod.vchImagen //https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/
+                        ? `https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/${prod.vchImagen}`
+                        : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
 
                     galeria.innerHTML += `
                         <div class="producto">
