@@ -72,12 +72,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (inputId) inputId.value = data.hero.vchNo_Serie;
                 heroForm.action = rutaDetalle;
             }
-
+            
+            //Antes `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
             if (galeria && data.productos) {
                 galeria.innerHTML = ''; 
-                data.productos.forEach(prod => {
+                data.productos.forEach(prod => {    //https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/.png
                     const imgUrl = prod.vchImagen 
-                        ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
+                        ? `https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/${prod.vchImagen}`
                         : 'https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png';
 
                     galeria.innerHTML += `
