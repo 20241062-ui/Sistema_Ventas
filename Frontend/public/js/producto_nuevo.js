@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert("✅ Producto registrado con imagen en Cloudinary");
+                    alert("✅ Producto registrado");
                     window.location.href = 'menuAdministrador.html';
                 } else {
                     alert("❌ Error: " + result.mensaje);
