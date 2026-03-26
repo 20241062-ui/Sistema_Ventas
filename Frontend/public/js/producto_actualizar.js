@@ -1,3 +1,6 @@
+const cloudname = "dnu57rgek";
+const preset = "Precet_5C";
+
 document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const idProducto = params.get('id');
@@ -75,8 +78,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const imgPreview = document.getElementById('imagen-preview');
             if (imgPreview) {
                 imgPreview.src = prod.vchImagen 
-                    ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
-                    : `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png`;
+                    ? prod.vchImagen
+                    : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
             }
             //https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/
 
@@ -91,10 +94,54 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-            
+
+            const fileInput = document.getElementById("vchImagen");
+
+        
+            if (fileInput.files[0]) {
+                const file = fileInput.files[0];
+
+                const formDataCloud = new FormData();
+                formDataCloud.append("file", file);
+                formDataCloud.append("upload_preset", preset);
+
+                
+                formDataCloud.append(
+                    "public_id",
+                    data.vchNombre.replace(/\s+/g, "_")
+                );
+
+                try {
+                    const resCloud = await fetch(
+                        `https://api.cloudinary.com/v1_1/${cloudname}/image/upload`,
+                        {
+                            method: "POST",
+                            body: formDataCloud
+                        }
+                    );
+
+                    const cloudData = await resCloud.json();
+
+                    if (!resCloud.ok) {
+                        throw new Error(cloudData.error.message);
+                    }
+
+                    
+                    data.vchImagen = cloudData.secure_url;
+
+                } catch (error) {
+                    alert("Error subiendo imagen: " + error.message);
+                    return;
+                }
+
+            } else {
+                
+                data.vchImagen = document.getElementById("imagen-preview").src;
+            }
+
             data.vchNo_Serie = idProducto;
 
             try {
@@ -110,13 +157,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const result = await res.json();
 
                 if (res.ok) {
-                    alert("¡Producto actualizado exitosamente!");
+                    alert("✅ Producto actualizado correctamente");
                     window.location.href = 'menuAdministrador.html';
                 } else {
-                    alert("Error: " + (result.mensaje || "No se pudo actualizar el producto"));
+                    alert("❌ Error: " + (result.mensaje || "No se pudo actualizar"));
                 }
+
             } catch (error) {
-                console.error("❌ Error en la petición PUT:", error);
+                console.error("❌ Error:", error);
                 alert("Error de conexión con el servidor.");
             }
         });
