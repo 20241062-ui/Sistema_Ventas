@@ -75,13 +75,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const imgPreview = document.getElementById('imagen-preview');
             if (imgPreview) {
                 imgPreview.src = prod.vchImagen 
-                    ? `https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/${prod.vchImagen}`
-                    : `https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png`;
-            }
-
-            /*imgPreview.src = prod.vchImagen 
                     ? `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${prod.vchImagen}`
-                    : `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png`;*/
+                    : `https://comercializadorall.grupoctic.com/ComercializadoraLL/img/sin-imagen.png`;
+            }
+            //https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/
 
         } catch (error) {
             console.error("❌ Error al cargar producto:", error);
