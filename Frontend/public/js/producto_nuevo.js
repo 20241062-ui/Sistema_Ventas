@@ -1,3 +1,6 @@
+const cloudname = "dnu57rgek";
+const preset = "Precet_5C";
+
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const API_BASE = 'https://sistemaventasback.vercel.app/api/admin';
@@ -25,21 +28,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('btn-convertir').addEventListener('click', () => {
         if (tasaActual === 0) {
-            alert("Aún no tenemos la tasa de cambio. Intenta de nuevo en un momento.");
+            alert("Aún no tenemos la tasa de cambio.");
             return;
         }
         const usd = prompt("Ingrese el costo en Dólares (USD):");
         if (usd && !isNaN(usd)) {
             const mxn = (parseFloat(usd) * tasaActual).toFixed(2);
             document.getElementById('floPrecioCompra').value = mxn;
-            alert(`Convertido: $${usd} USD -> $${mxn} MXN`);
         }
     });
 
-    
     async function cargarSelectores() {
         try {
-            
             const resMarcas = await fetch(`${API_BASE}/marcas`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectMarca.innerHTML += `<option value="${m.intid_Marca}">${m.vchNombre}</option>`;
             });
 
-            
             const resCat = await fetch(`${API_BASE}/categorias`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -61,21 +60,42 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectCat.innerHTML += `<option value="${c.intid_Categoria}">${c.vchNombre}</option>`;
             });
 
-            console.log("Selectores cargados con éxito");
         } catch (error) {
             console.error("Error cargando selectores:", error);
-            alert("Error al cargar marcas/categorías. Verifica tu conexión.");
         }
     }
-
 
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            
             const imagenInput = document.getElementById('vchImagen');
-            const nombreImagen = imagenInput.files[0] ? imagenInput.files[0].name : 'default.jpg';
+            let imagenUrl = "";
+
+            
+            if (imagenInput.files[0]) {
+                const file = imagenInput.files[0];
+
+                const formDataCloud = new FormData();
+                formDataCloud.append("file", file);
+                formDataCloud.append("upload_preset", preset);
+
+                try {
+                    const resCloud = await fetch(`https://api.cloudinary.com/v1_1/${cloudname}/image/upload`, {
+                        method: "POST",
+                        body: formDataCloud
+                    });
+
+                    const cloudData = await resCloud.json();
+                    imagenUrl = cloudData.secure_url;
+
+                } catch (error) {
+                    alert("Error subiendo imagen a Cloudinary");
+                    return;
+                }
+            } else {
+                imagenUrl = "https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png";
+            }
 
             
             const producto = {
@@ -87,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 intStock: parseInt(document.getElementById('intStock').value) || 0,
                 intid_Categoria: parseInt(selectCat.value),
                 intid_Marca: parseInt(selectMarca.value),
-                vchImagen: nombreImagen
+                vchImagen: imagenUrl // 🔥 AQUÍ VA LA URL REAL
             };
 
             try {
@@ -103,18 +123,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert("✅ ¡Producto registrado con éxito!");
+                    alert("✅ Producto registrado con imagen en Cloudinary");
                     window.location.href = 'menuAdministrador.html';
                 } else {
-                    alert("❌ Error: " + (result.mensaje || "No se pudo guardar"));
+                    alert("❌ Error: " + result.mensaje);
                 }
+
             } catch (error) {
                 alert("⚠️ Error de conexión con el servidor.");
             }
         });
     }
 
-    
     cargarSelectores();
     obtenerTasaDolar();
 });
