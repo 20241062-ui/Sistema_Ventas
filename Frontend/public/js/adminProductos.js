@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             data.productos.forEach(prod => {
+                console.log("Producto actual:", prod);
                 const tr = document.createElement('tr');
                 if (prod.Estado == 0) tr.classList.add('fila-inactiva');
 
