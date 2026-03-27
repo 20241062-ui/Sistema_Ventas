@@ -12,7 +12,7 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
     seccion.style.display = 'block';
     tablaDiv.innerHTML = `
         <div style="text-align:center; padding:20px;">
-            <p>Calculando modelo exponencial para: <strong>${nombreProducto}</strong>...</p>
+            <p>Generando modelo matemático de decaimiento para: <strong>${nombreProducto}</strong>...</p>
         </div>`;
 
     try {
@@ -20,39 +20,92 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
         const data = await res.json();
 
         if (res.ok) {
+            const tPedido = parseFloat(data.resultados.semanasPedido);
+            const tAgotamiento = parseFloat(data.resultados.semanasAgotamiento);
+
+            // --- LÓGICA DE CATEGORIZACIÓN (Semaforización de Tiempos) ---
+            let mensajeStatus, claseAlerta, sugerenciaAdmin;
+
+            if (tAgotamiento <= 4) {
+                // RIESGO ALTO: MENOS DE UN MES
+                mensajeStatus = "🚨 ROTACIÓN CRÍTICA: AGOTAMIENTO EN MENOS DE UN MES";
+                claseAlerta = "background-color: #ffe5e5; color: #d63031; border: 1px solid #ff7675;";
+                sugerenciaAdmin = "El inventario actual no cubre la demanda mensual. Se requiere una orden de compra inmediata.";
+            } else if (tAgotamiento > 52) {
+                // RIESGO BAJO / SOBREINVENTARIO: MÁS DE UN AÑO
+                mensajeStatus = "💤 PRODUCTO ESTANCADO: SOBREINVENTARIO DETECTADO";
+                claseAlerta = "background-color: #e1f5fe; color: #0288d1; border: 1px solid #29b6f6;";
+                sugerenciaAdmin = "El stock excede la demanda anual prevista. Evaluar estrategias de promoción o liquidación.";
+            } else {
+                // RANGO OPERABLE / ESTABLE
+                mensajeStatus = "✅ STOCK OPERABLE: FLUJO DE VENTAS ESTABLE";
+                claseAlerta = "background-color: #e8f5e9; color: #2e7d32; border: 1px solid #66bb6a;";
+                sugerenciaAdmin = "El ritmo de desplazamiento es saludable. Mantener el monitoreo estándar de reposición.";
+            }
+
+            // Mensaje específico para el punto de reorden vencido
+            const textoPedido = tPedido < 0 
+                ? `<span style="color:#e74c3c; font-weight:bold;">⚠️ PEDIDO URGENTE (Punto vencido)</span>` 
+                : `${tPedido.toFixed(2)} semanas`;
+
+            const textoAgotamiento = tAgotamiento > 52 
+                ? `+52 semanas (más de 1 año)` 
+                : `${tAgotamiento.toFixed(2)} semanas`;
+
             tablaDiv.innerHTML = `
+                <div style="padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold; ${claseAlerta}">
+                    ${mensajeStatus}
+                </div>
+
                 <table class="tabla-simulacion" style="width:100%; border-collapse: collapse; margin-top:10px;">
                     <thead>
                         <tr style="background:#2c3e50; color:white;">
-                            <th style="padding:10px;">Escenario Crítico</th>
-                            <th>Tiempo (Semanas)</th>
-                            <th>Decisión Administrativa</th>
+                            <th style="padding:12px; text-align: left;">Escenario Crítico</th>
+                            <th style="padding:12px;">Tiempo Estimado</th>
+                            <th style="padding:12px; text-align: left;">Decisión Administrativa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding:10px;">Punto de Reorden (10 u)</td>
-                            <td><strong>${data.resultados.semanasPedido}</strong></td>
-                            <td>Generar pedido automático</td>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:15px;"><b>Punto de Reorden (10 u)</b></td>
+                            <td style="text-align:center;">${textoPedido}</td>
+                            <td>Generar orden de reposición prioritaria</td>
                         </tr>
                         <tr>
-                            <td style="padding:10px;">Agotamiento (1 u)</td>
-                            <td><strong>${data.resultados.semanasAgotamiento}</strong></td>
-                            <td style="color:red; font-weight:bold;">Alerta Crítica de Quiebre</td>
+                            <td style="padding:15px;"><b>Agotamiento Total (1 u)</b></td>
+                            <td style="text-align:center;"><b>${textoAgotamiento}</b></td>
+                            <td>Cierre de inventario y alerta de quiebre</td>
                         </tr>
                     </tbody>
                 </table>
-                <div style="margin-top: 15px; background: #f8f9fa; padding: 12px; border-left: 4px solid #2c3e50; font-family: monospace;">
-                    <strong>Modelo Matemático:</strong> S(t) = ${data.stockInicial}e^{${data.k}t}<br>
-                    <strong>Tasa de ventas:</strong> ${(Math.abs(data.k) * 100).toFixed(2)}% de inventario/semana.
+
+                <div style="margin-top: 20px; background: #fdfdfd; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                    <p style="margin-top:0; color:#7f8c8d; font-size: 0.85em; font-weight:bold; text-transform:uppercase;">Modelo Matemático Aplicado:</p>
+                    
+                    <div style="font-size: 1.5em; text-align:center; margin:15px 0; color:#2c3e50; font-family: 'Times New Roman', serif;">
+                        $$S(t) = ${data.stockInicial} \cdot e^{${data.k}t}$$
+                    </div>
+                    
+                    <div style="font-family: monospace; font-size:0.9em; color:#34495e; border-top: 1px solid #eee; padding-top:10px;">
+                        <b>Variables del Sistema:</b><br>
+                        • Stock Inicial estimado ($S_0$): ${data.stockInicial} unidades<br>
+                        • Tasa de decaimiento ($k$): ${data.k}<br>
+                        • Variación semanal: ${(Math.abs(data.k) * 100).toFixed(2)}% del inventario<br>
+                        • Recomendación: ${sugerenciaAdmin}
+                    </div>
                 </div>
             `;
+
+            // Ejecutar renderizado de MathJax si está presente
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
 
             generarGraficaExponencial(data.stockInicial, data.k, nombreProducto);
             seccion.scrollIntoView({ behavior: 'smooth' });
 
         } else {
-            tablaDiv.innerHTML = `<p style="color:red; font-weight:bold;">⚠️ Error: ${data.error || "No se pudo procesar"}</p>`;
+            tablaDiv.innerHTML = `<p style="color:red; font-weight:bold;">⚠️ Error: ${data.error || "No se pudo procesar el cálculo"}</p>`;
         }
     } catch (error) {
         console.error("Error en la simulación:", error);
@@ -68,7 +121,8 @@ function generarGraficaExponencial(C, k, nombre) {
     const etiquetasSemanas = [];
     const datosPuntos = [];
 
-    for (let t = 0; t <= 12; t++) {
+    // Graficamos hasta 14 semanas para ver bien la curva de agotamiento
+    for (let t = 0; t <= 14; t++) {
         etiquetasSemanas.push("Sem. " + t);
         const stockEnT = C * Math.exp(k * t);
         datosPuntos.push(stockEnT > 0 ? stockEnT.toFixed(2) : 0);
@@ -83,30 +137,34 @@ function generarGraficaExponencial(C, k, nombre) {
         data: {
             labels: etiquetasSemanas,
             datasets: [{
-                label: `Proyección de Stock: ${nombre}`,
+                label: `Curva de Decaimiento: ${nombre}`,
                 data: datosPuntos,
                 borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
                 borderWidth: 3,
                 fill: true,
-                tension: 0.4,
-                pointRadius: 5,
+                tension: 0.3,
+                pointRadius: 4,
                 pointBackgroundColor: '#2c3e50'
             }]
         },
         options: {
             responsive: true,
             plugins: {
+                legend: { position: 'top' },
                 tooltip: {
                     callbacks: {
-                        label: (context) => `Unidades estimadas: ${context.parsed.y}`
+                        label: (context) => `Stock Estimado: ${context.parsed.y} u`
                     }
                 }
             },
             scales: {
                 y: { 
                     beginAtZero: true,
-                    title: { display: true, text: 'Unidades Disponibles' }
+                    title: { display: true, text: 'Cantidad (Unidades)' }
+                },
+                x: {
+                    title: { display: true, text: 'Tiempo (Semanas)' }
                 }
             }
         }
