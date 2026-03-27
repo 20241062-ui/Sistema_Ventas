@@ -115,15 +115,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    window.abrirSimulacion = (id, nombre) => {
-        if (typeof iniciarAnalisisDinamico === 'function') {
-            iniciarAnalisisDinamico(id, nombre);
-        } else {
-            console.log("Iniciando análisis para " + id);
-            document.getElementById('seccionSimulacion').style.display = 'block';
-        }
-    };
-
     const btnBuscar = document.getElementById('btn-buscar');
     const inputBuscar = document.getElementById('input-buscar');
     if (btnBuscar) {
