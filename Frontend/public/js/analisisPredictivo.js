@@ -40,12 +40,12 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                 sugerenciaAdmin = "El ritmo de desplazamiento es saludable. Mantener el monitoreo estándar de reposición.";
             }
 
-            const textoPedido = tPedido < 0 
-                ? `<span style="color:#e74c3c; font-weight:bold;">⚠️ PEDIDO URGENTE (Punto vencido)</span>` 
+            const textoPedido = tPedido < 0
+                ? `<span style="color:#e74c3c; font-weight:bold;">⚠️ PEDIDO URGENTE (Punto vencido)</span>`
                 : `${tPedido.toFixed(2)} semanas`;
 
-            const textoAgotamiento = tAgotamiento > 52 
-                ? `+52 semanas (más de 1 año)` 
+            const textoAgotamiento = tAgotamiento > 52
+                ? `+52 semanas (más de 1 año)`
                 : `${tAgotamiento.toFixed(2)} semanas`;
 
             tablaDiv.innerHTML = `
@@ -84,8 +84,8 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                     
                     <div style="font-family: monospace; font-size:0.9em; color:#34495e; border-top: 1px solid #eee; padding-top:10px;">
                         <b>Variables del Sistema:</b><br>
-                        • Stock Inicial estimado ($S_0$): ${data.stockInicial} unidades<br>
-                        • Tasa de decaimiento ($k$): ${data.k}<br>
+                        • Stock Inicial estimado \( (S_0) \): ${data.stockInicial} unidades<br>
+                        • Tasa de decaimiento \( (k) \): ${data.k}<br>
                         • Variación semanal: ${(Math.abs(data.k) * 100).toFixed(2)}% del inventario<br>
                         • Recomendación: ${sugerenciaAdmin}
                     </div>
@@ -153,7 +153,7 @@ function generarGraficaExponencial(C, k, nombre) {
                 }
             },
             scales: {
-                y: { 
+                y: {
                     beginAtZero: true,
                     title: { display: true, text: 'Cantidad (Unidades)' }
                 },
