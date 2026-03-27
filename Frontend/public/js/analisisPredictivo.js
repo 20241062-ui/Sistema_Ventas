@@ -1,8 +1,13 @@
-const API_BASE_ANALISIS = "https://sistemaventasback.vercel.app/api/analisis/simulacion";
+const API_SIMULACION = "https://sistemaventasback.vercel.app/api/analisis/simulacion";
 
-async function iniciarAnalisisDinamico(noSerie, nombreProducto) {
+async function ejecutarPrediccion(noSerie, nombreProducto) {
     const seccion = document.getElementById('seccionSimulacion');
     const tablaDiv = document.getElementById('tablaResultados');
+
+    if (!noSerie || noSerie === 'undefined') {
+        console.error("Error: NoSerie no definido");
+        return;
+    }
 
     seccion.style.display = 'block';
     tablaDiv.innerHTML = `
@@ -11,7 +16,7 @@ async function iniciarAnalisisDinamico(noSerie, nombreProducto) {
         </div>`;
 
     try {
-        const res = await fetch(`${API_BASE_ANALISIS}/${noSerie}`);
+        const res = await fetch(`${API_SIMULACION}/${noSerie}`);
         const data = await res.json();
 
         if (res.ok) {
@@ -44,7 +49,6 @@ async function iniciarAnalisisDinamico(noSerie, nombreProducto) {
             `;
 
             generarGraficaExponencial(data.stockInicial, data.k, nombreProducto);
-
             seccion.scrollIntoView({ behavior: 'smooth' });
 
         } else {

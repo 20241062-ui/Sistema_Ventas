@@ -63,12 +63,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             data.productos.forEach(prod => {
-                console.log("Producto actual:", prod); // Esto te dirá si se llama vchNo_Serie o No_Serie
                 const tr = document.createElement('tr');
                 if (prod.Estado == 0) tr.classList.add('fila-inactiva');
 
                 const btnPrediccion = prod.tieneVentas
-                    ? `<button class="btn-prediccion" onclick="iniciarAnalisisDinamico('${prod.vchNo_Serie}', '${prod.vchNombre}')">📊</button>`
+                    ? `<button class="btn-prediccion" onclick="ejecutarPrediccion('${prod.vchNo_Serie}', '${prod.vchNombre}')">📊</button>`
                     : `<button class="btn-disabled" disabled>📉</button>`;
 
                 tr.innerHTML = `
