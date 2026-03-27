@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     const API_URL = 'https://sistemaventasback.vercel.app/api/admin/productos';
-    
+
     if (!token || !usuario || usuario.rol !== 'Administrador') {
         alert("Acceso restringido. Por favor, inicia sesión como administrador.");
         window.location.href = '../login.html';
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('link-logout-admin').addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.clear(); 
+            localStorage.clear();
             alert('Sesión administrativa finalizada.');
             window.location.href = '../index.html';
         });
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const res = await fetch(`${API_URL}?pagina=${pagina}&buscar=${buscar}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`, 
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             });
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (inactivos) inactivos.textContent = data.counts?.inactivos || 0;
 
             const tbody = document.getElementById('tabla-productos-body');
-            if (!tbody) return; 
+            if (!tbody) return;
 
             tbody.innerHTML = '';
 
@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const tr = document.createElement('tr');
                 if (prod.Estado == 0) tr.classList.add('fila-inactiva');
 
-                const btnPrediccion = prod.tieneVentas 
-                    ? `<button class="btn-prediccion" onclick="abrirSimulacion('${prod.vchNo_Serie}', '${prod.vchNombre}')" title="Análisis Predictivo">📊</button>`
-                    : `<button class="btn-disabled" title="Sin ventas registradas" disabled>📉</button>`;
+                const btnPrediccion = prod.tieneVentas
+                    ? `<button class="btn-prediccion" onclick="iniciarAnalisisDinamico('${prod.vchNo_Serie}', '${prod.vchNombre}')">📊</button>`
+                    : `<button class="btn-disabled" disabled>📉</button>`;
 
                 tr.innerHTML = `
                     <td><strong>${prod.vchNo_Serie}</strong></td>
@@ -84,9 +84,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td class="acciones">
                         <button class="btn-edit" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">Editar</button>
                         ${prod.Estado == 1
-                            ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">Baja</button>`
-                            : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">Alta</button>`
-                        }
+                        ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">Baja</button>`
+                        : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">Alta</button>`
+                    }
                         ${btnPrediccion}
                     </td>
                 `;
