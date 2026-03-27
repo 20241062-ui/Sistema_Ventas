@@ -84,8 +84,8 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                     
                     <div style="font-family: 'Segoe UI', Tahoma, sans-serif; font-size:0.95em; color:#34495e; border-top: 1px solid #eee; padding-top:15px; line-height: 1.8;">
                         <b style="color: #2c3e50;">Parámetros del Modelo de Decaimiento:</b><br>
-                        • Stock Inicial estimado \( S_0 \): <b style="color: #2c3e50;">${data.stockInicial} unidades</b><br>
-                        • Tasa de decaimiento \( k \): <b style="color: #2c3e50;">${data.k}</b><br>
+                        • Stock Inicial estimado \\( S_0 \\): <b style="color: #2c3e50;">${data.stockInicial} unidades</b><br>
+                        • Tasa de decaimiento \\( k \\): <b style="color: #2c3e50;">${data.k}</b><br>
                         • Variación semanal: <b style="color: #2c3e50;">${(Math.abs(data.k) * 100).toFixed(2)}%</b> del inventario disponible.<br>
                         <p style="margin-top: 10px; font-style: italic; color: #7f8c8d;">
                             <strong>Sugerencia:</strong> ${sugerenciaAdmin}
@@ -94,6 +94,7 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                 </div>
             `;
 
+            // Forzar a MathJax a procesar el nuevo HTML inyectado
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise([tablaDiv]).catch((err) => console.log("Error MathJax:", err));
             }
