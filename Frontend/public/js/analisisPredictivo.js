@@ -1,77 +1,75 @@
-// URL de tu API en Vercel
-const API_SIMULACION = "https://sistemaventasback.vercel.app/api/analisis/simulacion";
+const API_BASE_ANALISIS = "https://sistemaventasback.vercel.app/api/analisis/simulacion";
 
-async function abrirSimulacion() {
+async function iniciarAnalisisDinamico(noSerie, nombreProducto) {
     const seccion = document.getElementById('seccionSimulacion');
     const tablaDiv = document.getElementById('tablaResultados');
 
-    // Mostramos la sección
     seccion.style.display = 'block';
-    tablaDiv.innerHTML = "<p>Procesando modelo matemático...</p>";
+    tablaDiv.innerHTML = `
+        <div style="text-align:center; padding:20px;">
+            <p>Calculando modelo exponencial para: <strong>${nombreProducto}</strong>...</p>
+        </div>`;
 
     try {
-        const res = await fetch(API_SIMULACION);
+        const res = await fetch(`${API_BASE_ANALISIS}/${noSerie}`);
         const data = await res.json();
 
         if (res.ok) {
-            // 1. Renderizar la Tabla (Exigencia de la Rúbrica)
             tablaDiv.innerHTML = `
-                <table class="tabla-simulacion">
+                <table class="tabla-simulacion" style="width:100%; border-collapse: collapse; margin-top:10px;">
                     <thead>
-                        <tr>
-                            <th>Escenario Critico</th>
+                        <tr style="background:#2c3e50; color:white;">
+                            <th style="padding:10px;">Escenario Crítico</th>
                             <th>Tiempo (Semanas)</th>
                             <th>Decisión Administrativa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Punto de Reorden (10 u)</td>
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding:10px;">Punto de Reorden (10 u)</td>
                             <td><strong>${data.resultados.semanasPedido}</strong></td>
-                            <td>Generar pedido automático al proveedor</td>
+                            <td>Generar pedido automático</td>
                         </tr>
                         <tr>
-                            <td>Agotamiento de Stock (1 u)</td>
+                            <td style="padding:10px;">Agotamiento (1 u)</td>
                             <td><strong>${data.resultados.semanasAgotamiento}</strong></td>
-                            <td>Cierre de inventario / Alerta Crítica</td>
+                            <td style="color:red; font-weight:bold;">Alerta Crítica de Quiebre</td>
                         </tr>
                     </tbody>
                 </table>
-                <div style="margin-top: 15px; background: #f8f9fa; padding: 10px; border-left: 4px solid #2c3e50;">
-                    <small><strong>Modelo Generado:</strong> S(t) = ${data.C}e^{${data.k}t}</small><br>
-                    <small><strong>Interpretación:</strong> La tasa de decrecimiento es del ${(Math.abs(data.k) * 100).toFixed(2)}% semanal.</small>
+                <div style="margin-top: 15px; background: #f8f9fa; padding: 12px; border-left: 4px solid #2c3e50; font-family: monospace;">
+                    <strong>Modelo Matemático:</strong> S(t) = ${data.stockInicial}e^{${data.k}t}<br>
+                    <strong>Tasa de ventas:</strong> ${(Math.abs(data.k) * 100).toFixed(2)}% de inventario/semana.
                 </div>
             `;
 
-            // 2. Renderizar la Gráfica
-            generarGraficaExponencial(data.C, data.k);
+            generarGraficaExponencial(data.stockInicial, data.k, nombreProducto);
 
-            // Desplazar la vista al reporte
             seccion.scrollIntoView({ behavior: 'smooth' });
 
         } else {
-            tablaDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+            tablaDiv.innerHTML = `<p style="color:red; font-weight:bold;">⚠️ Error: ${data.error || "No se pudo procesar"}</p>`;
         }
     } catch (error) {
         console.error("Error en la simulación:", error);
-        tablaDiv.innerHTML = "<p style='color:red;'>No se pudo conectar con el motor de cálculo.</p>";
+        tablaDiv.innerHTML = "<p style='color:red;'>❌ Error de conexión con el motor de cálculo.</p>";
     }
 }
 
-function generarGraficaExponencial(C, k) {
-    const ctx = document.getElementById('graficaStock').getContext('2d');
+function generarGraficaExponencial(C, k, nombre) {
+    const canvas = document.getElementById('graficaStock');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
-    // Generar puntos para la curva (de semana 0 a 14 para ver el agotamiento)
     const etiquetasSemanas = [];
     const datosPuntos = [];
 
-    for (let t = 0; t <= 14; t++) {
-        etiquetasSemanas.push("Semana " + t);
+    for (let t = 0; t <= 12; t++) {
+        etiquetasSemanas.push("Sem. " + t);
         const stockEnT = C * Math.exp(k * t);
-        datosPuntos.push(stockEnT.toFixed(2));
+        datosPuntos.push(stockEnT > 0 ? stockEnT.toFixed(2) : 0);
     }
 
-    // Si ya existe una gráfica previa, la destruimos para evitar solapamiento
     if (window.miGrafica) {
         window.miGrafica.destroy();
     }
@@ -81,29 +79,30 @@ function generarGraficaExponencial(C, k) {
         data: {
             labels: etiquetasSemanas,
             datasets: [{
-                label: 'Curva de Decrecimiento de Stock (iPhone 15 Pro)',
+                label: `Proyección de Stock: ${nombre}`,
                 data: datosPuntos,
-                borderColor: '#dc3545',
-                backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231, 76, 60, 0.2)',
                 borderWidth: 3,
                 fill: true,
-                tension: 0.3,
-                pointRadius: 4,
+                tension: 0.4,
+                pointRadius: 5,
                 pointBackgroundColor: '#2c3e50'
             }]
         },
         options: {
             responsive: true,
             plugins: {
-                legend: { position: 'top' }
+                tooltip: {
+                    callbacks: {
+                        label: (context) => `Unidades estimadas: ${context.parsed.y}`
+                    }
+                }
             },
             scales: {
-                y: {
+                y: { 
                     beginAtZero: true,
-                    title: { display: true, text: 'Cantidad de Unidades (S)' }
-                },
-                x: {
-                    title: { display: true, text: 'Tiempo (t) en Semanas' }
+                    title: { display: true, text: 'Unidades Disponibles' }
                 }
             }
         }
