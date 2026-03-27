@@ -84,9 +84,9 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                     
                     <div style="font-family: monospace; font-size:0.9em; color:#34495e; border-top: 1px solid #eee; padding-top:10px;">
                         <b>Variables del Sistema:</b><br>
-                        • Stock Inicial estimado \( (S_0) \): ${data.stockInicial} unidades<br>
-                        • Tasa de decaimiento \( (k) \): ${data.k}<br>
-                        • Variación semanal: ${(Math.abs(data.k) * 100).toFixed(2)}% del inventario<br>
+                        • Stock Inicial estimado \( S_0 \): <b>${data.stockInicial} unidades</b><br>
+                        • Tasa de decaimiento \( k \): <b>${data.k}</b><br>
+                        • Variación semanal: <b>${(Math.abs(data.k) * 100).toFixed(2)}%</b> del inventario<br>
                         • Recomendación: ${sugerenciaAdmin}
                     </div>
                 </div>
