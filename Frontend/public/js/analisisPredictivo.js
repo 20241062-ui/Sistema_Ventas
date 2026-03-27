@@ -27,23 +27,19 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
             let mensajeStatus, claseAlerta, sugerenciaAdmin;
 
             if (tAgotamiento <= 4) {
-                // RIESGO ALTO: MENOS DE UN MES
                 mensajeStatus = "🚨 ROTACIÓN CRÍTICA: AGOTAMIENTO EN MENOS DE UN MES";
                 claseAlerta = "background-color: #ffe5e5; color: #d63031; border: 1px solid #ff7675;";
                 sugerenciaAdmin = "El inventario actual no cubre la demanda mensual. Se requiere una orden de compra inmediata.";
             } else if (tAgotamiento > 52) {
-                // RIESGO BAJO / SOBREINVENTARIO: MÁS DE UN AÑO
                 mensajeStatus = "💤 PRODUCTO ESTANCADO: SOBREINVENTARIO DETECTADO";
                 claseAlerta = "background-color: #e1f5fe; color: #0288d1; border: 1px solid #29b6f6;";
                 sugerenciaAdmin = "El stock excede la demanda anual prevista. Evaluar estrategias de promoción o liquidación.";
             } else {
-                // RANGO OPERABLE / ESTABLE
                 mensajeStatus = "✅ STOCK OPERABLE: FLUJO DE VENTAS ESTABLE";
                 claseAlerta = "background-color: #e8f5e9; color: #2e7d32; border: 1px solid #66bb6a;";
                 sugerenciaAdmin = "El ritmo de desplazamiento es saludable. Mantener el monitoreo estándar de reposición.";
             }
 
-            // Mensaje específico para el punto de reorden vencido
             const textoPedido = tPedido < 0 
                 ? `<span style="color:#e74c3c; font-weight:bold;">⚠️ PEDIDO URGENTE (Punto vencido)</span>` 
                 : `${tPedido.toFixed(2)} semanas`;
@@ -79,11 +75,11 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                     </tbody>
                 </table>
 
-                <div style="margin-top: 20px; background: #fdfdfd; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                <div id="contenedor-math" style="margin-top: 20px; background: #fdfdfd; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
                     <p style="margin-top:0; color:#7f8c8d; font-size: 0.85em; font-weight:bold; text-transform:uppercase;">Modelo Matemático Aplicado:</p>
                     
                     <div style="font-size: 1.5em; text-align:center; margin:15px 0; color:#2c3e50; font-family: 'Times New Roman', serif;">
-                        $$S(t) = ${data.stockInicial} \cdot e^{${data.k}t}$$
+                        $$S(t) = ${data.stockInicial} \\cdot e^{${data.k}t}$$
                     </div>
                     
                     <div style="font-family: monospace; font-size:0.9em; color:#34495e; border-top: 1px solid #eee; padding-top:10px;">
@@ -96,9 +92,8 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                 </div>
             `;
 
-            // Ejecutar renderizado de MathJax si está presente
-            if (window.MathJax) {
-                MathJax.typesetPromise();
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([tablaDiv]).catch((err) => console.log("Error MathJax:", err));
             }
 
             generarGraficaExponencial(data.stockInicial, data.k, nombreProducto);
@@ -121,7 +116,6 @@ function generarGraficaExponencial(C, k, nombre) {
     const etiquetasSemanas = [];
     const datosPuntos = [];
 
-    // Graficamos hasta 14 semanas para ver bien la curva de agotamiento
     for (let t = 0; t <= 14; t++) {
         etiquetasSemanas.push("Sem. " + t);
         const stockEnT = C * Math.exp(k * t);
