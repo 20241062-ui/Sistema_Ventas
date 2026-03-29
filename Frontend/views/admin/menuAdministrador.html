@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Productos - Sistema de Ventas</title>
     <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -67,11 +76,6 @@
                     <button type="button" id="btn-buscar" class="btn-superior buscar">🔍 Buscar</button>
                     <button type="button" id="btn-limpiar" class="btn-superior limpiar"
                         style="display:none;">Limpiar</button>
-
-                    <button type="button" class="btn-superior" onclick="abrirSimulacion()"
-                        style="background-color: #2c3e50; margin-left: 5px;">
-                        📊 Simulación
-                    </button>
                 </div>
             </div>
 
