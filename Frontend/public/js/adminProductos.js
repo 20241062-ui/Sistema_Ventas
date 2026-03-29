@@ -77,11 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td class="descripcion">${prod.vchDescripcion || 'Sin descripción'}</td>
                     <td>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
                     <td>${prod.intStock || 0}</td>
-                    <td>
-                        <span class="badge ${prod.Estado == 1 ? 'status-active' : 'status-inactive'}">
-                            ${prod.Estado == 1 ? 'Activo' : 'Inactivo'}
-                        </span>
-                    </td>
+                    <td>${prod.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
                     <td class="acciones">
                         <button class="guardar" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">Editar</button>
                         ${prod.Estado == 1
