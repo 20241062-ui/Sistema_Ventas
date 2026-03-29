@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const API_URL = 'https://sistemaventasback.vercel.app/api/admin/marcas';
     const token = localStorage.getItem('token');
     const tablaBody = document.getElementById('tabla-marcas-body');
+    const btnBuscar = document.getElementById('btn-buscar');
+    const inputBuscar = document.getElementById('input-buscar');
 
     const cargarMarcas = async (buscar = "") => {
         try {
@@ -45,6 +47,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert("Error al procesar la baja.");
         }
     };
+     if (btnBuscar) {
+        btnBuscar.addEventListener('click', () => cargarMarcas(inputBuscar.value));
+    }
 
     cargarMarcas();
 });
