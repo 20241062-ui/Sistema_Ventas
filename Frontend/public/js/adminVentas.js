@@ -63,14 +63,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             tbody.innerHTML = '<tr><td colspan="7" style="color:red; text-align:center;">Error al obtener los datos del servidor.</td></tr>';
         }
     };
-    
-    if (btnBuscar) {
+
+   if (btnBuscar) {
         btnBuscar.onclick = () => {
-            busquedaActual = inputBuscar.value.trim();
-            cargarDashboard(1, busquedaActual);
+            const valor = inputBuscar.value.trim(); 
+            cargarVentas(valor); 
         };
     }
 
-    // Carga inicial
+    const btnLimpiar = document.getElementById('btn-limpiar');
+    if (btnLimpiar) {
+        btnLimpiar.onclick = () => {
+            inputBuscar.value = ""; 
+            cargarVentas(""); 
+        };
+    }
+   
     cargarVentas();
 });
