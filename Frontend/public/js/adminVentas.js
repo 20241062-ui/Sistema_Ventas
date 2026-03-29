@@ -11,13 +11,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const tbody = document.getElementById("tabla-ventas-body");
     const totalVentas = document.getElementById("total-ventas");
+    
+    // Referencias para la búsqueda
     const inputBuscar = document.getElementById('input-buscar-ventas');
     const btnBuscar = document.getElementById('btn-buscar-ventas');
 
     const cargarVentas = async (buscar = "") => {
         try {
-           
-            tbody.innerHTML = '<tr><td colspan="7">Buscando ventas...</td></tr>';
+            // Limpiamos la tabla y ponemos un mensaje de carga
+            tbody.innerHTML = '<tr><td colspan="7">Cargando ventas...</td></tr>';
 
             const res = await fetch(`${API_URL}/ventas?buscar=${encodeURIComponent(buscar)}`, {
                 headers: {
@@ -26,15 +28,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             const data = await res.json();
-
-           
             totalVentas.textContent = data.total || 0;
             tbody.innerHTML = "";
 
             if (!data.ventas || data.ventas.length === 0) {
                 tbody.innerHTML = `
                 <tr>
-                    <td colspan="7" style="text-align:center;">No se encontraron ventas con ese criterio.</td>
+                    <td colspan="7" style="text-align:center;">No se encontraron ventas registradas.</td>
                 </tr>`;
                 return;
             }
@@ -42,16 +42,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             data.ventas.forEach(v => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td><strong>V-${v.id_Ventas}</strong></td>
+                    <td>V-${v.id_Ventas}</td>
                     <td>${v.nombre_cliente}</td>
                     <td>${v.Items}</td>
-                    <td>$${parseFloat(v.Total_Venta).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
+                    <td>$${parseFloat(v.Total_Venta).toFixed(2)}</td>
                     <td>${v.Fecha_Venta}</td>
-                    <td><span class="estado-completado">Completada</span></td>
+                    <td>Completada</td>
                     <td>
-                        <button class="guardar" 
+                        <button class="guardar"
                         onclick="window.location.href='venta_ver.html?id=${v.id_Ventas}'">
-                        Ver Detalle
+                        Ver
                         </button>
                     </td>
                 `;
@@ -60,22 +60,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         } catch (error) {
             console.error("Error cargar ventas:", error);
-            tbody.innerHTML = '<tr><td colspan="7" style="color:red;">Error al conectar con el servidor.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="color:red; text-align:center;">Error al obtener los datos del servidor.</td></tr>';
         }
     };
 
-    btnBuscar.onclick = () => {
-        const valorBusqueda = inputBuscar.value.trim();
-        cargarVentas(valorBusqueda);
-    };
-
-   inputBuscar.onkeypress = (e) => {
-    if (e.key === 'Enter') {
-        const valorBusqueda = inputBuscar.value.trim();
-        cargarVentas(valorBusqueda);
+    // Lógica del botón Buscar (Igual que en productos)
+    if (btnBuscar) {
+        btnBuscar.onclick = () => {
+            const busquedaActual = inputBuscar.value.trim();
+            cargarVentas(busquedaActual);
+        };
     }
-};
 
-   
+    // Carga inicial
     cargarVentas();
 });
