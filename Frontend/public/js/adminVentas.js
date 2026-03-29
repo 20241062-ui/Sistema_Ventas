@@ -63,17 +63,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-   if (btnBuscar) {
-        btnBuscar.onclick = () => {
-            const valor = inputBuscar.value.trim(); 
-            cargarVentas(valor); 
-        };
-    }
-
     const btnLimpiar = document.getElementById('btn-limpiar');
     if (btnBuscar) {
         btnBuscar.addEventListener('click', () => cargarCategorias(inputBuscar.value));
     }
-   
+    
     cargarVentas();
 });
