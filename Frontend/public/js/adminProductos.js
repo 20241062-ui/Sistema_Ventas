@@ -83,10 +83,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </span>
                     </td>
                     <td class="acciones">
-                        <button class="btn-edit" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">Editar</button>
+                        <button class="guardar" onclick="window.location.href='producto_actualizar.html?id=${prod.vchNo_Serie}'">Editar</button>
                         ${prod.Estado == 1
-                        ? `<button class="btn-baja" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">Baja</button>`
-                        : `<button class="btn-alta" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">Alta</button>`
+                        ? `<button class="cancelar" onclick="cambiarEstado('${prod.vchNo_Serie}', 0)">Baja</button>`
+                        : `<button class="guardar" onclick="cambiarEstado('${prod.vchNo_Serie}', 1)">Alta</button>`
                     }
                         ${btnPrediccion}
                     </td>
