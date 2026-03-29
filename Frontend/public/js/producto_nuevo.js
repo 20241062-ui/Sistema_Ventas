@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 intStock: parseInt(document.getElementById('intStock').value) || 0,
                 intid_Categoria: parseInt(selectCat.value),
                 intid_Marca: parseInt(selectMarca.value),
-                vchImagen: imagenUrl // 🔥 AQUÍ VA LA URL REAL
+                vchImagen: imagenUrl 
             };
 
             try {
