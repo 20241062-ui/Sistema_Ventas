@@ -3,9 +3,11 @@ const API_URL = "https://sistemaventasback.vercel.app/api/proveedores";
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formProveedor");
     const tablaBody = document.getElementById("tablaProveedoresBody");
-    const formBuscar = document.getElementById("formBuscarProveedor"); 
     const params = new URLSearchParams(window.location.search);
     const editRFC = params.get("id");
+
+    const btnBuscar = document.getElementById('btn-buscar');
+    const inputBuscar = document.getElementById('input-buscar');
 
     if (editRFC && form) {
         document.getElementById("tituloFormulario").innerText = "Actualizar proveedor";
@@ -28,11 +30,19 @@ document.addEventListener("DOMContentLoaded", () => {
         cargarProveedores();
     }
 
-    if (formBuscar) {
-        formBuscar.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const valor = document.getElementById("inputBuscar").value;
+    if (btnBuscar) {
+        btnBuscar.addEventListener('click', () => {
+            const valor = inputBuscar.value.trim();
             cargarProveedores(valor);
+        });
+    }
+
+    
+    if (inputBuscar) {
+        inputBuscar.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                cargarProveedores(inputBuscar.value.trim());
+            }
         });
     }
 
@@ -62,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+    
 });
 
 async function cargarProveedores(buscar = "") {
@@ -110,3 +121,4 @@ async function eliminarProveedor(rfc) {
         }
     }
 }
+
