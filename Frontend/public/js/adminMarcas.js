@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const API_URL = 'https://sistemaventasback.vercel.app/api/admin/marcas';
     const token = localStorage.getItem('token');
     const tablaBody = document.getElementById('tabla-marcas-body');
-    const btnBuscar = document.getElementById('btn-buscar');
-    const inputBuscar = document.getElementById('input-buscar');
+    const btnBuscar = document.getElementById('btnBuscar'); 
+    const inputBuscar = document.getElementById('inputBuscar');
 
     const cargarMarcas = async (buscar = "") => {
         try {
