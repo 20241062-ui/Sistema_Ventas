@@ -63,10 +63,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const btnLimpiar = document.getElementById('btn-limpiar');
+   const btnLimpiar = document.getElementById('btn-limpiar');
+
     if (btnBuscar) {
-        btnBuscar.addEventListener('click', () => cargarCategorias(inputBuscar.value));
+        btnBuscar.addEventListener('click', () => {
+            const valorBusqueda = inputBuscar.value;
+            cargarVentas(valorBusqueda); 
+        });
     }
-    
+    if (inputBuscar) {
+        inputBuscar.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                cargarVentas(inputBuscar.value);
+            }
+        });
+    }
+
     cargarVentas();
 });
