@@ -11,14 +11,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const tbody = document.getElementById("tabla-ventas-body");
     const totalVentas = document.getElementById("total-ventas");
-    
-    // Referencias para la búsqueda
-    const inputBuscar = document.getElementById('input-buscar');
+
     const btnBuscar = document.getElementById('btn-buscar');
+    const inputBuscar = document.getElementById('input-buscar');
 
     const cargarVentas = async (buscar = "") => {
         try {
-            // Limpiamos la tabla y ponemos un mensaje de carga
+           
             tbody.innerHTML = '<tr><td colspan="7">Cargando ventas...</td></tr>';
 
             const res = await fetch(`${API_URL}/ventas?buscar=${encodeURIComponent(buscar)}`, {
@@ -72,11 +71,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const btnLimpiar = document.getElementById('btn-limpiar');
-    if (btnLimpiar) {
-        btnLimpiar.onclick = () => {
-            inputBuscar.value = ""; 
-            cargarVentas(""); 
-        };
+    if (btnBuscar) {
+        btnBuscar.addEventListener('click', () => cargarCategorias(inputBuscar.value));
     }
    
     cargarVentas();
