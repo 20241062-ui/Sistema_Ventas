@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const totalVentas = document.getElementById("total-ventas");
     
     // Referencias para la búsqueda
-    const inputBuscar = document.getElementById('input-buscar-ventas');
-    const btnBuscar = document.getElementById('btn-buscar-ventas');
+    const inputBuscar = document.getElementById('input-buscar');
+    const btnBuscar = document.getElementById('btn-buscar');
 
     const cargarVentas = async (buscar = "") => {
         try {
@@ -63,12 +63,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             tbody.innerHTML = '<tr><td colspan="7" style="color:red; text-align:center;">Error al obtener los datos del servidor.</td></tr>';
         }
     };
-
-    // Lógica del botón Buscar (Igual que en productos)
+    
     if (btnBuscar) {
         btnBuscar.onclick = () => {
-            const busquedaActual = inputBuscar.value.trim();
-            cargarVentas(busquedaActual);
+            busquedaActual = inputBuscar.value.trim();
+            cargarDashboard(1, busquedaActual);
         };
     }
 
