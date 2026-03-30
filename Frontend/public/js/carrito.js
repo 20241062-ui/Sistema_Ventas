@@ -2,6 +2,24 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarCarrito();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const cartBtn = document.getElementById("cart-icon-btn");
+    const cartDropdown = document.getElementById("cart-dropdown");
+
+    // Al hacer clic en el icono del carrito
+    cartBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // Evita que la página salte
+        cartDropdown.classList.toggle("show"); // Abre o cierra el cuadro
+    });
+
+    // Cerrar el cuadro si se hace clic fuera de él
+    document.addEventListener("click", (e) => {
+        if (!cartBtn.contains(e.target) && !cartDropdown.contains(e.target)) {
+            cartDropdown.classList.remove("show");
+        }
+    });
+});
+
 async function cargarCarrito() {
     const token = localStorage.getItem("token");
     try {
