@@ -92,7 +92,6 @@ function renderMiniCarrito(items) {
         return;
     }
 
-   
     let html = items.map(item => `
         <div class="mini-item">
             <img src="${item.vchImagen}" alt="${item.vchNombre}">
@@ -103,7 +102,7 @@ function renderMiniCarrito(items) {
         </div>
     `).join("");
 
-    
+
     html += `
         <div style="margin-top: 15px;">
             <a href="carrito.html" class="btn-bolsa">Revisar la bolsa</a>
@@ -111,6 +110,43 @@ function renderMiniCarrito(items) {
     `;
 
     miniContenedor.innerHTML = html;
+}
+
+async function cargarCarrito() {
+    const token = localStorage.getItem("token");
+    const miniContenedor = document.getElementById("mini-cart-items");
+    const countLabel = document.getElementById("cart-count");
+
+    if (!token) {
+        if (countLabel) countLabel.innerText = "0";
+        if (miniContenedor) {
+            miniContenedor.innerHTML = `
+                <div class="cart-no-session" style="text-align: center;">
+                    <p style="font-size: 14px; margin-bottom: 15px;">Inicia sesión para ver tu bolsa.</p>
+                    <a href="login.html" class="btn-bolsa" style="background-color: #1d1d1f;">Iniciar sesión</a>
+                </div>
+            `;
+        }
+        return;
+    }
+
+    try {
+        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+        const items = await res.json();
+        
+        if (countLabel) countLabel.innerText = items.length;
+
+        renderMiniCarrito(items);
+        
+        if (document.getElementById("items-carrito")) {
+            renderCarritoPrincipal(items);
+        }
+        
+    } catch (error) {
+        console.error("Error:", error);
+    }
 }
 
 async function cargarCarrito() {
