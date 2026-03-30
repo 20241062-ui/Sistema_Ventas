@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
     cargarCarrito();
 
-    
     const cartBtn = document.getElementById("cart-icon-btn");
     const cartDropdown = document.getElementById("cart-dropdown");
 
@@ -13,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
             cartDropdown.classList.toggle("show");
         });
 
-       
         document.addEventListener("click", (e) => {
             if (!cartBtn.contains(e.target) && !cartDropdown.contains(e.target)) {
                 cartDropdown.classList.remove("show");
@@ -30,14 +27,15 @@ async function cargarCarrito() {
     if (!token) {
         if (countLabel) countLabel.innerText = "0";
         if (miniContenedor) {
+            // Se quita el botón azul de arriba y la barra gris
             miniContenedor.innerHTML = `
-                <div class="cart-empty-state" style="text-align: center; padding: 10px;">
-                    <p style="font-size: 14px; color: #1d1d1f; margin: 0;">Tu bolsa está vacía.</p>
-                    <p style="font-size: 13px; color: #86868b; margin-top: 8px;">
-                        Inicia sesión para poder agregar productos al carrito de compras.
-                    </p>
+                <div class="cart-empty-state">
+                    <p class="empty-title">Tu bolsa está vacía.</p>
+                    <p class="empty-subtitle">Inicia sesión para ver tu bolsa e iniciar una compra.</p>
                 </div>
-                <a href="login.html" class="btn-bolsa" style="background-color: #1d1d1f; margin-top: 15px;">Iniciar sesión</a>
+                <div class="mini-cart-footer">
+                    <a href="login.html" class="btn-bolsa">Iniciar sesión</a>
+                </div>
             `;
         }
         return;
@@ -49,9 +47,7 @@ async function cargarCarrito() {
         });
 
         if (!res.ok) throw new Error("Error en la petición");
-
         const items = await res.json();
-        
         if (countLabel) countLabel.innerText = items.length;
 
         renderMiniCarrito(items);
@@ -63,7 +59,7 @@ async function cargarCarrito() {
     } catch (error) {
         console.error("Error al cargar carrito:", error);
         if (miniContenedor) {
-            miniContenedor.innerHTML = '<p class="empty-cart-msg" style="text-align:center;">Error al conectar con el servidor.</p>';
+            miniContenedor.innerHTML = '<p class="empty-cart-msg">Error al conectar con el servidor.</p>';
         }
     }
 }
@@ -74,34 +70,30 @@ function renderMiniCarrito(items) {
 
     if (items.length === 0) {
         miniContenedor.innerHTML = `
-            <div class="cart-empty-state" style="text-align: center; padding: 10px;">
-                <p style="font-size: 14px; color: #1d1d1f;">Tu bolsa está vacía.</p>
+            <div class="cart-empty-state">
+                <p class="empty-title">Tu bolsa está vacía.</p>
             </div>
-            <a href="index.html" class="btn-bolsa" style="background-color: #1d1d1f; margin-top: 15px;">Continuar comprando</a>`;
+            <div class="mini-cart-footer">
+                <a href="index.html" class="btn-bolsa">Continuar comprando</a>
+            </div>`;
         return;
     }
 
-    let html = items.map((item, index) => {
-        
-        const isLast = index === items.length - 1;
-        const borderStyle = isLast ? 'border-bottom: none;' : 'border-bottom: 1px solid #f5f5f7;';
-
-        return `
-            <div class="mini-item" style="display: flex; align-items: center; gap: 12px; padding: 12px 0; ${borderStyle}">
-                <img src="${item.vchImagen}" alt="${item.vchNombre}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
-                <div class="mini-item-info">
-                    <h4 style="margin: 0; font-size: 14px; color: #1d1d1f; font-weight: 600;">${item.vchNombre}</h4>
-                    <p style="margin: 2px 0 0; font-size: 13px; color: #1d1d1f; font-weight: bold;">
-                        $${parseFloat(item.floPrecioUnitario).toLocaleString('es-MX')}
-                    </p>
-                </div>
+    // Renderizado de items con simetría (paddings controlados por CSS)
+    let html = `<div class="mini-items-list">` + 
+    items.map((item) => `
+        <div class="mini-item">
+            <img src="${item.vchImagen}" alt="${item.vchNombre}">
+            <div class="mini-item-info">
+                <h4>${item.vchNombre}</h4>
+                <p>$${parseFloat(item.floPrecioUnitario).toLocaleString('es-MX')}</p>
             </div>
-        `;
-    }).join("");
+        </div>
+    `).join("") + `</div>`;
 
     html += `
-        <div style="margin-top: 15px;">
-            <a href="publico/carrito.html" class="btn-bolsa" style="background-color: #1d1d1f;">Revisar la bolsa</a>
+        <div class="mini-cart-footer">
+            <a href="publico/carrito.html" class="btn-bolsa">Revisar la bolsa</a>
         </div>
     `;
 
