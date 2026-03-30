@@ -668,27 +668,51 @@ footer {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* --- CONTADOR DE PRODUCTOS (El 0) --- */
+.cart-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
 
-/* Contenedor padre en el header */
+#cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #ffffff; /* Blanco para que resalte en el header negro */
+    color: #000000;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    z-index: 10;
+}
+
+/* --- DROPDOWN PRINCIPAL --- */
 .cart-container {
     position: relative;
     display: inline-block;
 }
 
-/* El cuadro Dropdown principal */
 .cart-dropdown {
-    display: none; /* Se activa con la clase .show */
+    display: none;
     position: absolute;
     top: 50px;
     right: -10px;
     width: 320px;
     background-color: #ffffff;
     border-radius: 18px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     padding: 20px;
     z-index: 1000;
     border: 1px solid rgba(0,0,0,0.05);
-    /* Animación suave al aparecer */
+    overflow-x: hidden; /* QUITA LAS BARRAS HORIZONTALES */
     transform-origin: top right;
     animation: fadeInScale 0.2s ease-out;
 }
@@ -702,7 +726,12 @@ footer {
     display: block !important;
 }
 
-/* Título de la bolsa */
+/* OCULTAR EL BOTÓN ESTÁTICO DEL HTML (Para evitar duplicados) */
+.cart-dropdown > .mini-cart-footer {
+    display: none !important;
+}
+
+/* Título */
 .cart-dropdown-header h3 {
     font-size: 16px;
     color: #1d1d1f;
@@ -711,15 +740,16 @@ footer {
     text-align: left;
 }
 
-/* Contenedor de la lista de productos */
+/* Contenedor de lista */
 #mini-cart-items {
     max-height: 350px;
     overflow-y: auto;
+    overflow-x: hidden; /* Evita scroll lateral interno */
     padding: 0;
     margin: 0;
 }
 
-/* Estilo de cada fila de producto */
+/* --- ITEMS --- */
 .mini-item {
     display: flex;
     align-items: center;
@@ -729,7 +759,7 @@ footer {
 }
 
 .mini-item:last-child {
-    border-bottom: none; /* Evita espacio extra al final de la lista */
+    border-bottom: none;
 }
 
 .mini-item img {
@@ -740,28 +770,22 @@ footer {
     background-color: #fbfbfd;
 }
 
-.mini-item-info {
-    flex: 1;
-}
-
 .mini-item-info h4 {
     margin: 0;
     font-size: 14px;
     color: #1d1d1f;
     font-weight: 500;
-    line-height: 1.3;
 }
 
 .mini-item-info p {
     margin: 4px 0 0;
     font-size: 14px;
-    color: #1d1d1f;
     font-weight: 700;
 }
 
-/* --- ESTADOS VACÍOS / SIN SESIÓN --- */
+/* --- ESTADOS VACÍOS --- */
 .cart-empty-state {
-    padding: 30px 0;
+    padding: 20px 0;
     text-align: center;
 }
 
@@ -769,34 +793,26 @@ footer {
     font-size: 15px;
     font-weight: 600;
     color: #1d1d1f;
-    margin-bottom: 8px;
 }
 
 .empty-subtitle {
     font-size: 13px;
     color: #86868b;
-    line-height: 1.4;
-    margin: 0;
+    margin-top: 5px;
 }
 
-/* --- FOOTER Y BOTONES (SIMETRÍA TOTAL) --- */
-
-/* Forzamos que el contenedor del botón no tenga fondos grises ni bordes */
+/* --- BOTÓN NEGRO (ÚNICO) --- */
 .mini-cart-footer {
     margin-top: 15px;
-    padding-top: 0;
-    border-top: none;
-    background: none;
     text-align: center;
 }
 
-/* Botón Negro Elegante */
 .btn-bolsa {
     display: flex !important;
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: #1d1d1f !important; /* Negro total */
+    background-color: #1d1d1f !important;
     color: #ffffff !important;
     height: 44px;
     border-radius: 12px;
@@ -804,16 +820,15 @@ footer {
     font-size: 14px;
     font-weight: 600;
     border: none;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .btn-bolsa:hover {
     background-color: #000000 !important;
-    transform: scale(1.01);
+    transform: scale(1.02);
 }
 
-/* Ocultar scrollbar para estética limpia */
+/* Scrollbar estética */
 #mini-cart-items::-webkit-scrollbar {
     width: 4px;
 }
