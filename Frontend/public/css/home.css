@@ -56,10 +56,29 @@ nav {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  align-content: center;
-  padding: 0px;
   gap: 20px 50px;
-  width: 100%;
+  width: auto; 
+  flex-grow: 1; 
+}
+
+
+.user-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+.profileicon, .cart-icon {
+  height: 30px; 
+  width: 30px;  
+  object-fit: contain;
+}
+
+
+.cart-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .profileicon {
