@@ -24,9 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('usuario', JSON.stringify(data.user));
 
-                    alert('¡Bienvenido, ' + data.user.nombre + '!');
+                    alert('¡Bienvenido/a, ' + data.user.nombre + '!');
 
-                    if (data.user.rol === 'Administrador') {
+                    const rolesAdmin = ['Administrador', 'Vendedor', 'Encargado'];
+                    
+                    if (rolesAdmin.includes(data.user.rol)) {
                         window.location.href = 'admin/menuAdministrador.html';
                     } else {
                         window.location.href = 'index.html';
@@ -36,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
             } catch (error) {
-                console.error('Error:', error);
-                alert('No se pudo conectar con el servidor.');
+                console.error('Error de red o servidor:', error);
+                alert('No se pudo establecer conexión con el servidor en Vercel. Revisa tu conexión a internet.');
             }
         });
     }
