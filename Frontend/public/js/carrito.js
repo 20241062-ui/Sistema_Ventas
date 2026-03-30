@@ -27,7 +27,7 @@ async function cargarCarrito() {
     if (!token) {
         if (countLabel) countLabel.innerText = "0";
         if (miniContenedor) {
-            // Se quita el botón azul de arriba y la barra gris
+            // Estado: No hay sesión iniciada
             miniContenedor.innerHTML = `
                 <div class="cart-empty-state">
                     <p class="empty-title">Tu bolsa está vacía.</p>
@@ -48,6 +48,7 @@ async function cargarCarrito() {
 
         if (!res.ok) throw new Error("Error en la petición");
         const items = await res.json();
+        
         if (countLabel) countLabel.innerText = items.length;
 
         renderMiniCarrito(items);
@@ -59,7 +60,7 @@ async function cargarCarrito() {
     } catch (error) {
         console.error("Error al cargar carrito:", error);
         if (miniContenedor) {
-            miniContenedor.innerHTML = '<p class="empty-cart-msg">Error al conectar con el servidor.</p>';
+            miniContenedor.innerHTML = '<p class="empty-subtitle">Error al conectar con el servidor.</p>';
         }
     }
 }
@@ -79,7 +80,7 @@ function renderMiniCarrito(items) {
         return;
     }
 
-    // Renderizado de items con simetría (paddings controlados por CSS)
+    // Renderizado de items en la lista
     let html = `<div class="mini-items-list">` + 
     items.map((item) => `
         <div class="mini-item">
@@ -91,6 +92,7 @@ function renderMiniCarrito(items) {
         </div>
     `).join("") + `</div>`;
 
+    // Botón final para ir al carrito completo
     html += `
         <div class="mini-cart-footer">
             <a href="publico/carrito.html" class="btn-bolsa">Revisar la bolsa</a>
