@@ -1,3 +1,36 @@
+async function agregarProducto(noSerie) {
+    const token = localStorage.getItem("token");
+    
+    if (!token) {
+        alert("Inicia sesión para agregar productos a tu bolsa");
+        const esSubcarpeta = window.location.pathname.includes('/publico/');
+        window.location.href = esSubcarpeta ? "../login.html" : "login.html";
+        return;
+    }
+
+    try {
+        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ vchNo_Serie: noSerie })
+        });
+
+        if (res.ok) {
+            alert("👜 ¡Producto añadido a tu bolsa!");
+        } else {
+            const error = await res.json();
+            alert("Error: " + (error.error || "No se pudo añadir"));
+        }
+    } catch (err) {
+        console.error("Error al agregar al carrito:", err);
+        alert("Error de conexión al agregar el producto");
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const galeria = document.getElementById('contenedor-galeria');
     const heroTexto = document.querySelector('.textohero');
