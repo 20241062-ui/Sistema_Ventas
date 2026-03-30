@@ -8,11 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarCarrito() {
-    const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
-        headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
-    });
-    const items = await res.json();
-    renderCarrito(items);
+    try {
+        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+        });
+        const items = await res.json();
+        renderCarrito(items);
+    } catch (error) {
+        console.error("Error al cargar carrito:", error);
+    }
 }
 
 function renderCarrito(items) {
@@ -20,8 +24,9 @@ function renderCarrito(items) {
     const titulo = document.getElementById("titulo-bolsa");
     const resumen = document.getElementById("resumen-seccion");
 
-    if (items.length === 0) {
+    if (!items || items.length === 0) {
         titulo.innerText = "Tu bolsa está vacía.";
+        contenedor.innerHTML = "";
         resumen.style.display = "none";
         return;
     }
@@ -31,7 +36,11 @@ function renderCarrito(items) {
     
     let total = 0;
     contenedor.innerHTML = items.map(item => {
-        total += item.fltPrecio * item.intCantidad;
+        // CORRECCIÓN: Usamos floPrecioUnitario que es como viene de la DB
+        const precio = parseFloat(item.floPrecioUnitario) || 0;
+        const subtotalItem = precio * item.intCantidad;
+        total += subtotalItem;
+
         return `
             <div class="item-carrito">
                 <div class="item-imagen">
@@ -44,13 +53,33 @@ function renderCarrito(items) {
                         <button class="btn-eliminar" onclick="eliminarDelCarrito(${item.intid_Carrito})">Eliminar</button>
                     </div>
                     <div class="item-precio">
-                        $${(item.fltPrecio * item.intCantidad).toLocaleString()}
+                        $${subtotalItem.toLocaleString('es-MX', {minimumFractionDigits: 2})}
                     </div>
                 </div>
             </div>
         `;
     }).join("");
 
-    document.getElementById("subtotal").innerText = `$${total.toLocaleString()}`;
-    document.getElementById("total-final").innerText = `$${total.toLocaleString()}`;
+    document.getElementById("subtotal").innerText = `$${total.toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
+    document.getElementById("total-final").innerText = `$${total.toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
+}
+
+// NUEVA FUNCIÓN: Para que el botón de eliminar funcione
+async function eliminarDelCarrito(id) {
+    if (!confirm("¿Eliminar este producto de la bolsa?")) return;
+
+    try {
+        const res = await fetch(`https://sistemaventasback.vercel.app/api/carrito/${id}`, {
+            method: "DELETE",
+            headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+        });
+
+        if (res.ok) {
+            cargarCarrito(); // Recarga la lista
+        } else {
+            alert("No se pudo eliminar el producto");
+        }
+    } catch (error) {
+        console.error("Error al eliminar:", error);
+    }
 }
