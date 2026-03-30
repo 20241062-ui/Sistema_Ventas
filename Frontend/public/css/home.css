@@ -700,11 +700,6 @@ footer {
     border-bottom: 10px solid #ffffff;
 }
 
-/* Mostrar el cuadro al pasar el mouse por el contenedor 
-.cart-container:hover .cart-dropdown {
-    display: block;
-}*/
-/* AÑADIR ESTO */
 .cart-dropdown.show {
     display: block !important;
 }
