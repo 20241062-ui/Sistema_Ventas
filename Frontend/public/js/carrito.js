@@ -67,17 +67,23 @@ function renderMiniCarrito(items) {
     const miniContenedor = document.getElementById("mini-cart-items");
     const countLabel = document.getElementById("cart-count");
     
-    countLabel.innerText = items.length;
+    if (countLabel) countLabel.innerText = items.length;
+
+    if (!miniContenedor) return;
 
     if (items.length === 0) {
-        miniContenedor.innerHTML = "<p>Tu bolsa está vacía.</p>";
+        miniContenedor.innerHTML = '<p class="empty-cart-msg">Tu bolsa está vacía.</p>';
         return;
     }
 
-    miniContenedor.innerHTML = items.slice(0, 3).map(item => `
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <img src="${item.vchImagen}" width="40">
-            <span style="font-size:14px;">${item.vchNombre}</span>
+    // Renderiza cada producto en el cuadro blanco
+    miniContenedor.innerHTML = items.map(item => `
+        <div class="mini-item">
+            <img src="${item.vchImagen}" alt="${item.vchNombre}">
+            <div class="mini-item-info">
+                <h4>${item.vchNombre}</h4>
+                <p>$${parseFloat(item.floPrecioUnitario).toLocaleString('es-MX')}</p>
+            </div>
         </div>
     `).join("");
 }
