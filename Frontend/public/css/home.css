@@ -668,107 +668,134 @@ footer {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Contenedor del carrito */
 .cart-container {
     position: relative;
 }
 
-/* El cuadro blanco (Dropdown) */
+/* El cuadro (Dropdown) con estilo moderno */
 .cart-dropdown {
-    display: none; /* Se oculta por defecto */
+    display: none;
     position: absolute;
     top: 55px;
     right: -10px;
-    width: 320px;
+    width: 350px;
     background-color: #ffffff;
-    border: 1px solid #d2d2d7;
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    padding: 24px;
     z-index: 1000;
-}
-
-/* La flechita de arriba del cuadro */
-.cart-dropdown::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .cart-dropdown.show {
     display: block !important;
+    animation: fadeInDown 0.3s ease-out;
 }
 
-/* Estilo de los productos dentro del mini carrito */
-#mini-cart-items {
-    max-height: 300px;
-    overflow-y: auto;
+/* Animación de entrada */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Títulos internos */
+.cart-dropdown h3 {
+    font-size: 18px;
+    color: #1d1d1f;
     margin-bottom: 15px;
+    font-family: "SFBold", sans-serif;
+}
+
+/* Listado de productos */
+#mini-cart-items {
+    max-height: 320px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 5px;
+}
+
+/* Personalizar barra de desplazamiento */
+#mini-cart-items::-webkit-scrollbar {
+    width: 4px;
+}
+#mini-cart-items::-webkit-scrollbar-thumb {
+    background: #d2d2d7;
+    border-radius: 10px;
 }
 
 .mini-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 10px 0;
+    gap: 12px;
+    padding: 12px 0;
     border-bottom: 1px solid #f5f5f7;
 }
 
 .mini-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #f9f9f9;
 }
 
 .mini-item-info h4 {
     margin: 0;
     font-size: 14px;
     color: #1d1d1f;
+    font-weight: 600;
 }
 
 .mini-item-info p {
     margin: 2px 0 0;
-    font-size: 12px;
-    color: #86868b;
+    font-size: 13px;
+    color: #6f42c1; /* Tu color morado */
+    font-weight: bold;
 }
 
-/* Botón de revisar bolsa */
+/* Botones con tu identidad: Morado y Negro */
 .btn-bolsa {
     display: block;
     width: 100%;
-    background-color: #0071e3;
+    background-color: #6f42c1; /* Morado base */
     color: white;
     text-align: center;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     text-decoration: none;
     font-size: 14px;
-    font-family: "SFBold";
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .btn-bolsa:hover {
-    background-color: #0077ed;
+    background-color: #5a32a3; /* Morado más oscuro */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(111, 66, 193, 0.3);
 }
 
-.empty-cart-msg {
-    text-align: center;
-    color: #86868b;
-    padding: 20px 0;
-}
-
-/* El círculo del contador sobre el icono */
-#cart-count {
-    background-color: #0071e3;
+.btn-login-cart {
+    background-color: #1d1d1f; /* Negro elegante */
     color: white;
-    font-size: 10px;
-    padding: 2px 6px;
+    border-radius: 10px;
+    transition: opacity 0.2s;
+}
+
+/* Círculo del contador (Badge) */
+#cart-count {
+    background-color: #6f42c1; /* Morado */
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -2px;
+    right: -8px;
+    border: 2px solid #000; /* Para que resalte sobre el fondo negro del nav */
 }
