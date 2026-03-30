@@ -1,7 +1,7 @@
 const formulario = document.getElementById("signupForm");
+const API_BASE_URL = "https://sistemaventasback.vercel.app/api";
 
 formulario.addEventListener("submit", async (e) => {
-
     e.preventDefault();
 
     const nombre = document.getElementById("nombre").value;
@@ -10,46 +10,29 @@ formulario.addEventListener("submit", async (e) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const nombre_completo = nombre + " " + apellidoP + " " + apellidoM;
-
     try {
-
-        const respuesta = await fetch("http://localhost:3000/api/register", {
-
+        const respuesta = await fetch(`${API_BASE_URL}/auth/registro`, {
             method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                email,
-                password,
-                nombre_completo
+                nombre,
+                paterno: apellidoP,
+                materno: apellidoM,
+                correo: email, 
+                password
             })
-
         });
 
         const data = await respuesta.json();
 
         if (respuesta.ok) {
-
-            alert("Usuario registrado correctamente");
-
+            alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
             window.location.href = "login.html";
-
         } else {
-
-            alert(data.message);
-
+            alert(data.message || "Error en el registro");
         }
-
     } catch (error) {
-
         console.error(error);
-
-        alert("Error al registrar usuario");
-
+        alert("Error de conexión con el servidor de Vercel");
     }
-
 });
