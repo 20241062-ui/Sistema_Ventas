@@ -1,18 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
     
     cargarCarrito();
+
+    
     const cartBtn = document.getElementById("cart-icon-btn");
     const cartDropdown = document.getElementById("cart-dropdown");
 
     if (cartBtn && cartDropdown) {
-      
         cartBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation(); 
             cartDropdown.classList.toggle("show");
         });
 
-      
+       
         document.addEventListener("click", (e) => {
             if (!cartBtn.contains(e.target) && !cartDropdown.contains(e.target)) {
                 cartDropdown.classList.remove("show");
@@ -26,31 +27,22 @@ async function cargarCarrito() {
     const miniContenedor = document.getElementById("mini-cart-items");
     const countLabel = document.getElementById("cart-count");
 
-  
     if (!token) {
         if (countLabel) countLabel.innerText = "0";
         if (miniContenedor) {
             miniContenedor.innerHTML = `
-                <div class="cart-no-session" style="text-align: center; padding: 20px;">
-                    <p style="font-size: 14px; color: #1d1d1f; margin-bottom: 15px;">
-                        Para ver tu bolsa e iniciar una compra, inicia sesión.
+                <div class="cart-empty-state" style="text-align: center; padding: 10px;">
+                    <p style="font-size: 14px; color: #1d1d1f; margin: 0;">Tu bolsa está vacía.</p>
+                    <p style="font-size: 13px; color: #86868b; margin-top: 8px;">
+                        Inicia sesión para poder agregar productos al carrito de compras.
                     </p>
-                    <a href="login.html" class="btn-login-cart" style="
-                        display: inline-block;
-                        background-color: #0071e3;
-                        color: white;
-                        padding: 8px 20px;
-                        border-radius: 8px;
-                        text-decoration: none;
-                        font-size: 13px;
-                        font-weight: bold;">Iniciar sesión</a>
                 </div>
+                <a href="login.html" class="btn-bolsa" style="background-color: #1d1d1f; margin-top: 15px;">Iniciar sesión</a>
             `;
         }
         return;
     }
 
-   
     try {
         const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
             headers: { "Authorization": `Bearer ${token}` }
@@ -60,132 +52,60 @@ async function cargarCarrito() {
 
         const items = await res.json();
         
-      
         if (countLabel) countLabel.innerText = items.length;
 
-       
+        renderMiniCarrito(items);
+
         if (document.getElementById("items-carrito")) {
             renderCarritoPrincipal(items);
         }
-               
-        
-        renderMiniCarrito(items);
         
     } catch (error) {
         console.error("Error al cargar carrito:", error);
         if (miniContenedor) {
-            miniContenedor.innerHTML = '<p class="empty-cart-msg">Error al conectar con el servidor.</p>';
+            miniContenedor.innerHTML = '<p class="empty-cart-msg" style="text-align:center;">Error al conectar con el servidor.</p>';
         }
     }
 }
 
 function renderMiniCarrito(items) {
     const miniContenedor = document.getElementById("mini-cart-items");
-    const cartDropdown = document.getElementById("cart-dropdown");
     if (!miniContenedor) return;
 
     if (items.length === 0) {
         miniContenedor.innerHTML = `
-            <div class="empty-cart-msg">
-                <p>Tu bolsa está vacía.</p>
-            </div>`;
+            <div class="cart-empty-state" style="text-align: center; padding: 10px;">
+                <p style="font-size: 14px; color: #1d1d1f;">Tu bolsa está vacía.</p>
+            </div>
+            <a href="index.html" class="btn-bolsa" style="background-color: #1d1d1f; margin-top: 15px;">Continuar comprando</a>`;
         return;
     }
 
-    let html = items.map(item => `
-        <div class="mini-item">
-            <img src="${item.vchImagen}" alt="${item.vchNombre}">
-            <div class="mini-item-info">
-                <h4>${item.vchNombre}</h4>
-                <p>$${parseFloat(item.floPrecioUnitario).toLocaleString('es-MX')}</p>
-            </div>
-        </div>
-    `).join("");
+    let html = items.map((item, index) => {
+        
+        const isLast = index === items.length - 1;
+        const borderStyle = isLast ? 'border-bottom: none;' : 'border-bottom: 1px solid #f5f5f7;';
 
+        return `
+            <div class="mini-item" style="display: flex; align-items: center; gap: 12px; padding: 12px 0; ${borderStyle}">
+                <img src="${item.vchImagen}" alt="${item.vchNombre}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
+                <div class="mini-item-info">
+                    <h4 style="margin: 0; font-size: 14px; color: #1d1d1f; font-weight: 600;">${item.vchNombre}</h4>
+                    <p style="margin: 2px 0 0; font-size: 13px; color: #1d1d1f; font-weight: bold;">
+                        $${parseFloat(item.floPrecioUnitario).toLocaleString('es-MX')}
+                    </p>
+                </div>
+            </div>
+        `;
+    }).join("");
 
     html += `
         <div style="margin-top: 15px;">
-            <a href="carrito.html" class="btn-bolsa">Revisar la bolsa</a>
+            <a href="publico/carrito.html" class="btn-bolsa" style="background-color: #1d1d1f;">Revisar la bolsa</a>
         </div>
     `;
 
     miniContenedor.innerHTML = html;
-}
-
-async function cargarCarrito() {
-    const token = localStorage.getItem("token");
-    const miniContenedor = document.getElementById("mini-cart-items");
-    const countLabel = document.getElementById("cart-count");
-
-    if (!token) {
-        if (countLabel) countLabel.innerText = "0";
-        if (miniContenedor) {
-            miniContenedor.innerHTML = `
-                <div class="cart-no-session" style="text-align: center;">
-                    <p style="font-size: 14px; margin-bottom: 15px;">Inicia sesión para ver tu bolsa.</p>
-                    <a href="login.html" class="btn-bolsa" style="background-color: #1d1d1f;">Iniciar sesión</a>
-                </div>
-            `;
-        }
-        return;
-    }
-
-    try {
-        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-        const items = await res.json();
-        
-        if (countLabel) countLabel.innerText = items.length;
-
-        renderMiniCarrito(items);
-        
-        if (document.getElementById("items-carrito")) {
-            renderCarritoPrincipal(items);
-        }
-        
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-
-async function cargarCarrito() {
-    const token = localStorage.getItem("token");
-    const miniContenedor = document.getElementById("mini-cart-items");
-    const countLabel = document.getElementById("cart-count");
-
-    if (!token) {
-        if (countLabel) countLabel.innerText = "0";
-        if (miniContenedor) {
-            miniContenedor.innerHTML = `
-                <div class="cart-no-session" style="text-align: center;">
-                    <p style="font-size: 14px; margin-bottom: 15px;">Inicia sesión para ver tu bolsa.</p>
-                    <a href="login.html" class="btn-bolsa" style="background-color: #1d1d1f;">Iniciar sesión</a>
-                </div>
-            `;
-        }
-        return;
-    }
-
-    try {
-        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-        const items = await res.json();
-        
-        if (countLabel) countLabel.innerText = items.length;
-        
-        // Renderizar mini carrito
-        renderMiniCarrito(items);
-
-        // Si estamos en la página de carrito full, renderizar también
-        if (document.getElementById("items-carrito")) {
-            renderCarritoPrincipal(items);
-        }
-        
-    } catch (error) {
-        console.error("Error:", error);
-    }
 }
 
 function renderCarritoPrincipal(items) {
@@ -196,7 +116,7 @@ function renderCarritoPrincipal(items) {
     if (!contenedor) return;
 
     if (items.length === 0) {
-        titulo.innerText = "Tu bolsa está vacía.";
+        if (titulo) titulo.innerText = "Tu bolsa está vacía.";
         if (resumen) resumen.style.display = "none";
         contenedor.innerHTML = "";
         return;
@@ -237,6 +157,8 @@ function renderCarritoPrincipal(items) {
 
 async function eliminarProducto(id) {
     const token = localStorage.getItem("token");
+    if (!token) return;
+
     try {
         const res = await fetch(`https://sistemaventasback.vercel.app/api/carrito/${id}`, {
             method: 'DELETE',

@@ -673,17 +673,17 @@ footer {
     position: relative;
 }
 
-/* El cuadro (Dropdown) con estilo moderno */
+/* El cuadro (Dropdown) estilo moderno y limpio */
 .cart-dropdown {
     display: none;
     position: absolute;
     top: 55px;
     right: -10px;
-    width: 350px;
+    width: 320px; /* Un poco más estrecho para que sea elegante */
     background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    padding: 24px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     z-index: 1000;
     border: 1px solid rgba(0,0,0,0.05);
 }
@@ -693,29 +693,28 @@ footer {
     animation: fadeInDown 0.3s ease-out;
 }
 
-/* Animación de entrada */
 @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Títulos internos */
 .cart-dropdown h3 {
-    font-size: 18px;
+    font-size: 17px;
     color: #1d1d1f;
-    margin-bottom: 15px;
+    margin: 0 0 15px 0;
     font-family: "SFBold", sans-serif;
+    text-align: left;
 }
 
-/* Listado de productos */
+/* Contenedor de items sin desplazamientos raros */
 #mini-cart-items {
-    max-height: 320px;
+    max-height: 350px;
     overflow-y: auto;
-    margin-bottom: 20px;
-    padding-right: 5px;
+    padding: 0; /* Eliminado el padding lateral que causaba asimetría */
+    margin: 0;
 }
 
-/* Personalizar barra de desplazamiento */
+/* Ocultar scrollbar si hay pocos items para mantener limpieza */
 #mini-cart-items::-webkit-scrollbar {
     width: 4px;
 }
@@ -724,6 +723,7 @@ footer {
     border-radius: 10px;
 }
 
+/* Estilo de la fila de producto */
 .mini-item {
     display: flex;
     align-items: center;
@@ -732,70 +732,59 @@ footer {
     border-bottom: 1px solid #f5f5f7;
 }
 
+.mini-item:last-child {
+    border-bottom: none; /* Quita la línea al final para que no sobre espacio */
+}
+
 .mini-item img {
     width: 50px;
     height: 50px;
     border-radius: 8px;
     object-fit: cover;
-    background: #f9f9f9;
 }
 
 .mini-item-info h4 {
     margin: 0;
     font-size: 14px;
     color: #1d1d1f;
-    font-weight: 600;
 }
 
 .mini-item-info p {
     margin: 2px 0 0;
     font-size: 13px;
-    color: #6f42c1; /* Tu color morado */
-    font-weight: bold;
+    color: #1d1d1f; /* Negro para consistencia */
+    font-weight: 600;
 }
 
-/* Botones con tu identidad: Morado y Negro */
+/* Botón Negro Elegante */
 .btn-bolsa {
     display: block;
     width: 100%;
-    background-color: #6f42c1; /* Morado base */
+    background-color: #1d1d1f; /* Negro total */
     color: white;
     text-align: center;
-    padding: 14px;
-    border-radius: 12px;
+    padding: 12px;
+    border-radius: 10px;
     text-decoration: none;
     font-size: 14px;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: background-color 0.2s;
 }
 
 .btn-bolsa:hover {
-    background-color: #5a32a3; /* Morado más oscuro */
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(111, 66, 193, 0.3);
+    background-color: #000000;
 }
 
-.btn-login-cart {
-    background-color: #1d1d1f; /* Negro elegante */
-    color: white;
-    border-radius: 10px;
-    transition: opacity 0.2s;
+/* Mensaje de bolsa vacía / No sesión */
+.cart-empty-state {
+    text-align: center;
+    padding: 10px 0;
 }
 
-/* Círculo del contador (Badge) */
-#cart-count {
-    background-color: #6f42c1; /* Morado */
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    min-width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    position: absolute;
-    top: -2px;
-    right: -8px;
-    border: 2px solid #000; /* Para que resalte sobre el fondo negro del nav */
+.cart-empty-state p {
+    font-size: 14px;
+    color: #86868b;
+    line-height: 1.4;
+    margin: 0;
 }
