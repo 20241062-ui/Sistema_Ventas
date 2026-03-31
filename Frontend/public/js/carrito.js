@@ -1,11 +1,11 @@
-const API_URL_CARRITO = window.location.hostname === 'localhost' 
+const API_URL_CARRITO = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000/api' 
     : 'https://sistemaventasback.vercel.app/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarCarrito();
 
-    // Lógica para abrir/cerrar el dropdown del carrito en el index
+    // Configuración del dropdown (si existe en la página)
     const cartIcon = document.getElementById('cart-icon-btn');
     const cartDropdown = document.getElementById('cart-dropdown');
     if (cartIcon && cartDropdown) {
@@ -34,19 +34,65 @@ async function cargarCarrito() {
     }
 }
 
+// Función unificada para agregar (Se llama desde detalle.js o index)
+async function agregarProductoCarrito() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Debes iniciar sesión para agregar productos.");
+        return;
+    }
+
+    const inputId = document.getElementById('det-id');
+    if (!inputId || !inputId.value) {
+        alert("Error: No se encontró el ID del producto.");
+        return;
+    }
+
+    const vchNo_Serie = inputId.value;
+    
+    try {
+        const response = await fetch(`${API_URL_CARRITO}/carrito/agregar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ vchNo_Serie, intCantidad: 1 })
+        });
+
+        const data = await response.json();
+        if (data.status === 'success') {
+            alert("✅ Producto añadido");
+            cargarCarrito(); // Recarga el contador y mini-cart
+        } else {
+            alert("Error: " + data.mensaje);
+        }
+    } catch (error) {
+        alert("Error de conexión");
+    }
+}
+
 function actualizarInterfazCarrito(items) {
-   
     const contador = document.getElementById('cart-count');
     if (contador) contador.textContent = items.length;
 
-    const contenedorPagina = document.getElementById('items-carrito');
-    if (contenedorPagina) {
+    // Si estamos en la página carrito.html
+    if (document.getElementById('items-carrito')) {
         renderizarPaginaCompleta(items);
     }
 
+    // Si hay un mini-cart (dropdown)
     const miniCart = document.getElementById('mini-cart-items');
     if (miniCart) {
-        renderizarMiniCart(items);
+        if (items.length === 0) {
+            miniCart.innerHTML = '<p style="padding:10px;">Tu bolsa está vacía</p>';
+        } else {
+            miniCart.innerHTML = items.slice(0, 3).map(item => `
+                <div class="mini-item">
+                    <span>${item.vchNombre} x ${item.intCantidad}</span>
+                </div>
+            `).join('') + '<a href="publico/carrito.html" class="ver-mas">Ver todo</a>';
+        }
     }
 }
 
@@ -59,13 +105,13 @@ function renderizarPaginaCompleta(items) {
 
     if (items.length === 0) {
         titulo.textContent = "Tu bolsa está vacía.";
-        resumen.style.display = 'none';
+        if(resumen) resumen.style.display = 'none';
         contenedor.innerHTML = '';
         return;
     }
 
-    titulo.textContent = "Tu bolsa de compra.";
-    resumen.style.display = 'block';
+    if(titulo) titulo.textContent = "Tu bolsa de compra.";
+    if(resumen) resumen.style.display = 'block';
     
     let total = 0;
     contenedor.innerHTML = items.map(item => {
@@ -81,22 +127,18 @@ function renderizarPaginaCompleta(items) {
                         <p>Cantidad: ${item.intCantidad}</p>
                         <button class="btn-eliminar" onclick="eliminarItem(${item.intid_Carrito})">Eliminar</button>
                     </div>
-                    <div class="item-precio">
-                        $${(item.floPrecioUnitario * item.intCantidad).toLocaleString('es-MX')}
-                    </div>
+                    <div class="item-precio">$${(item.floPrecioUnitario * item.intCantidad).toLocaleString('es-MX')}</div>
                 </div>
-            </div>
-        `;
+            </div>`;
     }).join('');
 
-    subtotalText.textContent = `$${total.toLocaleString('es-MX')}`;
-    totalText.textContent = `$${total.toLocaleString('es-MX')}`;
+    if(subtotalText) subtotalText.textContent = `$${total.toLocaleString('es-MX')}`;
+    if(totalText) totalText.textContent = `$${total.toLocaleString('es-MX')}`;
 }
 
 async function eliminarItem(id) {
     const token = localStorage.getItem('token');
     if (!confirm("¿Eliminar este producto?")) return;
-
     try {
         const res = await fetch(`${API_URL_CARRITO}/carrito/${id}`, {
             method: 'DELETE',
@@ -104,6 +146,6 @@ async function eliminarItem(id) {
         });
         if (res.ok) cargarCarrito();
     } catch (error) {
-        console.error("Error al eliminar:", error);
+        console.error(error);
     }
 }
