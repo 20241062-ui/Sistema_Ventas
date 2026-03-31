@@ -1,56 +1,142 @@
 const API_URL_CARRITO = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:3000/api' 
-    : 'https://sistemaventasback.vercel.app/api';
+    ? 'http://localhost:3000/api/carrito'
+    : 'https://sistemaventasback.vercel.app/api/carrito';
 
 document.addEventListener('DOMContentLoaded', () => {
-    cargarCarrito();
-
-   
-    const cartIcon = document.getElementById('cart-icon-btn');
+    // 1. Manejo del Dropdown (Abrir/Cerrar)
+    const cartIconBtn = document.getElementById('cart-icon-btn');
     const cartDropdown = document.getElementById('cart-dropdown');
-    if (cartIcon && cartDropdown) {
-        cartIcon.addEventListener('click', (e) => {
+
+    if (cartIconBtn && cartDropdown) {
+        cartIconBtn.addEventListener('click', (e) => {
             e.preventDefault();
             cartDropdown.classList.toggle('active');
+            actualizarInterfazCarrito();
+        });
+
+        // Cerrar al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!cartIconBtn.contains(e.target) && !cartDropdown.contains(e.target)) {
+                cartDropdown.classList.remove('active');
+            }
         });
     }
+
+    actualizarInterfazCarrito();
 });
 
-async function cargarCarrito() {
+// Función global para actualizar tanto el resumen (dropdown) como la página completa
+async function actualizarInterfazCarrito() {
     const token = localStorage.getItem('token');
-    if (!token) return;
+    const miniCartContainer = document.getElementById('mini-cart-items');
+    const cartCount = document.getElementById('cart-count');
+    
+    // Elementos de la página carrito.html
+    const itemsCarritoPage = document.getElementById('items-carrito');
+    const resumenSeccion = document.getElementById('resumen-seccion');
+    const tituloBolsa = document.getElementById('titulo-bolsa');
+
+    if (!token) {
+        // CASO: SIN SESIÓN (Mostrar cuadro de la imagen 1)
+        if (miniCartContainer) {
+            miniCartContainer.innerHTML = `
+                <div class="cart-empty-state">
+                    <p>Inicia sesión para ver tu bolsa y empezar a comprar.</p>
+                    <a href="/ComercializadoraLL/login.html" class="btn-login-cart">Iniciar sesión</a>
+                </div>`;
+        }
+        if (cartCount) cartCount.textContent = "0";
+        if (itemsCarritoPage) itemsCarritoPage.innerHTML = "<p>Inicia sesión para ver tus productos.</p>";
+        return;
+    }
 
     try {
-        const response = await fetch(`${API_URL_CARRITO}/carrito`, {
+        const res = await fetch(API_URL_CARRITO, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        const items = await response.json();
+        const items = await res.json();
 
-        if (Array.isArray(items)) {
-            actualizarInterfazCarrito(items);
+        // Actualizar contador
+        if (cartCount) cartCount.textContent = items.length;
+
+        // Renderizar en el Dropdown (Index)
+        if (miniCartContainer) {
+            if (items.length === 0) {
+                miniCartContainer.innerHTML = '<p class="empty-msg">Tu bolsa está vacía.</p>';
+            } else {
+                let html = '<div class="mini-cart-list">';
+                items.forEach(item => {
+                    html += `
+                        <div class="mini-item">
+                            <img src="${item.vchImagen}" alt="${item.vchNombre}">
+                            <div class="mini-info">
+                                <p class="name">${item.vchNombre}</p>
+                                <p class="price">$${parseFloat(item.floPrecioUnitario).toFixed(2)} x ${item.intCantidad}</p>
+                            </div>
+                        </div>`;
+                });
+                html += `</div>
+                         <div class="mini-footer">
+                            <button onclick="window.location.href='/ComercializadoraLL/publico/carrito.html'" class="btn-ver-carrito">Ver mi bolsa</button>
+                         </div>`;
+                miniCartContainer.innerHTML = html;
+            }
         }
+
+        // Renderizar en la Página (carrito.html)
+        if (itemsCarritoPage) {
+            if (items.length === 0) {
+                itemsCarritoPage.innerHTML = "";
+                if (tituloBolsa) tituloBolsa.textContent = "Tu bolsa está vacía.";
+                if (resumenSeccion) resumenSeccion.style.display = "none";
+            } else {
+                if (tituloBolsa) tituloBolsa.textContent = "Tu bolsa.";
+                if (resumenSeccion) resumenSeccion.style.display = "block";
+                
+                let subtotal = 0;
+                itemsCarritoPage.innerHTML = items.map(item => {
+                    const filaTotal = item.floPrecioUnitario * item.intCantidad;
+                    subtotal += filaTotal;
+                    return `
+                        <div class="carrito-item">
+                            <img src="${item.vchImagen}" alt="${item.vchNombre}">
+                            <div class="item-detalles">
+                                <h3>${item.vchNombre}</h3>
+                                <p>ID: ${item.vchNo_Serie}</p>
+                                <div class="item-controles">
+                                    <span>Cantidad: ${item.intCantidad}</span>
+                                    <button class="btn-eliminar" onclick="eliminarProducto('${item.intid_Carrito}')">Eliminar</button>
+                                </div>
+                            </div>
+                            <div class="item-precio">
+                                <p>$${parseFloat(item.floPrecioUnitario).toFixed(2)}</p>
+                            </div>
+                        </div>`;
+                }).join('');
+
+                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                document.getElementById('total-final').textContent = `$${subtotal.toFixed(2)}`;
+            }
+        }
+
     } catch (error) {
-        console.error("Error al cargar carrito:", error);
+        console.error("Error carrito:", error);
     }
 }
 
+// Función para agregar (Se llama desde detalle.js o index.js)
 async function agregarProductoCarrito() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
         alert("Debes iniciar sesión para agregar productos.");
         return;
     }
 
-    const inputId = document.getElementById('det-id');
-    if (!inputId || !inputId.value) {
-        alert("Error: No se encontró el ID del producto.");
-        return;
-    }
+    const vchNo_Serie = document.getElementById('det-id').value;
+    if (!vchNo_Serie) return;
 
-    const vchNo_Serie = inputId.value;
-    
     try {
-        const response = await fetch(`${API_URL_CARRITO}/carrito/agregar`, {
+        const response = await fetch(`${API_URL_CARRITO}/agregar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,92 +145,26 @@ async function agregarProductoCarrito() {
             body: JSON.stringify({ vchNo_Serie, intCantidad: 1 })
         });
 
-        const data = await response.json();
-        if (data.status === 'success') {
-            alert("✅ Producto añadido");
-            cargarCarrito(); 
-        } else {
-            alert("Error: " + data.mensaje);
+        if (response.ok) {
+            actualizarInterfazCarrito();
+            // Abrir el dropdown automáticamente para mostrar que se agregó
+            document.getElementById('cart-dropdown').classList.add('active');
         }
     } catch (error) {
-        alert("Error de conexión");
+        console.error("Error al agregar:", error);
     }
 }
 
-function actualizarInterfazCarrito(items) {
-    const contador = document.getElementById('cart-count');
-    if (contador) contador.textContent = items.length;
-
-   
-    if (document.getElementById('items-carrito')) {
-        renderizarPaginaCompleta(items);
-    }
-
-
-    const miniCart = document.getElementById('mini-cart-items');
-    if (miniCart) {
-        if (items.length === 0) {
-            miniCart.innerHTML = '<p style="padding:10px;">Tu bolsa está vacía</p>';
-        } else {
-            miniCart.innerHTML = items.slice(0, 3).map(item => `
-                <div class="mini-item">
-                    <span>${item.vchNombre} x ${item.intCantidad}</span>
-                </div>
-            `).join('') + '<a href="publico/carrito.html" class="ver-mas">Ver todo</a>';
-        }
-    }
-}
-
-function renderizarPaginaCompleta(items) {
-    const contenedor = document.getElementById('items-carrito');
-    const titulo = document.getElementById('titulo-bolsa');
-    const resumen = document.getElementById('resumen-seccion');
-    const subtotalText = document.getElementById('subtotal');
-    const totalText = document.getElementById('total-final');
-
-    if (items.length === 0) {
-        titulo.textContent = "Tu bolsa está vacía.";
-        if(resumen) resumen.style.display = 'none';
-        contenedor.innerHTML = '';
-        return;
-    }
-
-    if(titulo) titulo.textContent = "Tu bolsa de compra.";
-    if(resumen) resumen.style.display = 'block';
-    
-    let total = 0;
-    contenedor.innerHTML = items.map(item => {
-        total += item.floPrecioUnitario * item.intCantidad;
-        return `
-            <div class="item-carrito">
-                <div class="item-imagen">
-                    <img src="${item.vchImagen || 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png'}" alt="${item.vchNombre}">
-                </div>
-                <div class="item-info">
-                    <div class="info-detalles">
-                        <h2>${item.vchNombre}</h2>
-                        <p>Cantidad: ${item.intCantidad}</p>
-                        <button class="btn-eliminar" onclick="eliminarItem(${item.intid_Carrito})">Eliminar</button>
-                    </div>
-                    <div class="item-precio">$${(item.floPrecioUnitario * item.intCantidad).toLocaleString('es-MX')}</div>
-                </div>
-            </div>`;
-    }).join('');
-
-    if(subtotalText) subtotalText.textContent = `$${total.toLocaleString('es-MX')}`;
-    if(totalText) totalText.textContent = `$${total.toLocaleString('es-MX')}`;
-}
-
-async function eliminarItem(id) {
+// Función para eliminar
+async function eliminarProducto(id_carrito) {
     const token = localStorage.getItem('token');
-    if (!confirm("¿Eliminar este producto?")) return;
     try {
-        const res = await fetch(`${API_URL_CARRITO}/carrito/${id}`, {
+        await fetch(`${API_URL_CARRITO}/${id_carrito}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (res.ok) cargarCarrito();
+        actualizarInterfazCarrito();
     } catch (error) {
-        console.error(error);
+        console.error("Error al eliminar:", error);
     }
 }
