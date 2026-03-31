@@ -27,11 +27,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             const inputId = document.getElementById('det-id');
             if (inputId) inputId.value = prod.vchNo_Serie;
 
-            const imgContenedor = document.getElementById('contenedor-img');
+           const imgContenedor = document.getElementById('contenedor-img');
             if (imgContenedor) {
-                const nombreImagen = prod.vchImagen || 'sin-imagen.png';
+                const imgUrl = prod.vchImagen 
+                    ? prod.vchImagen 
+                    : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
+
                 imgContenedor.innerHTML = `
-                    <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/${nombreImagen}" 
+                    <img src="${imgUrl}" 
                         alt="${prod.vchNombre}" 
                         class="imagen-detalle-principal">
                 `;
