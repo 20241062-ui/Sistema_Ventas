@@ -868,3 +868,19 @@ footer {
     font-weight: 500;
     margin-bottom: 10px;
 }
+
+/* Control de visibilidad del carrito */
+.cart-dropdown.active {
+    display: block !important;
+}
+
+/* Estilo para que el botón de 'Iniciar Sesión' en el carrito se vea bien */
+.cart-empty-state .btn-bolsa {
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}

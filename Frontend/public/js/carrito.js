@@ -6,15 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartIconBtn = document.getElementById('cart-icon-btn');
     const cartDropdown = document.getElementById('cart-dropdown');
 
+    // 1. Lógica del Dropdown (Mini-carrito)
     if (cartIconBtn && cartDropdown) {
-        // Abrir/Cerrar el recuadro negro
         cartIconBtn.onclick = (e) => {
             e.preventDefault();
             cartDropdown.classList.toggle('active');
             actualizarInterfazCarrito();
         };
 
-        // Cerrar si hacen clic fuera
         document.addEventListener('click', (e) => {
             if (!cartIconBtn.contains(e.target) && !cartDropdown.contains(e.target)) {
                 cartDropdown.classList.remove('active');
@@ -22,26 +21,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Carga inicial (contador y resumen)
+    // Ejecución inicial para actualizar contadores y contenido
     actualizarInterfazCarrito();
 });
 
-// 1. FUNCIÓN PARA MOSTRAR LOS PRODUCTOS (O EL LOGIN)
 async function actualizarInterfazCarrito() {
     const token = localStorage.getItem('token');
     const miniCartContainer = document.getElementById('mini-cart-items');
     const cartCount = document.getElementById('cart-count');
     
-    // Elementos de la página carrito.html (la bolsa completa)
+    // Elementos de la página carrito.html (pueden no existir en home.html)
     const itemsCarritoPage = document.getElementById('items-carrito');
     const resumenSeccion = document.getElementById('resumen-seccion');
+    const tituloBolsa = document.getElementById('titulo-bolsa');
 
+    // Caso: No hay sesión iniciada
     if (!token) {
         if (miniCartContainer) {
             miniCartContainer.innerHTML = `
                 <div class="cart-empty-state" style="padding: 20px; text-align: center;">
-                    <p style="color: white; margin-bottom: 15px;">Inicia sesión para ver tu bolsa y empezar a comprar.</p>
-                    <a href="login.html" class="btn-superior" style="display: block; text-decoration: none; background: #fff; color: #000; padding: 10px; border-radius: 5px; font-weight: bold;">Iniciar sesión</a>
+                    <p style="color: #1d1d1f; margin-bottom: 15px;">Inicia sesión para ver tu bolsa.</p>
+                    <a href="login.html" class="btn-bolsa">Iniciar sesión</a>
                 </div>`;
         }
         if (cartCount) cartCount.textContent = "0";
@@ -55,63 +55,67 @@ async function actualizarInterfazCarrito() {
         });
         const items = await res.json();
 
+        // Actualizar el globo del contador (común en todas las páginas)
         if (cartCount) cartCount.textContent = items.length;
 
-        // Render para el RESUMEN (Dropdown negro)
+        // --- RENDER PARA EL DROPDOWN (Mini Cart) ---
         if (miniCartContainer) {
             if (items.length === 0) {
-                miniCartContainer.innerHTML = '<p style="padding: 20px; color: white; text-align:center;">Tu bolsa está vacía.</p>';
+                miniCartContainer.innerHTML = '<div class="cart-empty-state"><p style="padding:20px; text-align:center; color:#888;">Tu bolsa está vacía.</p></div>';
             } else {
                 let html = '<div class="mini-cart-scroll" style="max-height: 300px; overflow-y: auto;">';
                 items.forEach(item => {
                     html += `
-                        <div class="item-mini" style="display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid #333;">
+                        <div class="mini-item" style="display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid #eee;">
                             <img src="${item.vchImagen}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
                             <div style="flex: 1;">
-                                <p style="color: white; font-size: 14px; margin: 0; font-weight: bold;">${item.vchNombre}</p>
-                                <p style="color: #aaa; font-size: 12px; margin: 0;">$${parseFloat(item.floPrecioUnitario).toFixed(2)} x ${item.intCantidad}</p>
+                                <h4 style="margin:0; font-size: 14px; color:#000;">${item.vchNombre}</h4>
+                                <p style="margin:0; font-size: 12px; color:#666;">$${parseFloat(item.floPrecioUnitario).toFixed(2)} x ${item.intCantidad}</p>
                             </div>
-                            <button onclick="eliminarDelCarrito('${item.intid_Carrito}')" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:18px;">&times;</button>
+                            <button onclick="eliminarDelCarrito('${item.intid_Carrito}')" style="background:none; border:none; color:red; cursor:pointer; font-size:18px;">&times;</button>
                         </div>`;
                 });
                 html += `</div>
-                         <div style="padding: 10px;">
-                            <button onclick="window.location.href='carrito.html'" style="width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Ver mi bolsa completa</button>
+                         <div class="mini-cart-footer" style="padding: 15px; display: flex; flex-direction: column; gap: 10px;">
+                            <a href="publico/carrito.html" class="btn-bolsa-border" style="text-align:center; display:block; border: 1px solid #000; padding: 8px; text-decoration:none; color:#000; border-radius:8px;">Revisar la bolsa</a>
+                            <button onclick="window.location.href='pago.html'" class="btn-bolsa" style="background:#000; color:#fff; border:none; padding:10px; border-radius:8px; cursor:pointer;">Pagar</button>
                          </div>`;
                 miniCartContainer.innerHTML = html;
             }
         }
 
-        // Render para la PÁGINA COMPLETA (carrito.html)
+        // --- RENDER PARA LA PÁGINA COMPLETA (carrito.html) ---
         if (itemsCarritoPage) {
             if (items.length === 0) {
-                itemsCarritoPage.innerHTML = "<h2 style='text-align:center;'>Tu bolsa está vacía</h2>";
+                itemsCarritoPage.innerHTML = "";
+                if(tituloBolsa) tituloBolsa.textContent = "Tu bolsa está vacía.";
                 if (resumenSeccion) resumenSeccion.style.display = "none";
             } else {
+                if(tituloBolsa) tituloBolsa.textContent = "Tu bolsa.";
                 if (resumenSeccion) resumenSeccion.style.display = "block";
+                
                 let subtotal = 0;
                 itemsCarritoPage.innerHTML = items.map(item => {
                     const totalFila = item.floPrecioUnitario * item.intCantidad;
                     subtotal += totalFila;
                     return `
-                        <div class="carrito-item">
-                            <img src="${item.vchImagen}" alt="${item.vchNombre}">
-                            <div class="item-detalles">
-                                <h3>${item.vchNombre}</h3>
-                                <p>Serie: ${item.vchNo_Serie}</p>
-                                <div class="item-controles">
-                                    <span>Cantidad: ${item.intCantidad}</span>
+                        <div class="item-carrito">
+                            <div class="item-imagen"><img src="${item.vchImagen}"></div>
+                            <div class="item-info">
+                                <div class="info-detalles">
+                                    <h2>${item.vchNombre}</h2>
+                                    <p>Cantidad: ${item.intCantidad}</p>
                                     <button class="btn-eliminar" onclick="eliminarDelCarrito('${item.intid_Carrito}')">Eliminar</button>
                                 </div>
-                            </div>
-                            <div class="item-precio">
-                                <p>$${parseFloat(item.floPrecioUnitario).toFixed(2)}</p>
+                                <div class="item-precio">$${parseFloat(item.floPrecioUnitario).toFixed(2)}</div>
                             </div>
                         </div>`;
                 }).join('');
                 
-                if(document.getElementById('subtotal')) document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-                if(document.getElementById('total-final')) document.getElementById('total-final').textContent = `$${subtotal.toFixed(2)}`;
+                const subtotalElem = document.getElementById('subtotal');
+                const totalFinalElem = document.getElementById('total-final');
+                if(subtotalElem) subtotalElem.textContent = `$${subtotal.toFixed(2)}`;
+                if(totalFinalElem) totalFinalElem.textContent = `$${subtotal.toFixed(2)}`;
             }
         }
     } catch (error) {
@@ -119,7 +123,7 @@ async function actualizarInterfazCarrito() {
     }
 }
 
-// 2. FUNCIÓN PARA AGREGAR (Se activa al dar clic en "Comprar ahora")
+// Función para agregar (usada en la vista de detalle)
 async function agregarProductoCarrito() {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -128,7 +132,9 @@ async function agregarProductoCarrito() {
         return;
     }
 
-    const vchNo_Serie = document.getElementById('det-id').value;
+    const inputId = document.getElementById('det-id');
+    const vchNo_Serie = inputId ? inputId.value : null;
+
     if (!vchNo_Serie) {
         alert("Error: No se pudo obtener el ID del producto.");
         return;
@@ -146,9 +152,9 @@ async function agregarProductoCarrito() {
 
         const data = await response.json();
         if (response.ok) {
-            actualizarInterfazCarrito();
-            // Abrir el resumen para que el usuario vea que se agregó
-            document.getElementById('cart-dropdown').classList.add('active');
+            await actualizarInterfazCarrito();
+            const cartDropdown = document.getElementById('cart-dropdown');
+            if (cartDropdown) cartDropdown.classList.add('active');
         } else {
             alert(data.mensaje || "Error al agregar");
         }
@@ -157,10 +163,10 @@ async function agregarProductoCarrito() {
     }
 }
 
-// 3. FUNCIÓN PARA ELIMINAR
+// Función para eliminar
 async function eliminarDelCarrito(id_carrito) {
     const token = localStorage.getItem('token');
-    if (!confirm("¿Eliminar este producto de la bolsa?")) return;
+    if (!token || !confirm("¿Eliminar este producto de la bolsa?")) return;
 
     try {
         const res = await fetch(`${API_URL_CARRITO}/${id_carrito}`, {
