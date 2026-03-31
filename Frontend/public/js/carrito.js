@@ -24,22 +24,12 @@ async function cargarCarrito() {
     const miniContenedor = document.getElementById("mini-cart-items");
     const countLabel = document.getElementById("cart-count");
 
-    // Aseguramos que el contador siempre muestre algo
     if (countLabel) countLabel.innerText = "0";
-
     if (!token) {
         if (miniContenedor) {
-            miniContenedor.innerHTML = `
-                <div class="cart-empty-state">
-                    <p class="empty-title">Tu bolsa está vacía.</p>
-                    <p class="empty-subtitle">Inicia sesión para ver tu bolsa e iniciar una compra.</p>
-                </div>
-                <div class="mini-cart-footer">
-                    <a href="login.html" class="btn-bolsa">Iniciar sesión</a>
-                </div>
-            `;
+            miniContenedor.innerHTML = `<p class="empty-subtitle">Inicia sesión para ver tu bolsa.</p>`;
         }
-        return;
+        return; 
     }
 
     try {
@@ -47,13 +37,17 @@ async function cargarCarrito() {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
+        if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem("token");
+            return;
+        }
+
         if (!res.ok) throw new Error("Error en la petición");
         const items = await res.json();
         
-        // Actualizamos el número real de productos
         if (countLabel) countLabel.innerText = items.length;
 
-        renderMiniCarrito(items);
+        if (miniContenedor) renderMiniCarrito(items);
 
         if (document.getElementById("items-carrito")) {
             renderCarritoPrincipal(items);
@@ -61,9 +55,6 @@ async function cargarCarrito() {
         
     } catch (error) {
         console.error("Error al cargar carrito:", error);
-        if (miniContenedor) {
-            miniContenedor.innerHTML = '<p class="empty-subtitle">Error de conexión.</p>';
-        }
     }
 }
 
