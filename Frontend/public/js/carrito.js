@@ -1,13 +1,17 @@
+const API_BASE = "https://sistemaventasback.vercel.app/api";
+const IMG_BASE = "https://comercializadorall.grupoctic.com/ComercializadoraLL/img/";
+
 document.addEventListener("DOMContentLoaded", () => {
     cargarCarrito();
 
+    // Lógica del Dropdown (Mini Carrito)
     const cartBtn = document.getElementById("cart-icon-btn");
     const cartDropdown = document.getElementById("cart-dropdown");
 
     if (cartBtn && cartDropdown) {
         cartBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            e.stopPropagation(); 
+            e.stopPropagation();
             cartDropdown.classList.toggle("show");
         });
 
@@ -23,17 +27,27 @@ async function cargarCarrito() {
     const token = localStorage.getItem("token");
     const miniContenedor = document.getElementById("mini-cart-items");
     const countLabel = document.getElementById("cart-count");
-
+    
+    // 1. Resetear contador
     if (countLabel) countLabel.innerText = "0";
+
+    // 2. Si no hay token, mostrar estado "Iniciar Sesión"
     if (!token) {
         if (miniContenedor) {
-            miniContenedor.innerHTML = `<p class="empty-subtitle">Inicia sesión para ver tu bolsa.</p>`;
+            miniContenedor.innerHTML = `
+                <div class="cart-empty-state">
+                    <p class="empty-title">Tu bolsa está vacía.</p>
+                    <p class="empty-subtitle">Inicia sesión para ver tu bolsa.</p>
+                </div>
+                <div class="mini-cart-footer">
+                    <a href="login.html" class="btn-bolsa">Iniciar sesión</a>
+                </div>`;
         }
-        return; 
+        return;
     }
 
     try {
-        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
+        const res = await fetch(`${API_BASE}/carrito`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
@@ -42,54 +56,46 @@ async function cargarCarrito() {
             return;
         }
 
-        if (!res.ok) throw new Error("Error en la petición");
         const items = await res.json();
-        
         if (countLabel) countLabel.innerText = items.length;
 
+        // 3. Renderizar Mini Carrito (Dropdown) si existe
         if (miniContenedor) renderMiniCarrito(items);
 
+        // 4. Renderizar Carrito Principal (Página completa) solo si existe el contenedor
         if (document.getElementById("items-carrito")) {
             renderCarritoPrincipal(items);
         }
-        
+
     } catch (error) {
-        console.error("Error al cargar carrito:", error);
+        console.error("Error crítico en el carrito:", error);
     }
 }
 
 function renderMiniCarrito(items) {
     const miniContenedor = document.getElementById("mini-cart-items");
-    if (!miniContenedor) return;
-
     if (items.length === 0) {
         miniContenedor.innerHTML = `
-            <div class="cart-empty-state">
-                <p class="empty-title">Tu bolsa está vacía.</p>
-            </div>
-            <div class="mini-cart-footer">
-                <a href="index.html" class="btn-bolsa">Continuar comprando</a>
-            </div>`;
+            <div class="cart-empty-state"><p class="empty-title">Tu bolsa está vacía.</p></div>
+            <div class="mini-cart-footer"><a href="index.html" class="btn-bolsa">Comprar ahora</a></div>`;
         return;
     }
 
-    let html = `<div class="mini-items-list">` + 
-    items.map((item) => `
+    let html = `<h3>Artículos añadidos a tu bolsa</h3><div class="mini-items-list">`;
+    html += items.map(item => `
         <div class="mini-item">
-            <img src="${item.vchImagen}" alt="${item.vchNombre}">
+            <img src="${IMG_BASE}${item.vchImagen}" alt="${item.vchNombre}">
             <div class="mini-item-info">
                 <h4>${item.vchNombre}</h4>
                 <p>$${parseFloat(item.floPrecioUnitario).toLocaleString('es-MX')}</p>
             </div>
-        </div>
-    `).join("") + `</div>`;
-
-    html += `
+        </div>`).join("");
+    
+    html += `</div>
         <div class="mini-cart-footer">
-            <a href="publico/carrito.html" class="btn-bolsa">Revisar la bolsa</a>
-        </div>
-    `;
-
+            <a href="publico/carrito.html" class="btn-bolsa-border">Revisar la bolsa (${items.length})</a>
+            <a href="checkout.html" class="btn-bolsa">Ir a pagar</a>
+        </div>`;
     miniContenedor.innerHTML = html;
 }
 
@@ -97,8 +103,6 @@ function renderCarritoPrincipal(items) {
     const contenedor = document.getElementById("items-carrito");
     const resumen = document.getElementById("resumen-seccion");
     const titulo = document.getElementById("titulo-bolsa");
-
-    if (!contenedor) return;
 
     if (items.length === 0) {
         if (titulo) titulo.innerText = "Tu bolsa está vacía.";
@@ -109,50 +113,34 @@ function renderCarritoPrincipal(items) {
 
     if (titulo) titulo.innerText = "Revisa tu bolsa.";
     if (resumen) resumen.style.display = "block";
-    
+
     let total = 0;
     contenedor.innerHTML = items.map(item => {
-        const subtotal = item.floPrecioUnitario * item.intCantidad;
-        total += subtotal;
+        const sub = item.floPrecioUnitario * item.intCantidad;
+        total += sub;
         return `
             <div class="item-carrito">
-                <div class="item-imagen">
-                    <img src="${item.vchImagen}" alt="${item.vchNombre}">
-                </div>
+                <div class="item-imagen"><img src="${IMG_BASE}${item.vchImagen}"></div>
                 <div class="item-info">
                     <div class="info-detalles">
                         <h2>${item.vchNombre}</h2>
                         <p>Cantidad: ${item.intCantidad}</p>
                         <button class="btn-eliminar" onclick="eliminarProducto(${item.intid_Carrito})">Eliminar</button>
                     </div>
-                    <div class="item-precio">
-                        $${subtotal.toLocaleString('es-MX')}
-                    </div>
+                    <div class="item-precio">$${sub.toLocaleString('es-MX')}</div>
                 </div>
-            </div>
-        `;
+            </div>`;
     }).join("");
 
-    const subtotalDom = document.getElementById("subtotal");
-    const totalDom = document.getElementById("total-final");
-    
-    if (subtotalDom) subtotalDom.innerText = `$${total.toLocaleString('es-MX')}`;
-    if (totalDom) totalDom.innerText = `$${total.toLocaleString('es-MX')}`;
+    document.getElementById("subtotal").innerText = `$${total.toLocaleString('es-MX')}`;
+    document.getElementById("total-final").innerText = `$${total.toLocaleString('es-MX')}`;
 }
 
 async function eliminarProducto(id) {
     const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-        const res = await fetch(`https://sistemaventasback.vercel.app/api/carrito/${id}`, {
-            method: 'DELETE',
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-        if (res.ok) {
-            cargarCarrito();
-        }
-    } catch (error) {
-        console.error("Error al eliminar:", error);
-    }
+    const res = await fetch(`${API_BASE}/carrito/${id}`, {
+        method: 'DELETE',
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (res.ok) cargarCarrito();
 }
