@@ -91,11 +91,11 @@
     margin-top: 20px;
 }
 
-/* BOTÓN NEGRO (Estilo solicitado) */
+/* BOTÓN NEGRO (Estilo Apple - Checkout) */
 .btn-checkout {
     width: 100%;
-    background: #000000; /* Negro */
-    color: white;
+    background-color: #000000; /* Negro sólido */
+    color: #ffffff;
     border: none;
     padding: 18px;
     border-radius: 12px;
@@ -103,7 +103,26 @@
     font-weight: 500;
     margin-top: 30px;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: all 0.2s ease;
+}
+
+.btn-checkout:hover {
+    background-color: #1d1d1f; /* Un gris casi negro al pasar el mouse */
+    opacity: 0.9;
+}
+
+/* Mejora de los detalles del item para que se parezca a la foto */
+.info-detalles h2 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.015em; /* Ajuste sutil de Apple */
+    color: #1d1d1f;
+}
+
+.item-precio {
+    font-size: 24px;
+    font-weight: 500; /* En la foto no es tan grueso como un 700 */
+    color: #1d1d1f;
 }
 
 .btn-checkout:hover {
