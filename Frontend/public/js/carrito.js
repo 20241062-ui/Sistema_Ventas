@@ -5,7 +5,7 @@ const API_URL_CARRITO = window.location.hostname === 'localhost' || window.locat
 document.addEventListener('DOMContentLoaded', () => {
     cargarCarrito();
 
-    // Configuración del dropdown (si existe en la página)
+   
     const cartIcon = document.getElementById('cart-icon-btn');
     const cartDropdown = document.getElementById('cart-dropdown');
     if (cartIcon && cartDropdown) {
@@ -34,7 +34,6 @@ async function cargarCarrito() {
     }
 }
 
-// Función unificada para agregar (Se llama desde detalle.js o index)
 async function agregarProductoCarrito() {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -63,7 +62,7 @@ async function agregarProductoCarrito() {
         const data = await response.json();
         if (data.status === 'success') {
             alert("✅ Producto añadido");
-            cargarCarrito(); // Recarga el contador y mini-cart
+            cargarCarrito(); 
         } else {
             alert("Error: " + data.mensaje);
         }
@@ -76,12 +75,12 @@ function actualizarInterfazCarrito(items) {
     const contador = document.getElementById('cart-count');
     if (contador) contador.textContent = items.length;
 
-    // Si estamos en la página carrito.html
+   
     if (document.getElementById('items-carrito')) {
         renderizarPaginaCompleta(items);
     }
 
-    // Si hay un mini-cart (dropdown)
+
     const miniCart = document.getElementById('mini-cart-items');
     if (miniCart) {
         if (items.length === 0) {
