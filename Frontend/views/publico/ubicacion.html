@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubicación - FlashCode</title>
     <link rel="stylesheet" href="../../public/css/home.css">
     <style>
-        .card-contacto { border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-top: 20px; background: white; }
-        iframe { width: 100%; height: 400px; border: 0; margin-top: 20px; border-radius: 8px; }
-        #sucursalSelect { padding: 8px; border-radius: 5px; width: 100%; max-width: 300px; margin-bottom: 10px; }
+        .card-contacto {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            background: white;
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 0;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        #sucursalSelect {
+            padding: 8px;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <div class="contenedor-header">
-            <a href="../index.html"><img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo"></a>
+            <a href="../index.html"><img
+                    src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo"></a>
             <nav>
-                <a href="#" onclick="aplicarFiltro('todas')" class="nav-link">Inicio</a>
-                <a href="#" onclick="aplicarFiltro(1)" class="nav-link">Celulares</a>
-                <a href="#" onclick="aplicarFiltro(8)" class="nav-link">Accesorios</a>
-                <a href="#" onclick="aplicarFiltro(2)" class="nav-link">Laptops</a>
+                <a href="categorias.html" class="nav-link">Inicio</a>
+                <a href="categorias.html?id=1" class="nav-link">Celulares</a>
+                <a href="categorias.html?id=8" class="nav-link">Accesorios</a>
+                <a href="categorias.html?id=2" class="nav-link">Laptops</a>
             </nav>
             <div class="user-menu">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
                 <div class="menu" id="menu-usuario">
                     <a href="perfil.html" id="link-perfil">Mi cuenta</a>
                     <a href="../login.html" id="link-login">Iniciar Sesión</a>
@@ -35,26 +60,38 @@
     <main class="acerca-container">
         <h1>Nuestras sucursales</h1>
         <p id="mensaje-carga">Cargando información de sucursales...</p>
-        
+
         <div id="contenido-ubicacion" style="display: none;">
             <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
             <select id="sucursalSelect"></select>
-            
+
             <iframe id="mapaSucursal" src="" allowfullscreen="" loading="lazy"></iframe>
 
             <div class="card-contacto" id="cardSucursal">
-                </div>
+            </div>
         </div>
     </main>
 
     <footer>
         <div class="linksFooter">
-            <a href="AcercaDe.html"><h3>Acerca de</h3></a>
-            <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
-            <a href="contactoPublico.html"><h3>Contacto</h3></a>
-            <a href="ubicacion.html" class="activo"><h3>Ubicación</h3></a>
-            <a href="politicaCompra.html"><h3>Políticas</h3></a>
-            <a href="preguntasFrecuentesPublic.html"><h3>Preguntas Frecuentes</h3></a>
+            <a href="AcercaDe.html">
+                <h3>Acerca de</h3>
+            </a>
+            <a href="quienessomos.html">
+                <h3>¿Quiénes somos?</h3>
+            </a>
+            <a href="contactoPublico.html">
+                <h3>Contacto</h3>
+            </a>
+            <a href="ubicacion.html" class="activo">
+                <h3>Ubicación</h3>
+            </a>
+            <a href="politicaCompra.html">
+                <h3>Políticas</h3>
+            </a>
+            <a href="preguntasFrecuentesPublic.html">
+                <h3>Preguntas Frecuentes</h3>
+            </a>
         </div>
     </footer>
 
@@ -62,4 +99,5 @@
     <script src="../../public/js/ubicacion.js"></script>
     <script src="../../public/js/home.js"></script>
 </body>
+
 </html>

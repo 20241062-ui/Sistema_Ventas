@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - Doble L</title>
     <link rel="stylesheet" href="../../public/css/home.css">
-    </head>
+</head>
+
 <body>
     <header>
         <div class="contenedor-header">
-            <a href="../index.html"><img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo"></a>
+            <a href="../index.html"><img
+                    src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo"></a>
             <nav>
-                <a href="#" onclick="aplicarFiltro('todas')" class="nav-link">Inicio</a>
-                <a href="#" onclick="aplicarFiltro(1)" class="nav-link">Celulares</a>
-                <a href="#" onclick="aplicarFiltro(8)" class="nav-link">Accesorios</a>
-                <a href="#" onclick="aplicarFiltro(2)" class="nav-link">Laptops</a>
+                <a href="categorias.html" class="nav-link">Inicio</a>
+                <a href="categorias.html?id=1" class="nav-link">Celulares</a>
+                <a href="categorias.html?id=8" class="nav-link">Accesorios</a>
+                <a href="categorias.html?id=2" class="nav-link">Laptops</a>
             </nav>
         </div>
     </header>
@@ -24,7 +28,8 @@
                 <h2>Mi cuenta</h2>
                 <p id="menu-user-info">Cargando...</p>
                 <a href="perfil.html">Mis datos</a>
-                <a href="actualizarPerfil.html" style="background-color: rgba(255, 255, 255, 0.4);">Editar información</a>
+                <a href="actualizarPerfil.html" style="background-color: rgba(255, 255, 255, 0.4);">Editar
+                    información</a>
                 <a href="#" id="logout-link">Cerrar Sesión</a>
             </div>
             <div class="perfil-info">
@@ -32,25 +37,28 @@
                 <form id="form-actualizar-perfil">
                     <label>Nombre(s):</label>
                     <input type="text" name="vchNombre" id="input-nombre" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
-                    
+
                     <label>Apellido Paterno:</label>
-                    <input type="text" name="vchApellido_Paterno" id="input-paterno" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
-                    
+                    <input type="text" name="vchApellido_Paterno" id="input-paterno" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                        required>
+
                     <label>Apellido Materno:</label>
-                    <input type="text" name="vchApellido_Materno" id="input-materno" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
-                    
+                    <input type="text" name="vchApellido_Materno" id="input-materno" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+                        required>
+
                     <label>Teléfono de contacto:</label>
                     <input type="text" name="vchTelefono" id="vchTelefono" maxlength="10">
-                    
+
                     <label>Correo electrónico (No modificable):</label>
                     <input type="email" id="input-correo" readonly>
-                    
+
                     <label>Nueva Contraseña (dejar en blanco para no cambiar):</label>
                     <input type="password" name="vchpassword" placeholder="••••••••">
-                    
+
                     <div class="botones">
                         <button type="submit" class="btn-guardar">Guardar cambios</button>
-                        <button type="button" class="btn-cancelar" onclick="window.location.href='perfil.html'">Cancelar</button>
+                        <button type="button" class="btn-cancelar"
+                            onclick="window.location.href='perfil.html'">Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -58,4 +66,5 @@
     </main>
     <script src="../../public/js/actualizarPerfil.js"></script>
 </body>
+
 </html>

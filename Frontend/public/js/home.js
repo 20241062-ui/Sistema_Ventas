@@ -16,10 +16,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const rutaAdmin = esSubcarpeta ? "../admin/menuAdministrador.html" : "admin/menuAdministrador.html";
     const rutaLogin = esSubcarpeta ? "../login.html" : "login.html";
 
+    const params = new URLSearchParams(window.location.search);
+    const idUrl = params.get('id'); 
+    let categoriaActual = idUrl || 'todas'; 
+
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     const token = localStorage.getItem('token');
-
-    let categoriaActual = 'todas';
 
     if (token && usuario.nombre) {
         if (linkLogin) linkLogin.style.display = 'none';
@@ -34,7 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             menuUsuario.prepend(saludo);
         }
 
-        if (usuario.rol === 'Administrador' && !document.getElementById('link-admin-panel')) {
+        const rolesAdmin = ['Administrador', 'Vendedor', 'Encargado'];
+        if (rolesAdmin.includes(usuario.rol) && !document.getElementById('link-admin-panel')) {
             const adminLink = document.createElement('a');
             adminLink.id = 'link-admin-panel';
             adminLink.href = rutaAdmin; 
@@ -47,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function cargarCatalogo(pagina = 1, categoria = 'todas') {
         if (!galeria) return;
         
-        galeria.innerHTML = '<p style="text-align:center; width:100%;">Cargando catálogo...</p>';
+        galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Cargando catálogo...</p>';
         
         try {
             const url = `${API_URL}/productos/home?pagina=${pagina}&categoria=${categoria}`;
@@ -67,9 +70,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             galeria.innerHTML = ''; 
             if (data.productos && data.productos.length > 0) {
                 data.productos.forEach(prod => {
-                   const imgUrl = prod.vchImagen 
-                    ? prod.vchImagen
-                    : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
+                    const imgUrl = prod.vchImagen 
+                        ? prod.vchImagen
+                        : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
 
                     galeria.innerHTML += `
                         <div class="producto">
@@ -89,14 +92,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>`;
                 });
             } else {
-                galeria.innerHTML = '<p style="text-align:center; width:100%;">No hay productos disponibles en esta sección.</p>';
+                galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">No hay productos disponibles en esta categoría.</p>';
             }
 
-            renderizarPaginacion(data.pagination);
+            if (data.pagination) {
+                renderizarPaginacion(data.pagination);
+            }
 
         } catch (error) {
             console.error("Error cargando productos:", error);
-            galeria.innerHTML = '<p style="text-align:center; width:100%;">Error al conectar con el servidor.</p>';
+            galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Error al conectar con el servidor.</p>';
         }
     }
 
@@ -118,6 +123,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     window.aplicarFiltro = (idCat) => {
         categoriaActual = idCat;
+        const nuevaUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + idCat;
+        window.history.pushState({path:nuevaUrl},'',nuevaUrl);
+        
         cargarCatalogo(1, idCat);
     };
 
@@ -131,5 +139,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    cargarCatalogo();
+    cargarCatalogo(1, categoriaActual);
 });
