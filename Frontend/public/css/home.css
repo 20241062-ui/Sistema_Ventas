@@ -884,3 +884,31 @@ footer {
     display: inline-block;
     margin-top: 10px;
 }
+
+/* Estilo específico para el dropdown (Mini-Carrito) */
+#cart-dropdown {
+    width: 320px;
+    padding: 20px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.mini-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.mini-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.mini-item-info h4 {
+    font-size: 14px;
+    margin: 0;
+}
