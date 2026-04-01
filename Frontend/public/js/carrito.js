@@ -87,13 +87,13 @@ async function actualizarInterfazCarrito() {
         // --- RENDER PÁGINA COMPLETA (carrito.html - Imagen 140502.jpg) ---
         if (itemsCarritoPage) {
             if (items.length === 0) {
-                if(tituloBolsa) tituloBolsa.textContent = "Tu bolsa está vacía.";
+                if (tituloBolsa) tituloBolsa.textContent = "Tu bolsa está vacía.";
                 if (resumenSeccion) resumenSeccion.style.display = "none";
                 itemsCarritoPage.innerHTML = "";
             } else {
-                if(tituloBolsa) tituloBolsa.textContent = "Revisa tu bolsa.";
+                if (tituloBolsa) tituloBolsa.textContent = "Revisa tu bolsa.";
                 if (resumenSeccion) resumenSeccion.style.display = "block";
-                
+
                 let subtotal = 0;
                 itemsCarritoPage.innerHTML = items.map(item => {
                     const precio = parseFloat(item.floPrecioUnitario);
@@ -111,7 +111,7 @@ async function actualizarInterfazCarrito() {
                             </div>
                         </div>`;
                 }).join('');
-                
+
                 document.getElementById('subtotal').textContent = `$${subtotal.toLocaleString('es-MX')}`;
                 document.getElementById('total-final').textContent = `$${subtotal.toLocaleString('es-MX')}`;
             }

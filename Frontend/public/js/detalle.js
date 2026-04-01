@@ -8,32 +8,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!productoId) {
         console.warn("No se proporcionó producto_id, redirigiendo...");
-        window.location.href = '../index.html'; 
+        window.location.href = '../index.html';
         return;
     }
 
     try {
         const response = await fetch(`${API_URL_DETALLE}/productos/detalle/${productoId}`);
-        
+
         if (!response.ok) {
             throw new Error("Producto no encontrado en el servidor");
         }
-        
+
         const prod = await response.json();
 
         if (document.getElementById('det-nombre')) {
             document.title = `${prod.vchNombre} - Doble L`;
-            
+
             document.getElementById('det-marca').textContent = prod.vchMarca || prod.Marca || "Genérico";
             document.getElementById('det-nombre').textContent = prod.vchNombre;
             document.getElementById('det-descripcion').textContent = prod.vchDescripcion;
-            
+
             const precio = parseFloat(prod.floPrecioUnitario);
             document.getElementById('det-precio').textContent = `$${precio.toLocaleString('es-MX', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })}`;
-            
+
             const inputId = document.getElementById('det-id');
             if (inputId) {
                 inputId.value = prod.vchNo_Serie;
@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const imgContenedor = document.getElementById('contenedor-img');
             if (imgContenedor) {
-                const imgUrl = prod.vchImagen 
-                    ? prod.vchImagen 
+                const imgUrl = prod.vchImagen
+                    ? prod.vchImagen
                     : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
 
                 imgContenedor.innerHTML = `
                     <img src="${imgUrl}" 
-                         alt="${prod.vchNombre}" 
-                         class="imagen-detalle-principal">
+                        alt="${prod.vchNombre}" 
+                        class="imagen-detalle-principal">
                 `;
             }
         }
