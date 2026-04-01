@@ -1,3 +1,4 @@
+// Reemplaza la función agregarProducto en home.js por esta:
 async function agregarProducto(noSerie) {
     const token = localStorage.getItem("token");
     
@@ -9,27 +10,31 @@ async function agregarProducto(noSerie) {
     }
 
     try {
-        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito", {
+        // CORRECCIÓN: Agregamos /agregar al final de la URL
+        const res = await fetch("https://sistemaventasback.vercel.app/api/carrito/agregar", {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ vchNo_Serie: noSerie })
+            body: JSON.stringify({ vchNo_Serie: noSerie, intCantidad: 1 }) // Agregamos cantidad
         });
 
         if (res.ok) {
             alert("👜 ¡Producto añadido a tu bolsa!");
+            // Si carrito.js está cargado, actualizamos el contador visualmente
+            if (typeof actualizarInterfazCarrito === 'function') {
+                actualizarInterfazCarrito();
+            }
         } else {
             const error = await res.json();
-            alert("Error: " + (error.error || "No se pudo añadir"));
+            alert("Error: " + (error.mensaje || "No se pudo añadir"));
         }
     } catch (err) {
         console.error("Error al agregar al carrito:", err);
-        alert("Error de conexión al agregar el producto");
+        alert("Error de conexión");
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', async () => {
     const galeria = document.getElementById('contenedor-galeria');
