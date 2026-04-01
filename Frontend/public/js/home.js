@@ -1,4 +1,3 @@
-// Reemplaza la función agregarProducto en home.js por esta:
 async function agregarProducto(noSerie) {
     const token = localStorage.getItem("token");
     
