@@ -48,9 +48,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const total = document.getElementById('count-total');
             const activos = document.getElementById('count-activos');
             const inactivos = document.getElementById('count-inactivos');
-            if (total) total.textContent = data.counts?.total || 0;
-            if (activos) activos.textContent = data.counts?.activos || 0;
-            if (inactivos) inactivos.textContent = data.counts?.inactivos || 0;
+
+            if (total) total.textContent = data.stats?.total || 0;
+            if (activos) activos.textContent = data.stats?.activos || 0;
+            if (inactivos) inactivos.textContent = data.stats?.inactivos || 0;
 
             const tbody = document.getElementById('tabla-productos-body');
             if (!tbody) return;
@@ -63,7 +64,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             data.productos.forEach(prod => {
-                console.log("Producto actual:", prod);
                 const tr = document.createElement('tr');
                 if (prod.Estado == 0) tr.classList.add('fila-inactiva');
 
