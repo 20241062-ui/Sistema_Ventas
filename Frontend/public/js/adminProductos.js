@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <span style="display:block; padding:10px; font-weight:bold; color:#333;">
                 Hola, ${usuario.nombre}
             </span>
-            <a href="../index.html">Volver al Sitio</a>
+            <a href="perfilAdmin.html">Mi cuenta</a>
             <a href="#" id="link-logout-admin" style="color: red;">Cerrar Sesión</a>
         `;
 

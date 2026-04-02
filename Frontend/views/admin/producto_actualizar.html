@@ -1,138 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Producto - Doble L</title>
     <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
 </head>
+
 <body>
 
-<header class="header-admin">
-    <div class="contenedor-header">
-        <a href="menuAdministrador.html">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" class="logo" alt="Logo">
-        </a>
+    <header class="header-admin">
+        <div class="contenedor-header">
+            <a href="menuAdministrador.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" class="logo"
+                    alt="Logo">
+            </a>
 
-        <nav class="nav-admin">
-            <a href="menuAdministrador.html" class="active">Productos</a>
-            <a href="ventas.html">Ventas</a>
-            <a href="compra.html">Compras</a>
-            <a href="categorias.html">Categorías</a>
-            <a href="marcas.html">Marcas</a>
-            <a href="proveedores.html">Proveedores</a>
-            <a href="listaSucursales.html">Sucursales</a>
-            <a href="informacionEmpresa.html">Información</a>
-            <a href="clientes.html">Clientes</a>
-            <a href="preguntasFrecuentes.html">FAQ</a>
-            <a href="contactoLista.html">Contacto</a>
-            <a href="usuarios.html">Usuarios</a>
-        </nav>
+            <nav class="nav-admin">
+                <a href="menuAdministrador.html" class="active">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compra.html">Compras</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="marcas.html">Marcas</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="listaSucursales.html">Sucursales</a>
+                <a href="informacionEmpresa.html">Información</a>
+                <a href="clientes.html">Clientes</a>
+                <a href="preguntasFrecuentes.html">FAQ</a>
+                <a href="contactoLista.html">Contacto</a>
+                <a href="usuarios.html">Usuarios</a>
+            </nav>
 
-        <div class="user-menu">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" class="profileicon" alt="Perfil">
-            <div class="menu">
-                <a href="perfilAdmin.html">Mi cuenta</a>
-                <a href="../publico/index.html">Inicio</a>
-                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
+                <div class="menu" id="menu-usuario-admin">
+                </div>
             </div>
         </div>
+    </header>
+
+    <div class="container">
+        <main class="main">
+
+            <form id="form-actualizar-producto" class="panelP-formularioProductos">
+                <h2>Editar producto</h2>
+
+                <label>No. Serie:</label>
+                <input type="text" id="vchNo_Serie" readonly>
+
+                <label>Marca:</label>
+                <select name="intid_Marca" id="intid_Marca" required></select>
+
+                <label>Categoría:</label>
+                <select name="intid_Categoria" id="intid_Categoria" required></select>
+
+                <label>Nombre:</label>
+                <input type="text" name="vchNombre" id="vchNombre" required>
+
+                <label>Descripción:</label>
+                <textarea name="vchDescripcion" id="vchDescripcion" rows="3"></textarea>
+
+                <label>Precio Unitario (Venta):</label>
+                <input type="number" name="floPrecioUnitario" id="floPrecioUnitario" required>
+
+                <label>Precio Compra:</label>
+                <input type="number" name="floPrecioCompra" id="floPrecioCompra" required>
+
+                <label>Stock:</label>
+                <input type="number" name="intStock" id="intStock" required>
+
+                <label>Imagen Actual:</label>
+                <div class="preview">
+                    <img id="imagen-preview" src="" width="150" alt="Vista previa de imagen">
+                </div>
+
+                <label>Nueva imagen (opcional):</label>
+                <input type="file" id="vchImagen" name="vchImagen" accept="image/*" onchange="validarImagen(this);">
+
+                <div class="botones">
+                    <button type="submit" class="guardar">Actualizar Producto</button>
+                    <button type="button" class="cancelar"
+                        onclick="window.location.href='menuAdministrador.html'">Cancelar</button>
+                </div>
+            </form>
+
+        </main>
     </div>
-</header>
 
-<div class="container">
-<main class="main">
+    <footer>
+        <div class="linksFooter">
+            <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+        </div>
+    </footer>
 
-<form id="form-actualizar-producto" class="panelP-formularioProductos">
-    <h2>Editar producto</h2>
+    <script>
+        const imagenOriginalSrc = document.getElementById('imagen-preview').src;
 
-    <label>No. Serie:</label>
-    <input type="text" id="vchNo_Serie" readonly>
+        function validarImagen(input) {
+            const tiposPermitidos = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+            const archivo = input.files[0];
+            const imagenPreview = document.getElementById('imagen-preview');
 
-    <label>Marca:</label>
-    <select name="intid_Marca" id="intid_Marca" required></select>
+            if (!archivo) {
+                imagenPreview.src = imagenOriginalSrc;
+                return true;
+            }
 
-    <label>Categoría:</label>
-    <select name="intid_Categoria" id="intid_Categoria" required></select>
+            const nombreArchivo = archivo.name.toLowerCase();
+            let esValido = false;
 
-    <label>Nombre:</label>
-    <input type="text" name="vchNombre" id="vchNombre" required>
+            for (let i = 0; i < tiposPermitidos.length; i++) {
+                if (nombreArchivo.endsWith(tiposPermitidos[i])) {
+                    esValido = true;
+                    break;
+                }
+            }
 
-    <label>Descripción:</label>
-    <textarea name="vchDescripcion" id="vchDescripcion" rows="3"></textarea>
+            if (!esValido) {
+                alert('Error: Solo se permiten archivos de imagen (JPG, PNG, GIF o WEBP).');
+                input.value = "";
+                imagenPreview.src = imagenOriginalSrc;
+                return false;
+            }
 
-    <label>Precio Unitario (Venta):</label>
-    <input type="number" name="floPrecioUnitario" id="floPrecioUnitario" required>
-
-    <label>Precio Compra:</label>
-    <input type="number" name="floPrecioCompra" id="floPrecioCompra" required>
-
-    <label>Stock:</label>
-    <input type="number" name="intStock" id="intStock" required>
-
-    <label>Imagen Actual:</label>
-    <div class="preview">
-        <img id="imagen-preview" src="" width="150" alt="Vista previa de imagen">
-    </div>
-
-    <label>Nueva imagen (opcional):</label>
-    <input type="file" id="vchImagen" name="vchImagen" accept="image/*" onchange="validarImagen(this);">
-
-    <div class="botones">
-        <button type="submit" class="guardar">Actualizar Producto</button>
-        <button type="button" class="cancelar" onclick="window.location.href='menuAdministrador.html'">Cancelar</button>
-    </div>
-</form>
-
-</main>
-</div>
-
-<footer>
-    <div class="linksFooter">
-        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
-    </div>
-</footer>
-
-<script>
-    const imagenOriginalSrc = document.getElementById('imagen-preview').src;
-
-    function validarImagen(input) {
-        const tiposPermitidos = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-        const archivo = input.files[0];
-        const imagenPreview = document.getElementById('imagen-preview'); 
-
-        if (!archivo) {
-            imagenPreview.src = imagenOriginalSrc;
+            if (esValido) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagenPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(archivo);
+            }
             return true;
         }
-        
-        const nombreArchivo = archivo.name.toLowerCase();
-        let esValido = false;
-
-        for (let i = 0; i < tiposPermitidos.length; i++) {
-            if (nombreArchivo.endsWith(tiposPermitidos[i])) {
-                esValido = true;
-                break;
-            }
-        }
-
-        if (!esValido) {
-            alert('Error: Solo se permiten archivos de imagen (JPG, PNG, GIF o WEBP).');
-            input.value = ""; 
-            imagenPreview.src = imagenOriginalSrc; 
-            return false;
-        }
-
-        if (esValido) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagenPreview.src = e.target.result; 
-            };
-            reader.readAsDataURL(archivo);
-        }
-        return true;
-    }
-</script>
-<script src="../../public/js/producto_actualizar.js"></script>
+    </script>
+    <script src="../../public/js/authAdmin.js"></script>
+    <script src="../../public/js/producto_actualizar.js"></script>
 
 </body>
+
 </html>

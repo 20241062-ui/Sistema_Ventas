@@ -1,85 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <title>Compras - Sistema de Ventas</title>
     <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
 </head>
+
 <body>
 
-<header class="header-admin">
-    <div class="contenedor-header">
-        <a href="menuAdministrador.html">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
-        </a>
+    <header class="header-admin">
+        <div class="contenedor-header">
+            <a href="menuAdministrador.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo">
+            </a>
 
-        <nav class="nav-admin">
-            <a href="menuAdministrador.html">Productos</a>
-            <a href="ventas.html">Ventas</a>
-            <a href="compra.html" class="active">Compras</a>
-            <a href="categorias.html">Categorías</a>
-            <a href="marcas.html">Marcas</a>
-            <a href="proveedores.html">Proveedores</a>
-            <a href="listaSucursales.html">Sucursales</a>
-            <a href="informacionEmpresa.html">Información</a>
-            <a href="clientes.html">Clientes</a>
-            <a href="preguntasFrecuentes.html">FAQ</a>
-            <a href="contactoLista.html">Contacto</a>
-            <a href="usuarios.html">Usuarios</a>
-        </nav>
+            <nav class="nav-admin">
+                <a href="menuAdministrador.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compra.html" class="active">Compras</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="marcas.html">Marcas</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="listaSucursales.html">Sucursales</a>
+                <a href="informacionEmpresa.html">Información</a>
+                <a href="clientes.html">Clientes</a>
+                <a href="preguntasFrecuentes.html">FAQ</a>
+                <a href="contactoLista.html">Contacto</a>
+                <a href="usuarios.html">Usuarios</a>
+            </nav>
 
-        <div class="user-menu">
-            <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-            <div class="menu">
-                <a href="perfilAdmin.html">Mi cuenta</a>
-                <a href="../publico/index.html">Inicio</a>
-                <a href="../publico/cerrar_sesion.html">Cerrar Sesión</a>
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
+                <div class="menu" id="menu-usuario-admin">
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<div class="container">
-    <main class="main">
-        <h2>Registro de compras</h2>
+    <div class="container">
+        <main class="main">
+            <h2>Registro de compras</h2>
 
-        <div class="cards"> <div class="card"> <h3>Total de compras</h3> <p class="big" id="total-compras">0</p> </div> </div>
-
-        <div class="productos-superior">
-            <button class="btn-superior" onclick="window.location.href='compra_nueva.html'">Registrar Compra</button>
-
-            <div class="productos-buscar">
-                <input type="search" id="input-buscar" placeholder="Buscar por ID o proveedor">
-                <button type="button" id="btn-buscar" class="btn-superior buscar">🔍 Buscar</button>
+            <div class="cards">
+                <div class="card">
+                    <h3>Total de compras</h3>
+                    <p class="big" id="total-compras">0</p>
+                </div>
             </div>
 
-        </div>
+            <div class="productos-superior">
+                <button class="btn-superior" onclick="window.location.href='compra_nueva.html'">Registrar
+                    Compra</button>
 
-        <div class="panel table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID Compra</th>
-                        <th>Proveedor (RFC)</th>
-                        <th>Total Compra</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-compras-body"> <tr> <td colspan="5" style="text-align:center;"> Cargando compras... </td> </tr> </tbody>
-            </table>
-        </div>
+                <div class="productos-buscar">
+                    <input type="search" id="input-buscar" placeholder="Buscar por ID o proveedor">
+                    <button type="button" id="btn-buscar" class="btn-superior buscar">🔍 Buscar</button>
+                </div>
 
-    </main>
-</div>
+            </div>
 
-<footer>
-    <div class="linksFooter">  
-        <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+            <div class="panel table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Compra</th>
+                            <th>Proveedor (RFC)</th>
+                            <th>Total Compra</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-compras-body">
+                        <tr>
+                            <td colspan="5" style="text-align:center;"> Cargando compras... </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
     </div>
-</footer>
 
-<script src="../../public/js/adminCompras.js"></script>
+    <footer>
+        <div class="linksFooter">
+            <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
+        </div>
+    </footer>
+    <script src="../../public/js/authAdmin.js"></script>
+    <script src="../../public/js/adminCompras.js"></script>
 
 </body>
+
 </html>

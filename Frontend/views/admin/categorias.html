@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <title>Categorías - Sistema de Ventas</title>
@@ -10,7 +11,8 @@
     <header class="header-admin">
         <div class="contenedor-header">
             <a href="menuAdministrador.html">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo">
             </a>
 
             <nav class="nav-admin">
@@ -29,11 +31,9 @@
             </nav>
 
             <div class="user-menu">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
-                <div class="menu">
-                    <a href="perfilAdmin.html">Mi cuenta</a>
-                    <a href="../publico/index.html">Inicio</a>
-                    <a href="#" id="link-logout">Cerrar Sesión</a>
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
+                <div class="menu" id="menu-usuario-admin">
                 </div>
             </div>
         </div>
@@ -46,12 +46,13 @@
             <div class="cards">
                 <div class="card">
                     <h3>Total categorías</h3>
-                    <p class="big" id="total-categorias">0</p> 
+                    <p class="big" id="total-categorias">0</p>
                 </div>
             </div>
 
             <div class="productos-superior">
-                <button class="btn-superior" onclick="window.location.href='categoria_nueva.html'">Nueva categoría</button>
+                <button class="btn-superior" onclick="window.location.href='categoria_nueva.html'">Nueva
+                    categoría</button>
 
                 <div class="productos-buscar">
                     <input type="search" id="input-buscar" placeholder="Buscar por ID o nombre...">
@@ -69,17 +70,19 @@
                         </tr>
                     </thead>
                     <tbody id="tabla-categorias-body">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </main>
     </div>
 
     <footer>
-        <div class="linksFooter">  
+        <div class="linksFooter">
             <a>© 2026 Comercializadora Doble L — Sistema de Ventas</a>
         </div>
     </footer>
+    <script src="../../public/js/authAdmin.js"></script>
     <script src="../../public/js/adminCategorias.js"></script>
 </body>
+
 </html>

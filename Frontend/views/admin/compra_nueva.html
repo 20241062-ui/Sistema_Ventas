@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Nueva Compra - Doble L</title>
     <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
 </head>
+
 <body>
     <header class="header-admin">
         <div class="contenedor-header">
             <a href="menuAdministrador.html">
-                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo"
+                    class="logo">
             </a>
             <nav class="nav-admin">
                 <a href="menuAdministrador.html">Productos</a>
@@ -25,13 +28,19 @@
                 <a href="contactoLista.html">Contacto</a>
                 <a href="usuarios.html">Usuarios</a>
             </nav>
+            <div class="user-menu">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil"
+                    class="profileicon">
+                <div class="menu" id="menu-usuario-admin">
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="container">
         <div class="panel">
             <h2>📦 Registro de Nueva Compra</h2>
-            
+
             <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
                 <label for="vchRFC"><strong>Proveedor:</strong></label>
                 <select id="vchRFC" style="padding: 10px; border-radius: 5px; flex: 1;">
@@ -46,7 +55,8 @@
                     <option value="">Seleccione un producto...</option>
                 </select>
                 <input type="number" id="cantidad" placeholder="Cantidad" style="width: 100px; padding: 10px;">
-                <input type="number" id="precio" step="0.01" placeholder="Costo Unitario" style="width: 130px; padding: 10px;">
+                <input type="number" id="precio" step="0.01" placeholder="Costo Unitario"
+                    style="width: 130px; padding: 10px;">
                 <button type="button" class="btn-superior" onclick="añadirAlCarrito()">➕ Añadir</button>
             </form>
 
@@ -76,18 +86,20 @@
             </div>
 
             <div class="botones" style="margin-top: 20px; justify-content: flex-end;">
-                <button type="button" class="cancelar" onclick="window.location.href='compra.html'">Cancelar Compra</button>
+                <button type="button" class="cancelar" onclick="window.location.href='compra.html'">Cancelar
+                    Compra</button>
                 <button type="button" class="guardar" onclick="finalizarCompra()">Finalizar Compra</button>
             </div>
         </div>
     </main>
 
     <footer>
-        <div class="linksFooter">  
+        <div class="linksFooter">
             <a>© 2026 Comercializadora Doble L — Gestión de Inventario</a>
         </div>
     </footer>
-
+    <script src="../../public/js/authAdmin.js"></script>
     <script src="../../public/js/compraNueva.js"></script>
 </body>
+
 </html>
