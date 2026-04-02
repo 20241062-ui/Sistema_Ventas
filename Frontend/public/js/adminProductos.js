@@ -3,30 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     const API_URL = 'https://sistemaventasback.vercel.app/api/admin/productos';
 
-    if (!token || !usuario || usuario.rol !== 'Administrador') {
-        alert("Acceso restringido. Por favor, inicia sesión como administrador.");
-        window.location.href = '../login.html';
-        return;
-    }
-
-    const menuUsuario = document.getElementById('menu-usuario-admin');
-    if (menuUsuario) {
-        menuUsuario.innerHTML = `
-            <span style="display:block; padding:10px; font-weight:bold; color:#333;">
-                Hola, ${usuario.nombre}
-            </span>
-            <a href="perfilAdmin.html">Mi cuenta</a>
-            <a href="#" id="link-logout-admin" style="color: red;">Cerrar Sesión</a>
-        `;
-
-        document.getElementById('link-logout-admin').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.clear();
-            alert('Sesión administrativa finalizada.');
-            window.location.href = '../index.html';
-        });
-    }
-
     let paginaActual = 1;
     let busquedaActual = "";
 
