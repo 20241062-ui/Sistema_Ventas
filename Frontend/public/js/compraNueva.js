@@ -21,9 +21,9 @@ async function cargarProveedores() {
             const opt = document.createElement("option");
             opt.value = p.vchRFC;
             opt.dataset.correo = p.vchCorreo || ""; 
-            opt.dataset.nombre = p.vchNombre;
-            opt.textContent = p.vchNombre;
-            select.appendChild(opt);
+            const nombreMostrar = p.vchRazon_Social;
+            opt.dataset.nombre = nombreMostrar;
+            opt.textContent = nombreMostrar;
         });
     } catch (error) {
         console.error("Error al cargar proveedores:", error);

@@ -15,7 +15,6 @@ async function cargarDetalle() {
         const data = await res.json();
         const { compra, detalle } = data;
 
-        // Llenar encabezados
         document.querySelector("#id-compra").textContent = compra.id_Compra;
         document.querySelector("#proveedor").textContent = compra.RFC;
         document.querySelector("#fecha").textContent = new Date(compra.Fecha).toLocaleString();
@@ -32,7 +31,7 @@ async function cargarDetalle() {
                 <td>$${parseFloat(d.PrecioCompra).toFixed(2)}</td>
                 <td>${d.Cantidad}</td>
                 <td>$${parseFloat(d.subtotal).toFixed(2)}</td>
-            `; // Se eliminó la columna 'descripcion' porque el SQL no la trae
+            `;
             tbody.appendChild(fila);
         });
     } catch (error) {
