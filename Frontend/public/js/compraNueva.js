@@ -10,23 +10,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarProveedores() {
     const select = document.getElementById("vchRFC");
+    const token = localStorage.getItem('token');
+    if (!select) return;
     try {
         const res = await fetch(`${API_BASE}/compras/aux/proveedores`, {
-            headers: { 'Authorization': `Bearer ${token}` } 
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         });
+        if (!res.ok) throw new Error("Error en la respuesta del servidor");
         const proveedores = await res.json();
-
         select.innerHTML = '<option value="">Seleccione un proveedor...</option>';
+
         proveedores.forEach(p => {
             const opt = document.createElement("option");
             opt.value = p.vchRFC;
-            opt.dataset.correo = p.vchCorreo || ""; 
-            const nombreMostrar = p.vchRazon_Social;
+            opt.dataset.correo = p.vchCorreo || "";
+            const nombreMostrar = p.vchRazon_Social || p.vchNombre || "Sin nombre";
             opt.dataset.nombre = nombreMostrar;
             opt.textContent = nombreMostrar;
+            select.appendChild(opt);
         });
     } catch (error) {
         console.error("Error al cargar proveedores:", error);
+        select.innerHTML = '<option value="">Error al cargar la lista</option>';
     }
 }
 
@@ -40,11 +48,11 @@ async function cargarProductos() {
         const productos = await res.json();
 
         select.innerHTML = '<option value="">Seleccione un producto...</option>';
-        
+
         if (Array.isArray(productos)) {
             productos.forEach(p => {
                 const opt = document.createElement("option");
-                opt.value = p.vchNo_Serie; 
+                opt.value = p.vchNo_Serie;
                 opt.textContent = p.vchNombre;
                 select.appendChild(opt);
             });
@@ -56,7 +64,7 @@ async function cargarProductos() {
 }
 
 
-window.añadirAlCarrito = function() {
+window.añadirAlCarrito = function () {
     const select = document.getElementById("select-producto");
     const inputCant = document.getElementById("cantidad");
     const inputPrecio = document.getElementById("precio");
@@ -76,8 +84,8 @@ window.añadirAlCarrito = function() {
 
     carrito.push(item);
     actualizarTabla();
-    
-    
+
+
     inputCant.value = "";
     inputPrecio.value = "";
     select.value = "";
@@ -106,19 +114,19 @@ function actualizarTabla() {
     totalDoc.textContent = `$${totalAcumulado.toFixed(2)}`;
 }
 
-window.quitarDelCarrito = function(index) {
+window.quitarDelCarrito = function (index) {
     carrito.splice(index, 1);
     actualizarTabla();
 };
 
-window.finalizarCompra = async function() {
+window.finalizarCompra = async function () {
     const selectProv = document.getElementById("vchRFC");
     const rfc = selectProv.value;
 
     if (!rfc) return alert("Debe seleccionar un proveedor.");
     if (carrito.length === 0) return alert("El carrito está vacío.");
 
-    
+
     const selectedOption = selectProv.options[selectProv.selectedIndex];
     const correoProveedor = selectedOption.dataset.correo;
     const nombreProveedor = selectedOption.dataset.nombre;
@@ -131,8 +139,8 @@ window.finalizarCompra = async function() {
 
     const datosCompra = {
         rfc: rfc,
-        nombreProveedor: nombreProveedor, 
-        correoProveedor: correoProveedor, 
+        nombreProveedor: nombreProveedor,
+        correoProveedor: correoProveedor,
         total: carrito.reduce((sum, item) => sum + item.subtotal, 0),
         productos: carrito.map(p => ({
             no_serie: p.no_serie,
