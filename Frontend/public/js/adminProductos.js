@@ -118,5 +118,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    cargarDashboard();
+    await cargarDashboard();
 });
