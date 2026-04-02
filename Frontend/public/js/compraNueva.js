@@ -11,24 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
 async function cargarProveedores() {
     const select = document.getElementById("vchRFC");
     try {
-        const res = await fetch(`${API_BASE}/compras/aux/proveedores`);
+        const res = await fetch(`${API_BASE}/compras/aux/proveedores`, {
+            headers: { 'Authorization': `Bearer ${token}` } 
+        });
         const proveedores = await res.json();
 
         select.innerHTML = '<option value="">Seleccione un proveedor...</option>';
         proveedores.forEach(p => {
             const opt = document.createElement("option");
             opt.value = p.vchRFC;
-            
-            
             opt.dataset.correo = p.vchCorreo || ""; 
-            opt.dataset.nombre = p.vchRazon_Social || p.vchNombre;
-            
-            opt.textContent = p.vchRazon_Social || p.vchNombre;
+            opt.dataset.nombre = p.vchNombre;
+            opt.textContent = p.vchNombre;
             select.appendChild(opt);
         });
     } catch (error) {
         console.error("Error al cargar proveedores:", error);
-        select.innerHTML = '<option value="">Error al cargar proveedores</option>';
     }
 }
 
@@ -36,7 +34,9 @@ async function cargarProveedores() {
 async function cargarProductos() {
     const select = document.getElementById("select-producto");
     try {
-        const res = await fetch(`${API_BASE}/compras/aux/productos`);
+        const res = await fetch(`${API_BASE}/compras/aux/productos`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
         const productos = await res.json();
 
         select.innerHTML = '<option value="">Seleccione un producto...</option>';
@@ -111,10 +111,6 @@ window.quitarDelCarrito = function(index) {
     actualizarTabla();
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9f39999d82492330576dd97306d07b8074e9c090
 window.finalizarCompra = async function() {
     const selectProv = document.getElementById("vchRFC");
     const rfc = selectProv.value;
@@ -122,10 +118,7 @@ window.finalizarCompra = async function() {
     if (!rfc) return alert("Debe seleccionar un proveedor.");
     if (carrito.length === 0) return alert("El carrito está vacío.");
 
-<<<<<<< HEAD
     
-=======
->>>>>>> 9f39999d82492330576dd97306d07b8074e9c090
     const selectedOption = selectProv.options[selectProv.selectedIndex];
     const correoProveedor = selectedOption.dataset.correo;
     const nombreProveedor = selectedOption.dataset.nombre;
@@ -138,13 +131,8 @@ window.finalizarCompra = async function() {
 
     const datosCompra = {
         rfc: rfc,
-<<<<<<< HEAD
         nombreProveedor: nombreProveedor, 
         correoProveedor: correoProveedor, 
-=======
-        nombreProveedor: nombreProveedor,
-        correoProveedor: correoProveedor,
->>>>>>> 9f39999d82492330576dd97306d07b8074e9c090
         total: carrito.reduce((sum, item) => sum + item.subtotal, 0),
         productos: carrito.map(p => ({
             no_serie: p.no_serie,

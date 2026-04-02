@@ -24,7 +24,6 @@ async function cargarCompras(buscar = "") {
     const token = localStorage.getItem('token');
 
     try {
-        // IMPORTANTE: Enviamos el parámetro 'buscar' a tu API
         const url = `https://sistemaventasback.vercel.app/api/compras?buscar=${encodeURIComponent(buscar)}`;
         
         const res = await fetch(url, {
