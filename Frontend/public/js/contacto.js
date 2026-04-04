@@ -53,14 +53,14 @@ async function cargarContactos(buscar = "") {
             <td>${c.vchvalor}</td>
             <td>
                 <button class="guardar" onclick="window.location.href='contacto_formulario.html?id=${c.intid}'">Editar</button>
-                <button class="cancelar" onclick="eliminarContacto(${c.intid})">Eliminar</button>
+                <button class="cancelar" onclick="eliminarContacto(${c.intid})">Baja</button>
             </td>
         </tr>
     `).join("");
 }
 
 async function eliminarContacto(id) {
-    if (confirm("¿Seguro que deseas eliminar este contacto permanentemente?")) {
+    if (confirm("¿Seguro que deseas dar de baja a este contacto?")) {
         const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
         if (res.ok) cargarContactos();
     }
