@@ -37,7 +37,7 @@ async function cargarMarcas(busqueda = "") {
                     <td>${marca.vchNombre}</td>
                     <td>
                         <button class="guardar" onclick="irAEditar(${marca.intid_Marca})">Editar</button>
-                        <button class="cancelar" onclick="eliminarMarca(${marca.intid_Marca})">Eliminar</button>
+                        <button class="cancelar" onclick="eliminarMarca(${marca.intid_Marca})">Baja</button>
                     </td>
                 </tr>
             `;
@@ -52,7 +52,7 @@ function irAEditar(id) {
 }
 
 async function eliminarMarca(id) {
-    if (!confirm('¿Seguro de eliminar esta marca? (Se dará de baja)')) return;
+    if (!confirm('¿Seguro de dar de baja a esta marca?')) return;
 
     try {
         const response = await fetch(`${API_URL}/marcas/${id}`, {
@@ -66,6 +66,6 @@ async function eliminarMarca(id) {
             cargarMarcas(); 
         }
     } catch (error) {
-        alert("Error al eliminar la marca");
+        alert("Error al dar de baja la marca");
     }
 }
