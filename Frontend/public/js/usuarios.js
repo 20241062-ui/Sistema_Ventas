@@ -85,8 +85,23 @@ async function cambiarEstado(id, nuevoEstado) {
 }
 
 async function eliminarPermanente(id) {
-    if (confirm("¿Esta seguro de querer dar de baja a este usuario?")) {
-        const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-        if (res.ok) cargarUsuarios();
+    if (confirm("¿Está seguro de querer dar de baja a este usuario?")) {
+        try {
+            const res = await fetch(`${API_URL}/${id}`, { 
+                method: "DELETE" 
+            });
+
+            if (res.ok) {
+                alert("✅ Usuario dado de baja correctamente.");
+                
+                cargarUsuarios();
+            } else {
+                const error = await res.json();
+                alert("❌ Error: " + (error.mensaje || "No se pudo eliminar el usuario"));
+            }
+        } catch (error) {
+            console.error("Error en la conexión:", error);
+            alert("❌ Error de conexión con el servidor.");
+        }
     }
 }
