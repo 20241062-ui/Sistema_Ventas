@@ -69,7 +69,7 @@ async function cargarUsuarios(buscar = "") {
                 <button class="${u.Estado == 1 ? 'cancelar' : 'activar'}" onclick="cambiarEstado(${u.id_usuario}, ${u.Estado == 1 ? 0 : 1})">
                     ${u.Estado == 1 ? 'Baja' : 'Activar'}
                 </button>
-                <button class="btn-eliminar" onclick="eliminarPermanente(${u.id_usuario})">Eliminar</button>
+                <button class="btn-eliminar" onclick="eliminarPermanente(${u.id_usuario})">Baja</button>
             </td>
         </tr>
     `).join("");
@@ -85,7 +85,7 @@ async function cambiarEstado(id, nuevoEstado) {
 }
 
 async function eliminarPermanente(id) {
-    if (confirm("¿ESTÁS SEGURO? Esta acción eliminará al usuario PERMANENTEMENTE.")) {
+    if (confirm("¿Esta seguro de querer dar de baja a este usuario?")) {
         const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
         if (res.ok) cargarUsuarios();
     }
