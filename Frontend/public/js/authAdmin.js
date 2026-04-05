@@ -30,14 +30,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    if (currentPath.includes('perfilAdmin.html')) {
+    if (currentPath.includes('perfilAdmin.html') || currentPath.includes('actualizarPerfilA.html')) {
         try {
             const res = await fetch(`${API_URL}/perfil-admin`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
 
-            if (res.ok) {
+            if (!res.ok) throw new Error(data.mensaje || "Error al obtener datos");
+
+            if (currentPath.includes('perfilAdmin.html')) {
                 const menuP = document.querySelector('.perfil-menu p');
                 if (menuP) menuP.innerHTML = `<strong>${data.vchNombre}</strong><br>${data.vchCorreo}`;
                 
@@ -52,56 +54,51 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `;
                 }
             }
-        } catch (error) {
-            console.error("Error al obtener perfil:", error);
-        }
-    }
 
-    const formPerfil = document.querySelector('form');
-    if (formPerfil && currentPath.includes('actualizarPerfilA.html')) {
-        try {
-            const res = await fetch(`${API_URL}/perfil-admin`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const data = await res.json();
-            
-            if (res.ok) {
-                if (formPerfil.vchnombre) formPerfil.vchnombre.value = data.vchNombre;
-                if (formPerfil.vchapellidoP) formPerfil.vchapellidoP.value = data.vchApellidoP;
-                const correoDisplay = document.querySelector('input[type="email"]');
-                if (correoDisplay) correoDisplay.value = data.vchCorreo;
-            }
-
-            formPerfil.addEventListener('submit', async (e) => {
-                e.preventDefault();
+            const formPerfil = document.querySelector('form');
+            if (formPerfil && currentPath.includes('actualizarPerfilA.html')) {
+                if (document.getElementById('vchnombre')) document.getElementById('vchnombre').value = data.vchNombre;
+                if (document.getElementById('vchapellidoP')) document.getElementById('vchapellidoP.value') = data.vchApellidoP;
                 
-                const datosActualizados = {
-                    vchnombre: formPerfil.vchnombre.value,
-                    vchapellidoP: formPerfil.vchapellidoP.value,
-                    vchpassword: formPerfil.vchpassword.value || null
-                };
+                const inputEmail = formPerfil.querySelector('input[type="email"]');
+                if (inputEmail) inputEmail.value = data.vchCorreo;
 
-                const updateRes = await fetch(`${API_URL}/actualizar-admin`, {
-                    method: 'PUT',
-                    headers: { 
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json' 
-                    },
-                    body: JSON.stringify(datosActualizados)
+                formPerfil.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const datosActualizados = {
+                        vchnombre: document.getElementById('vchnombre').value,
+                        vchapellidoP: document.getElementById('vchapellidoP').value,
+                        vchpassword: document.getElementById('vchpassword').value || null
+                    };
+
+                    const updateRes = await fetch(`${API_URL}/actualizar-admin`, {
+                        method: 'PUT',
+                        headers: { 
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json' 
+                        },
+                        body: JSON.stringify(datosActualizados)
+                    });
+
+                    if (updateRes.ok) {
+                        usuarioLocal.nombre = datosActualizados.vchnombre;
+                        localStorage.setItem('usuario', JSON.stringify(usuarioLocal));
+
+                        alert("✅ ¡Perfil actualizado con éxito!");
+                        window.location.href = 'perfilAdmin.html';
+                    } else {
+                        const errorData = await updateRes.json();
+                        alert("❌ Error: " + (errorData.mensaje || "No se pudieron guardar los cambios."));
+                    }
                 });
-
-                if (updateRes.ok) {
-                    usuarioLocal.nombre = datosActualizados.vchnombre;
-                    localStorage.setItem('usuario', JSON.stringify(usuarioLocal));
-
-                    alert("✅ ¡Perfil actualizado con éxito!");
-                    window.location.href = 'perfilAdmin.html';
-                } else {
-                    alert("❌ Error al guardar los cambios.");
-                }
-            });
+            }
         } catch (error) {
-            console.error("Error en la edición:", error);
+            console.error("Error en módulo de perfil:", error);
+            if (error.message.includes("Token")) {
+                localStorage.clear();
+                window.location.href = '../login.html';
+            }
         }
     }
 });
