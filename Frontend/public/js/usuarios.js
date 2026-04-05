@@ -8,7 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (editId && form) {
         document.getElementById("tituloFormulario").innerText = "Editar Datos de Usuario";
-        document.getElementById("btnGuardar").innerText = "Actualizar Usuario";
+        const btnGuardar = document.getElementById("btnGuardar");
+        if (btnGuardar) btnGuardar.innerText = "Actualizar Usuario";
+        
         document.getElementById("passHelp").style.display = "block";
         document.getElementById("vchpassword").required = false;
 
@@ -18,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("id_usuario").value = data.id_usuario;
                 document.getElementById("vchnombre").value = data.vchnombre;
                 document.getElementById("vchapellido").value = data.vchapellido;
+                if (document.getElementById("vchapellidoM")) {
+                    document.getElementById("vchapellidoM").value = data.vchapellidoM || "";
+                }
                 document.getElementById("vchcorreo").value = data.vchcorreo;
                 document.getElementById("vchRol").value = data.vchRol;
             });
@@ -53,51 +58,50 @@ async function cargarUsuarios(buscar = "") {
     const tabla = document.getElementById("tablaUsuariosBody");
     if (!tabla) return;
 
-    document.getElementById("countTotal").innerText = usuarios.length;
-    document.getElementById("countActivos").innerText = usuarios.filter(u => u.Estado == 1).length;
-    document.getElementById("countInactivos").innerText = usuarios.filter(u => u.Estado == 0).length;
+    if (document.getElementById("countTotal")) document.getElementById("countTotal").innerText = usuarios.length;
+    if (document.getElementById("countActivos")) document.getElementById("countActivos").innerText = usuarios.filter(u => u.Estado == 1).length;
+    if (document.getElementById("countInactivos")) document.getElementById("countInactivos").innerText = usuarios.filter(u => u.Estado == 0).length;
 
     tabla.innerHTML = usuarios.map(u => `
         <tr class="${u.Estado == 0 ? 'inactivo' : ''}">
             <td>${u.id_usuario}</td>
-            <td>${u.vchnombre} ${u.vchapellido}</td>
+            <td>${u.vchnombre} ${u.vchapellido} ${u.vchapellidoM || ''}</td>
             <td>${u.vchcorreo}</td>
             <td><strong>${u.vchRol}</strong></td>
             <td>${u.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
             <td class="acciones-flex">
                 <button class="guardar" onclick="window.location.href='usuario_formulario.html?id=${u.id_usuario}'">Editar</button>
-                <button class="${u.Estado == 1 ? 'cancelar' : 'activar'}" onclick="cambiarEstado(${u.id_usuario}, ${u.Estado == 1 ? 0 : 1})">
+                
+                <button class="${u.Estado == 1 ? 'cancelar' : 'activar'}" 
+                        onclick="confirmarBaja(${u.id_usuario}, ${u.Estado == 1 ? 0 : 1}, '${u.Estado == 1 ? 'dar de baja' : 'reactivar'}')">
                     ${u.Estado == 1 ? 'Baja' : 'Activar'}
                 </button>
-                <button class="btn-eliminar" onclick="eliminarPermanente(${u.id_usuario})">Baja</button>
             </td>
         </tr>
     `).join("");
 }
 
-async function cambiarEstado(id, nuevoEstado) {
-    await fetch(`${API_URL}/${id}/estado`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ estado: nuevoEstado })
-    });
-    cargarUsuarios();
-}
-
-async function eliminarPermanente(id) {
-    if (confirm("¿Está seguro de querer dar de baja a este usuario?")) {
+async function confirmarBaja(id, nuevoEstado, textoAccion) {
+    if (confirm(`¿Está seguro de que desea ${textoAccion} a este usuario?`)) {
         try {
-            const res = await fetch(`${API_URL}/${id}`, { 
-                method: "DELETE" 
-            });
+            let res;
+            if (nuevoEstado === 0) {
+                res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+            } else {
+                // Si es ACTIVAR, usamos el método PATCH
+                res = await fetch(`${API_URL}/${id}/estado`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ estado: 1 })
+                });
+            }
 
             if (res.ok) {
-                alert("✅ Usuario dado de baja correctamente.");
-                
+                alert(`✅ Usuario ${nuevoEstado === 0 ? 'dado de baja' : 'reactivado'} correctamente.`);
                 cargarUsuarios();
             } else {
                 const error = await res.json();
-                alert("❌ Error: " + (error.mensaje || "No se pudo eliminar el usuario"));
+                alert("❌ Error: " + (error.mensaje || "No se pudo realizar la acción"));
             }
         } catch (error) {
             console.error("Error en la conexión:", error);
