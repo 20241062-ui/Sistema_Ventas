@@ -88,7 +88,6 @@ async function confirmarBaja(id, nuevoEstado, textoAccion) {
             if (nuevoEstado === 0) {
                 res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
             } else {
-                // Si es ACTIVAR, usamos el método PATCH
                 res = await fetch(`${API_URL}/${id}/estado`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
