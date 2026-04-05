@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!token || !usuarioLocal || usuarioLocal.rol !== 'Administrador') {
         console.warn("Acceso denegado: Token ausente o permisos insuficientes.");
         localStorage.clear();
-        window.location.href = '../login.html'; 
+        window.location.href = '../login.html';
         return;
     }
 
@@ -40,12 +40,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const res = await fetch(`${API_URL}/perfil-admin`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            
+
             const data = await res.json();
 
             if (res.ok) {
                 const nombre = data.vchNombre || data.vchnombre || "Admin";
                 const apellido = data.vchApellidoP || data.vchapellido || "";
+                const apellidoM = data.vchApellidoM || "";
                 const correo = data.vchCorreo || data.vchcorreo || "Sin correo";
 
                 const lateral = document.getElementById('lateral-info') || document.getElementById('lateral-info-edit');
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     datosAdminContainer.innerHTML = `
                         <p><strong>Nombre:</strong> ${nombre}</p>
                         <p><strong>Apellido:</strong> ${apellido}</p>
+                        <p><strong>Apellido Materno:</strong> ${apellidoM}</p>
                         <p><strong>Correo Electrónico:</strong> ${correo}</p>
                     `;
                 }
@@ -66,7 +68,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (document.getElementById('vchnombre')) document.getElementById('vchnombre').value = nombre;
                     if (document.getElementById('vchapellidoP')) document.getElementById('vchapellidoP').value = apellido;
                     if (document.getElementById('vchapellidoM')) document.getElementById('vchapellidoM').value = data.vchApellidoM || "";
-                    
                     const displayCorreo = document.getElementById('vchcorreo-display');
                     if (displayCorreo) displayCorreo.value = correo;
                 }
@@ -85,20 +86,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (formPerfil) {
         formPerfil.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const datosActualizados = {
                 vchnombre: document.getElementById('vchnombre').value,
                 vchapellidoP: document.getElementById('vchapellidoP').value,
-                vchapellidoM: document.getElementById('vchapellidoM') ? document.getElementById('vchapellidoM').value : "",
+                vchapellidoM: document.getElementById('vchapellidoM').value,
                 vchpassword: document.getElementById('vchpassword').value || null
             };
 
             try {
                 const updateRes = await fetch(`${API_URL}/actualizar-admin`, {
                     method: 'PUT',
-                    headers: { 
+                    headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json' 
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(datosActualizados)
                 });
