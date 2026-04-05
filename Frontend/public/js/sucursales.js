@@ -89,7 +89,7 @@ async function cargarSucursales() {
                 <td>${s.vchhorario || 'N/A'}</td>
                 <td>
                     <button class="guardar" onclick="window.location.href='sucursal_formulario.html?id=${s.intid}'">Editar</button>
-                    <button class="cancelar" onclick="eliminarSucursal(${s.intid})">Eliminar</button>
+                    <button class="cancelar" onclick="eliminarSucursal(${s.intid})">Baja</button>
                 </td>
             </tr>
         `).join("");
