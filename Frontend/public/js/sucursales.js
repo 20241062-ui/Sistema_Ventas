@@ -106,13 +106,13 @@ async function eliminarSucursal(id) {
         try {
             const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
             if (res.ok) {
-                alert("Sucursal eliminada.");
+                alert("Sucursal dada de baja.");
                 cargarSucursales(); 
             } else {
-                alert("No se pudo eliminar.");
+                alert("No se pudo dar de baja la sucursal.");
             }
         } catch (error) {
-            console.error("Error al eliminar:", error);
+            console.error("Error al dar de baja:", error);
         }
     }
 }
