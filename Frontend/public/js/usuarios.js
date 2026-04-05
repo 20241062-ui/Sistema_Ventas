@@ -1,4 +1,4 @@
-const API_URL = "https://sistemaventasback.vercel.app/api/usuarios";
+const API_URL = "https://sistemaventasback.vercel.app/api/admin/usuarios";
 
 document.addEventListener("DOMContentLoaded", () => {
     const tablaBody = document.getElementById("tablaUsuariosBody");
