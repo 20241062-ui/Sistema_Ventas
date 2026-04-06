@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const data = await res.json();
 
             if (res.ok) {
-                const nombre = data.vchNombre || data.vchnombre || "Admin";
-                const apellido = data.vchApellidoP || data.vchapellido || "";
+                const nombre = data.vchNombre || "Admin";
+                const apellido = data.vchApellidoP || "";
                 const apellidoM = data.vchapellidoM || "";
-                const correo = data.vchCorreo || data.vchcorreo || "Sin correo";
+                const correo = data.vchCorreo || "Sin correo";
 
                 const lateral = document.getElementById('lateral-info') || document.getElementById('lateral-info-edit');
                 if (lateral) {
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (currentPath.includes('actualizarPerfilA.html')) {
                     if (document.getElementById('vchnombre')) document.getElementById('vchnombre').value = nombre;
                     if (document.getElementById('vchapellidoP')) document.getElementById('vchapellidoP').value = apellido;
-                    if (document.getElementById('vchapellidoM')) document.getElementById('vchapellidoM').value = data.vchapellidoM || "";
+                    if (document.getElementById('vchapellidoM')) document.getElementById('vchapellidoM').value = apellidoM;
                     const displayCorreo = document.getElementById('vchcorreo-display');
                     if (displayCorreo) displayCorreo.value = correo;
                 }
