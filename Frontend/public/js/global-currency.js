@@ -7,22 +7,28 @@ const GlobalCurrency = {
     async init() {
         try {
             const geoRes = await fetch('https://ssl.geoplugin.net/json.gp');
+            
+            if (!geoRes.ok) throw new Error("Fallo en GeoPlugin");
+            
             const geoData = await geoRes.json();
             
-            this.currencyCode = geoData.geoplugin_currencyCode || 'MXN';
-            this.symbol = geoData.geoplugin_currencySymbol_UTF8 || '$';
+            if (geoData) {
+                this.currencyCode = geoData.geoplugin_currencyCode || 'MXN';
+                this.symbol = geoData.geoplugin_currencySymbol_UTF8 || '$';
+            }
 
             const apiKey = '71098f7428e3c5c09e430a12'; 
             const exRes = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/pair/MXN/${this.currencyCode}`);
-            const exData = await exRes.json();
-
-            if (exData.result === "success") {
-                this.rate = exData.conversion_rate;
+            
+            if (exRes.ok) {
+                const exData = await exRes.json();
+                if (exData && exData.conversion_rate) {
+                    this.rate = exData.conversion_rate;
+                }
             }
             
-            console.log(`Localización exitosa: ${this.currencyCode} (Tasa: ${this.rate})`);
         } catch (error) {
-            console.error("Error en globalización, usando valores por defecto:", error);
+            console.error("Error controlado en globalización:", error.message);
         } finally {
             this.isLoaded = true;
             document.dispatchEvent(new CustomEvent('currencyReady'));
@@ -30,7 +36,8 @@ const GlobalCurrency = {
     },
 
     format(amount) {
-        const converted = (parseFloat(amount) * this.rate).toFixed(2);
+        const valorBase = amount ? parseFloat(amount) : 0;
+        const converted = (valorBase * this.rate).toFixed(2);
         return `${this.symbol}${parseFloat(converted).toLocaleString()} ${this.currencyCode}`;
     }
 };
