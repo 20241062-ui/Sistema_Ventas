@@ -53,7 +53,7 @@ async function cargarContactos(buscar = "") {
             <td>${c.vchvalor}</td>
             <td>
                 <button class="guardar" onclick="window.location.href='contacto_formulario.html?id=${c.intid}'">Editar</button>
-                <button class="cancelar" onclick="eliminarContacto(${c.intid})">Baja</button>
+                <button class="cancelar" onclick="eliminarContacto(${c.intid})">Eliminar</button>
             </td>
         </tr>
     `).join("");
