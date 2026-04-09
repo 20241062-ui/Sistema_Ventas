@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>${marca.vchNombre}</td>
                     <td>
                         <button class="guardar" onclick="window.location.href='marca_actualizar.html?id=${marca.intid_Marca}'">Editar</button>
-                        <button class="cancelar" onclick="eliminarMarcaLogica(${marca.intid_Marca})">Eliminar</button>
+                        <button class="cancelar" onclick="eliminarMarcaLogica(${marca.intid_Marca})">Baja</button>
                     </td>
                 `;
                 tablaBody.appendChild(tr);

@@ -98,7 +98,7 @@ async function cargarProveedores(buscar = "") {
                 <td>${p.vchRazon_Social || 'N/A'}</td>
                 <td>
                     <button class="guardar" onclick="window.location.href='proveedor_formulario.html?id=${p.vchRFC}'">Editar</button>
-                    <button class="cancelar" onclick="eliminarProveedor('${p.vchRFC}')">Eliminar</button>
+                    <button class="cancelar" onclick="eliminarProveedor('${p.vchRFC}')">Baja</button>
                 </td>
             </tr>
         `).join("");

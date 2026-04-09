@@ -20,18 +20,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             totalLabel.textContent = categorias.length;
 
             if (categorias.length === 0) {
-                tablaBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No hay categorías activas.</td></tr>';
+                tablaBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No se encontraron categorías.</td></tr>';
                 return;
             }
 
             categorias.forEach(cat => {
                 const tr = document.createElement('tr');
+                if(cat.Estado === 0) tr.classList.add('inactivo');
+
                 tr.innerHTML = `
                     <td>${cat.intid_Categoria}</td>
-                    <td>${cat.vchNombre}</td>
+                    <td>${cat.vchNombre} ${cat.Estado === 0 ? '<span style="color:red; font-size:10px;">(Inactiva)</span>' : ''}</td>
                     <td>
                         <button class="guardar" onclick="window.location.href='categoria_actualizar.html?id=${cat.intid_Categoria}'">Editar</button>
-                        <button class="cancelar" onclick="eliminarLogico(${cat.intid_Categoria})">Baja</button>
+                        
+                        ${cat.Estado === 1 
+                            ? `<button class="cancelar" onclick="gestionarEstado(${cat.intid_Categoria}, 'baja')">Baja</button>`
+                            : `<button class="activar" onclick="gestionarEstado(${cat.intid_Categoria}, 'activar')" style="background-color: #28a745; color: white;">Activar</button>`
+                        }
                     </td>
                 `;
                 tablaBody.appendChild(tr);
@@ -41,14 +47,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    
-    window.eliminarLogico = async (id) => {
-        if (!confirm('¿Seguro que desea dar de baja esta categoría?')) return;
+    window.gestionarEstado = async (id, accion) => {
+        const confirmar = confirm(`¿Seguro que desea ${accion === 'activar' ? 'reactivar' : 'dar de baja'} esta categoría?`);
+        if (!confirmar) return;
         
         try {
-            
-            const res = await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE', 
+            const esBaja = accion === 'baja';
+            const url = esBaja ? `${API_URL}/${id}` : `${API_URL}/${id}/activar`;
+            const metodo = esBaja ? 'DELETE' : 'PATCH';
+
+            const res = await fetch(url, {
+                method: metodo,
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -60,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 alert("Error: " + data.mensaje);
             }
         } catch (error) {
-            alert("Error de conexión al intentar dar de baja la categoría.");
+            alert("Error de conexión al procesar la categoría.");
         }
     };
 
