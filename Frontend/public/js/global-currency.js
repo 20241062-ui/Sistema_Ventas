@@ -6,16 +6,15 @@ const GlobalCurrency = {
 
     async init() {
         try {
-            const geoRes = await fetch('https://ssl.geoplugin.net/json.gp');
+            const geoRes = await fetch('https://ipapi.co/json/');
             
-            if (!geoRes.ok) throw new Error("Fallo en GeoPlugin");
+            if (!geoRes.ok) throw new Error("Fallo al obtener localización");
             
             const geoData = await geoRes.json();
             
-            if (geoData) {
-                this.currencyCode = geoData.geoplugin_currencyCode || 'MXN';
-                this.symbol = geoData.geoplugin_currencySymbol_UTF8 || '$';
-            }
+            this.currencyCode = geoData.currency || 'MXN';
+            this.symbol = (this.currencyCode === 'USD') ? '$' : 
+                        (this.currencyCode === 'EUR') ? '€' : '$';
 
             const apiKey = '71098f7428e3c5c09e430a12'; 
             const exRes = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/pair/MXN/${this.currencyCode}`);
@@ -27,8 +26,12 @@ const GlobalCurrency = {
                 }
             }
             
+            console.log(`Sistema localizado: ${this.currencyCode} (Tasa: ${this.rate})`);
         } catch (error) {
-            console.error("Error controlado en globalización:", error.message);
+            console.error("Error controlado en globalización (CORS evitado):", error.message);
+            this.currencyCode = 'MXN';
+            this.rate = 1;
+            this.symbol = '$';
         } finally {
             this.isLoaded = true;
             document.dispatchEvent(new CustomEvent('currencyReady'));
@@ -36,8 +39,8 @@ const GlobalCurrency = {
     },
 
     format(amount) {
-        const valorBase = amount ? parseFloat(amount) : 0;
-        const converted = (valorBase * this.rate).toFixed(2);
+        const valor = parseFloat(amount) || 0;
+        const converted = (valor * this.rate).toFixed(2);
         return `${this.symbol}${parseFloat(converted).toLocaleString()} ${this.currencyCode}`;
     }
 };
