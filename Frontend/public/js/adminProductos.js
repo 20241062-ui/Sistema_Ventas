@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('currencyReady', async () => {
     const token = localStorage.getItem('token');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     const API_URL = 'https://sistemaventasback.vercel.app/api/admin/productos';
@@ -51,7 +51,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td><strong>${prod.vchNo_Serie}</strong></td>
                     <td>${prod.vchNombre}</td>
                     <td class="descripcion">${prod.vchDescripcion || 'Sin descripción'}</td>
-                    <td>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
+                    <td>
+                        <div style="font-weight: bold; color: #333;">
+                            $${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', { minimumFractionDigits: 2 })} MXN
+                        </div>
+                        <div style="font-size: 0.85em; color: #8737d1ff; margin-top: 4px;">
+                            ${GlobalCurrency.format(prod.floPrecioUnitario)}
+                        </div>
+                    </td>
                     <td>${prod.intStock || 0}</td>
                     <td>${prod.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
                     <td class="acciones">

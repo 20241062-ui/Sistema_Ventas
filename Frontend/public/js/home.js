@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('currencyReady', async () => {
     const galeria = document.getElementById('contenedor-galeria');
     const heroTexto = document.querySelector('.textohero');
     const heroForm = document.querySelector('.hero form');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function cargarCatalogo(pagina = 1, categoria = 'todas') {
         if (!galeria) return;
         
-        galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Cargando catálogo...</p>';
+        galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Cargando catálogo localizado...</p>';
         
         try {
             const url = `${API_URL}/productos/home?pagina=${pagina}&categoria=${categoria}`;
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (data.hero && heroTexto && heroForm && pagina === 1) {
                 heroTexto.innerHTML = `
-                    <h1>${data.hero.vchNombre} por menos de $${Math.floor(data.hero.floPrecioUnitario).toLocaleString()}</h1>
+                    <h1>${data.hero.vchNombre} por solo ${GlobalCurrency.format(data.hero.floPrecioUnitario)}</h1>
                     <h3>Sólo en Comercializadora Doble L</h3>
                 `;
                 const inputId = heroForm.querySelector('input[name="producto_id"]');
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="producto-detalle">
                                     <div class="texto-producto">
                                         <h2>${prod.vchNombre}</h2>
-                                        <h3>$${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', {minimumFractionDigits: 2})}</h3>
+                                        <h3>${GlobalCurrency.format(prod.floPrecioUnitario)}</h3>
                                     </div>
                                     <form action="${rutaDetalle}" method="GET">
                                         <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
