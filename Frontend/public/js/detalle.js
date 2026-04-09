@@ -2,7 +2,7 @@ const API_URL_DETALLE = window.location.hostname === 'localhost' || window.locat
     ? 'http://localhost:3000/api'
     : 'https://sistemaventasback.vercel.app/api';
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('currencyReady', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const productoId = urlParams.get('producto_id');
 
@@ -28,11 +28,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('det-nombre').textContent = prod.vchNombre;
             document.getElementById('det-descripcion').textContent = prod.vchDescripcion;
 
-            const precio = parseFloat(prod.floPrecioUnitario);
-            document.getElementById('det-precio').textContent = `$${precio.toLocaleString('es-MX', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })}`;
+            const precioBase = parseFloat(prod.floPrecioUnitario);
+            document.getElementById('det-precio').textContent = GlobalCurrency.format(precioBase);
 
             const inputId = document.getElementById('det-id');
             if (inputId) {
