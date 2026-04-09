@@ -1,8 +1,3 @@
-/* ============================================================
-   TIPOGRAFÍA Y VARIABLES GENERALES
-============================================================ */
-
-/* Definición de fuentes */
 @font-face {
   font-family: 'SF';
   src: url('../fonts/sfui.woff') format('woff');
