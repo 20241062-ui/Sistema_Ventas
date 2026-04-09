@@ -3,42 +3,43 @@ const GlobalCurrency = {
     currencyCode: 'MXN',
     symbol: '$',
     isLoaded: false,
-    
-    format(amount) {
+
+    async init() {
         try {
-            const valor = parseFloat(amount);
-            if (isNaN(valor)) return "$0.00 MXN";
-            const converted = (valor * this.rate).toFixed(2);
-            return `${this.symbol}${parseFloat(converted).toLocaleString()} ${this.currencyCode}`;
-        } catch (e) {
-            return `$${amount} MXN`;
+            const geoRes = await fetch('https://ipapi.co/json/');
+            
+            if (!geoRes.ok) throw new Error("Fallo de red");
+            
+            const geoData = await geoRes.json();
+            
+            if (geoData && geoData.currency) {
+                this.currencyCode = geoData.currency;
+                const symbols = { 'USD': '$', 'EUR': '€', 'MXN': '$', 'COP': '$', 'ARS': '$' };
+                this.symbol = symbols[this.currencyCode] || '$';
+            }
+
+            const apiKey = '71098f7428e3c5c09e430a12';
+            const exRes = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/pair/MXN/${this.currencyCode}`);
+            
+            if (exRes.ok) {
+                const exData = await exRes.json();
+                this.rate = exData.conversion_rate || 1;
+            }
+
+            console.log(`✅ Geolocalización exitosa: ${this.currencyCode}`);
+        } catch (error) {
+            console.warn("⚠️ Usando moneda base (MXN) por bloqueo de API o CORS.");
+        } finally {
+            this.isLoaded = true;
+            document.dispatchEvent(new CustomEvent('currencyReady'));
         }
+    },
+
+    format(amount) {
+        const valor = parseFloat(amount) || 0;
+        const convertido = (valor * this.rate).toFixed(2);
+        return `${this.symbol}${parseFloat(converted).toLocaleString()} ${this.currencyCode}`;
     }
 };
 
-async function iniciarGlobalizacion() {
-    try {
-        const geoRes = await fetch('https://ipapi.co/json/').catch(() => null);
-        
-        if (geoRes && geoRes.ok) {
-            const geoData = await geoRes.json();
-            GlobalCurrency.currencyCode = geoData.currency || 'MXN';
-            GlobalCurrency.symbol = (GlobalCurrency.currencyCode === 'USD') ? '$' : '$';
-
-            const apiKey = '71098f7428e3c5c09e430a12'; 
-            const exRes = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/pair/MXN/${GlobalCurrency.currencyCode}`).catch(() => null);
-            
-            if (exRes && exRes.ok) {
-                const exData = await exRes.json();
-                GlobalCurrency.rate = exData.conversion_rate || 1;
-            }
-        }
-    } catch (error) {
-        console.warn("Usando configuración de moneda local por fallo de red.");
-    } finally {
-        GlobalCurrency.isLoaded = true;
-        document.dispatchEvent(new CustomEvent('currencyReady'));
-    }
-}
-
-iniciarGlobalizacion();
+GlobalCurrency.init();
