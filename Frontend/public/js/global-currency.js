@@ -7,48 +7,52 @@ const GlobalCurrency = {
 
     async init() {
         try {
-            // CAMBIO: Usamos ip-api.com que es excelente con CORS
-            const geoRes = await fetch('http://ip-api.com/json/'); // Nota: Si falla por mixed content, usa https://ipapi.co/json/ nuevamente con el bloqueador de errores
-            const geoData = await geoRes.json();
+            // 1. Intentar obtener localización (HTTPS obligatorio para GitHub Pages)
+            const geoRes = await fetch('https://ipapi.co/json/');
             
-            // Si la API responde bien, intentamos obtener la moneda
-            // Nota: ip-api gratuito a veces no da la moneda, así que usamos un pequeño truco:
-            // Si detectamos que no es México (MX), ponemos USD por defecto para probar
-            if (geoData && geoData.status === "success") {
-                if (geoData.countryCode !== "MX") {
-                    this.currencyCode = 'USD'; // Forzamos USD para extranjeros si la API falla en dar moneda
-                    this.symbol = '$';
+            if (geoRes.ok) {
+                const geoData = await geoRes.json();
+                if (geoData && geoData.currency) {
+                    this.currencyCode = geoData.currency;
+                    // Mapeo rápido de símbolos
+                    const symbols = { 'USD': '$', 'EUR': '€', 'MXN': '$', 'COP': '$', 'ARS': '$' };
+                    this.symbol = symbols[this.currencyCode] || '$';
                 }
             }
 
-            // Tasa de cambio con tu API Key
-            const apiKey = '71098f7428e3c5c09e430a12';
-            const exRes = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/pair/MXN/${this.currencyCode}`);
-            
-            if (exRes.ok) {
-                const exData = await exRes.json();
-                this.rate = exData.conversion_rate || 1;
+            // 2. Obtener tasa de cambio solo si la moneda cambió
+            if (this.currencyCode !== 'MXN') {
+                const apiKey = '71098f7428e3c5c09e430a12';
+                const exRes = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/pair/MXN/${this.currencyCode}`);
+                
+                if (exRes.ok) {
+                    const exData = await exRes.json();
+                    this.rate = exData.conversion_rate || 1;
+                }
             }
 
-            console.log(`✅ Geolocalización: ${this.currencyCode} (Tasa: ${this.rate})`);
+            console.log(`✅ Localización: ${this.currencyCode} (Tasa: ${this.rate})`);
         } catch (error) {
-            console.warn("⚠️ Usando moneda base (MXN) por bloqueo de API o CORS.");
-            this.currencyCode = 'MXN';
-            this.rate = 1;
-            this.symbol = '$';
+            console.warn("⚠️ Modo seguro: Usando MXN por bloqueo de red o CORS.");
+            // No hacemos nada, ya tenemos los valores por defecto arriba
         } finally {
             this.isLoaded = true;
+            // IMPORTANTE: Disparar el evento para que home.js y productos.js despierten
             document.dispatchEvent(new CustomEvent('currencyReady'));
         }
     },
 
-    // FUNCIÓN CORREGIDA (Sin errores de variable)
     format(amount) {
         try {
             const valorBase = parseFloat(amount) || 0;
-            const resultado = (valorBase * this.rate).toFixed(2); // Usamos 'resultado'
-            return `${this.symbol}${parseFloat(resultado).toLocaleString('es-MX', {minimumFractionDigits: 2})} ${this.currencyCode}`;
+            const calculo = (valorBase * this.rate).toFixed(2);
+            // Retornamos el precio con formato limpio
+            return `${this.symbol}${parseFloat(calculo).toLocaleString('es-MX', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })} ${this.currencyCode}`;
         } catch (e) {
+            console.error("Error al formatear moneda:", e);
             return `$${amount} MXN`;
         }
     }
