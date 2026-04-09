@@ -84,13 +84,8 @@ async function cargarProveedores(buscar = "") {
         const tablaBody = document.getElementById("tablaProveedoresBody");
         if (!tablaBody) return;
 
-        if (proveedores.length === 0) {
-            tablaBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No se encontraron resultados</td></tr>`;
-            return;
-        }
-
-        const html = proveedores.map(p => `
-            <tr>
+        tablaBody.innerHTML = proveedores.map(p => `
+            <tr class="${p.intEstado === 0 ? 'inactivo' : ''}">
                 <td>${p.vchRFC}</td>
                 <td>${p.vchNombre} ${p.vchApellido_Paterno || ''} ${p.vchApellido_Materno || ''}</td>
                 <td>${p.vchTelefono || 'N/A'}</td>
@@ -98,27 +93,34 @@ async function cargarProveedores(buscar = "") {
                 <td>${p.vchRazon_Social || 'N/A'}</td>
                 <td>
                     <button class="guardar" onclick="window.location.href='proveedor_formulario.html?id=${p.vchRFC}'">Editar</button>
-                    <button class="cancelar" onclick="eliminarProveedor('${p.vchRFC}')">Baja</button>
+                    
+                    ${p.intEstado === 1 
+                        ? `<button class="cancelar" onclick="gestionarEstadoProveedor('${p.vchRFC}', 0)">Baja</button>`
+                        : `<button class="activar" onclick="gestionarEstadoProveedor('${p.vchRFC}', 1)" style="background-color: #28a745; color: white;">Activar</button>`
+                    }
                 </td>
             </tr>
         `).join("");
-        tablaBody.innerHTML = html;
     } catch (error) {
         console.error("Error al cargar tabla:", error);
     }
 }
 
-async function eliminarProveedor(rfc) {
-    if (confirm("¿Seguro de dar de baja a este proveedor?")) {
+window.gestionarEstadoProveedor = async (rfc, nuevoEstado) => {
+    const accion = nuevoEstado === 1 ? "reactivar" : "dar de baja";
+    if (confirm(`¿Seguro que desea ${accion} a este proveedor?`)) {
         try {
-            const res = await fetch(`${API_URL}/${rfc}`, { method: "DELETE" });
+            const url = nuevoEstado === 1 ? `${API_URL}/${rfc}/activar` : `${API_URL}/${rfc}`;
+            const metodo = nuevoEstado === 1 ? "PATCH" : "DELETE";
+
+            const res = await fetch(url, { method: metodo });
             if (res.ok) {
-                alert("Proveedor dado de baja");
+                alert(`Proveedor ${nuevoEstado === 1 ? 'reactivado' : 'dado de baja'}`);
                 cargarProveedores();
             }
         } catch (error) {
-            alert("Error al eliminar");
+            alert("Error al procesar la solicitud");
         }
     }
-}
+};
 
