@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+(async function() {
     const select = document.getElementById('sucursalSelect');
     const mapa = document.getElementById('mapaSucursal');
     const card = document.getElementById('cardSucursal');
@@ -11,43 +11,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch(API_URL);
         const sucursales = await response.json();
 
-        if (sucursales.length > 0) {
-            mensajeCarga.style.display = 'none';
-            contenido.style.display = 'block';
+        if (sucursales && sucursales.length > 0) {
+            if (mensajeCarga) mensajeCarga.style.display = 'none';
+            if (contenido) contenido.style.display = 'block';
 
-            sucursales.forEach((s, index) => {
+            sucursales.forEach(s => {
                 const option = document.createElement('option');
                 option.value = s.vchlink_mapa;
                 option.textContent = s.vchnombre;
                 option.dataset.direccion = s.vchdireccion;
-                option.dataset.ciudad = s.vchciudad;
                 option.dataset.telefono = s.vchtelefono;
                 option.dataset.horario = s.vchhorario;
                 select.appendChild(option);
             });
 
-            const actualizarVista = (s) => {
-                mapa.src = s.value;
+            const actualizarVista = (opt) => {
+                mapa.src = opt.value;
                 card.innerHTML = `
-                    <h2>${s.textContent}</h2>
-                    <p><strong>Dirección:</strong> ${s.dataset.direccion}</p>
-                    <p><strong>Ciudad:</strong> ${s.dataset.ciudad}</p>
-                    <p><strong>Teléfono:</strong> ${s.dataset.telefono}</p>
-                    <p><strong>Horario:</strong> ${s.dataset.horario}</p>
+                    <h2 style="margin-top:0;">${opt.textContent}</h2>
+                    <p><strong>📍 Dirección:</strong> ${opt.dataset.direccion}</p>
+                    <p><strong>📞 Teléfono:</strong> ${opt.dataset.telefono}</p>
+                    <p><strong>🕒 Horario:</strong> ${opt.dataset.horario}</p>
                 `;
             };
 
             actualizarVista(select.options[0]);
-
-            select.addEventListener('change', () => {
-                actualizarVista(select.selectedOptions[0]);
-            });
-
-        } else {
-            mensajeCarga.textContent = 'No hay sucursales registradas.';
+            select.addEventListener('change', () => actualizarVista(select.selectedOptions[0]));
         }
     } catch (error) {
-        console.error('Error:', error);
-        mensajeCarga.textContent = 'Error de conexión con el servidor.';
+        if (mensajeCarga) mensajeCarga.textContent = 'Error de conexión.';
     }
-});
+})();
