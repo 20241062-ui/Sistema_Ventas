@@ -1145,3 +1145,57 @@ footer {
   font-size: 18px;
   font-weight: 600;
 }
+footer {
+  display: block !important; /* Asegura que no esté oculto */
+  width: 100% !important;
+  height: auto !important;
+  min-height: 120px !important;
+  background-color: #8a2be2 !important; /* El morado de tu marca */
+  padding: 40px 0 !important;
+  margin-top: auto !important;
+  position: relative !important;
+  clear: both !important;
+}
+
+.linksFooter {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px 40px !important; /* Espaciado horizontal y vertical */
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+}
+
+.linksFooter a {
+  text-decoration: none !important;
+  color: #ffffff !important; /* Forzado a blanco puro */
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  font-family: "SF", sans-serif !important;
+  transition: opacity 0.3s ease !important;
+  display: inline-block !important;
+}
+
+.linksFooter a:hover {
+  opacity: 0.7 !important;
+  color: #f0f0f0 !important;
+}
+
+/* En caso de que los apartados del footer tengan contenedores de carga */
+.linksFooter :empty:before {
+  content: "Cargando...";
+  color: white;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+/* Ajuste para móviles: si la pantalla es pequeña, se apilan */
+@media (max-width: 600px) {
+  .linksFooter {
+    flex-direction: column !important;
+    gap: 15px !important;
+    text-align: center !important;
+  }
+}
