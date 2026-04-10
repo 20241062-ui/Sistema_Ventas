@@ -1199,3 +1199,43 @@ footer {
     text-align: center !important;
   }
 }
+/* ==========================================================================
+   CORRECCIÓN DE PAGINACIÓN (Color Morado)
+   ========================================================================== */
+
+/* Contenedor y botones base */
+.paginacion .pagina, 
+.btn-pag {
+    background-color: #ffffff !important; /* Fondo blanco para que resalte el borde */
+    color: #8a2be2 !important;           /* Texto morado */
+    border: 2px solid #8a2be2 !important; /* Borde morado */
+    padding: 10px 18px !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Estado de la página activa (donde estás parado) */
+.paginacion .activa, 
+.btn-pag.activa {
+    background-color: #8a2be2 !important; /* Fondo morado */
+    color: #ffffff !important;           /* Texto blanco */
+    border-color: #8a2be2 !important;
+}
+
+/* Efecto al pasar el mouse (Hover) */
+.paginacion .pagina:hover, 
+.btn-pag:hover {
+    background-color: #7b2cfb !important; /* Morado un poco más claro o vibrante */
+    color: #ffffff !important;
+    cursor: pointer !important;
+}
+
+/* Si usas la clase .paginacion-publica para el contenedor */
+.paginacion-publica {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    margin: 40px 0 !important;
+}
