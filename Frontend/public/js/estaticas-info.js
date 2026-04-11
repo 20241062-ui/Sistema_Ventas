@@ -2,7 +2,7 @@
     const contenedor = document.getElementById('contenido-nosotros') || document.getElementById('contenedor-nosotros');
     const mensajeCarga = document.getElementById('mensaje-carga');
     
-    const API_URL = 'https://sistemaventasback.vercel.app/api/public/nosotros';
+    const API_URL = 'https://sistemaventasback.vercel.app/api/public/informacion';
 
     if (!contenedor) return;
 
