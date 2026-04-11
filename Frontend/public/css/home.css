@@ -208,6 +208,13 @@ nav a {
 /* ==========================================================================
    7. CATÁLOGO Y TARJETAS DE PRODUCTO
    ========================================================================== */
+.contenedor-productos {
+  padding-bottom: 50px !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .galeria-productos {
   display: flex;
   flex-wrap: wrap;
@@ -215,6 +222,7 @@ nav a {
   padding: 0 20px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .producto {
@@ -270,7 +278,6 @@ nav a {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para cada bloque Pregunta-Respuesta o Título-Contenido */
 .info-block {
   display: flex;
   flex-direction: column; /* Apila título sobre texto */
@@ -384,6 +391,15 @@ nav a {
 /* ==========================================================================
    11. PAGINACIÓN Y FOOTER
    ========================================================================== */
+.paginacion-publica {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  margin-top: 40px !important;    /* Espacio entre catálogo y botones */
+  margin-bottom: 60px !important; /* Espacio entre botones y footer */
+  width: 100%;
+}
+
 .paginacion .pagina,
 .btn-pag {
   background-color: #ffffff !important;
@@ -394,12 +410,20 @@ nav a {
   font-weight: bold !important;
   text-decoration: none !important;
   transition: all 0.3s ease !important;
+  cursor: pointer;
 }
 
 .paginacion .activa,
 .btn-pag.activa {
   background-color: #8a2be2 !important;
   color: #ffffff !important;
+}
+
+.paginacion .pagina:hover,
+.btn-pag:hover {
+  background-color: #7b2cfb !important;
+  color: #ffffff !important;
+  transform: translateY(-3px);
 }
 
 footer {

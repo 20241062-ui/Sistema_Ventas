@@ -11,7 +11,7 @@ formulario.addEventListener("submit", async (e) => {
     const password = document.getElementById("password").value;
 
     try {
-        const respuesta = await fetch(`${API_BASE_URL}/auth/registro`, {
+        const respuesta = await fetch(`${API_BASE_URL}/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
