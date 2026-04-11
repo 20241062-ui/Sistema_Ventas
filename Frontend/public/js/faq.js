@@ -1,28 +1,27 @@
+// public/js/faq.js
 (async function() {
     const contenedor = document.getElementById('contenedor-faq');
-    const mensajeCarga = document.getElementById('mensaje-carga');
     const API_URL = "https://sistemaventasback.vercel.app/api/public/faq";
+
+    if (!contenedor) return;
 
     try {
         const res = await fetch(API_URL);
         const faqs = await res.json();
 
-        if (faqs && faqs.length > 0) {
-            if (mensajeCarga) mensajeCarga.remove();
-            
+        if (faqs.length > 0) {
+            contenedor.innerHTML = '<h1 style="text-align:center;">Preguntas Frecuentes</h1>';
             faqs.forEach(f => {
                 const div = document.createElement('div');
-                div.className = 'faq-item';
+                div.className = 'card-contacto';
                 div.innerHTML = `
-                    <h3 style="margin-top:20px; color:#333;">${f.vchpregunta}</h3>
-                    <p style="padding-bottom:10px; border-bottom:1px solid #ddd;">${f.vchrespuesta}</p>
+                    <h3 style="color:#8a2be2;">${f.vchpregunta}</h3>
+                    <p>${f.vchrespuesta}</p>
                 `;
                 contenedor.appendChild(div);
             });
-        } else {
-            if (mensajeCarga) mensajeCarga.textContent = 'No hay preguntas disponibles.';
         }
     } catch (error) {
-        if (mensajeCarga) mensajeCarga.textContent = 'Error de conexión.';
+        contenedor.innerHTML = '<p>Error al cargar las preguntas.</p>';
     }
 })();
