@@ -12,14 +12,19 @@
             contenedor.innerHTML = '<h1 style="text-align:center;">Políticas de la Empresa</h1>';
 
             politicas.forEach(item => {
+                const bloque = document.createElement('div');
+                bloque.className = 'info-block';
+
                 const h2 = document.createElement('h2');
                 h2.textContent = item.vchtitulo;
 
                 const p = document.createElement('p');
                 p.innerHTML = item.vchcontenido.replace(/\n/g, '<br>');
 
-                contenedor.appendChild(h2);
-                contenedor.appendChild(p);
+                bloque.appendChild(h2);
+                bloque.appendChild(p);
+                
+                contenedor.appendChild(bloque);
             });
         }
     } catch (error) {
