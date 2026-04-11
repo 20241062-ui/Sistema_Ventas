@@ -107,10 +107,6 @@ nav a {
   cursor: pointer;
 }
 
-.user-menu span {
-  font-size: 24px;
-}
-
 .profileicon {
   height: 30px;
   width: 30px;
@@ -146,92 +142,7 @@ nav a {
 }
 
 /* ==========================================================================
-   5. CARRITO DE COMPRAS (Dropdown y Contador)
-   ========================================================================== */
-.cart-container {
-  position: relative;
-  display: inline-block;
-}
-
-.cart-link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.cart-icon {
-  height: 30px;
-  width: 30px;
-  object-fit: contain;
-}
-
-#cart-count {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 11px;
-  font-weight: bold;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
-  z-index: 10;
-}
-
-.cart-dropdown {
-  display: none;
-  position: absolute;
-  top: 50px;
-  right: -10px;
-  width: 320px;
-  background-color: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  padding: 20px;
-  z-index: 1000;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  overflow-x: hidden;
-  transform-origin: top right;
-  animation: fadeInScale 0.2s ease-out;
-}
-
-.cart-dropdown.show,
-.cart-dropdown.active {
-  display: block !important;
-}
-
-#mini-cart-items {
-  max-height: 350px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0;
-  margin: 0;
-}
-
-.mini-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px 0;
-  border-bottom: 1px solid #f5f5f7;
-}
-
-.mini-item img {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  object-fit: cover;
-  background-color: #fbfbfd;
-}
-
-/* ==========================================================================
-   6. BOTONES GENERALES
+   5. BOTONES GENERALES
    ========================================================================== */
 .comprar,
 .comprarproducto,
@@ -258,24 +169,8 @@ nav a {
   background: #5e14d6;
 }
 
-.btn-bolsa {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background-color: #1d1d1f !important;
-  color: #ffffff !important;
-  height: 44px;
-  font-size: 14px;
-}
-
-.btn-bolsa:hover {
-  background-color: #000000 !important;
-  transform: scale(1.02);
-}
-
 /* ==========================================================================
-   7. SECCIONES HERO (BANNERS)
+   6. SECCIONES HERO (BANNERS)
    ========================================================================== */
 .hero-div,
 .hero-div-celulares,
@@ -311,7 +206,7 @@ nav a {
 }
 
 /* ==========================================================================
-   8. CATÁLOGO Y TARJETAS DE PRODUCTO
+   7. CATÁLOGO Y TARJETAS DE PRODUCTO
    ========================================================================== */
 .galeria-productos {
   display: flex;
@@ -357,35 +252,16 @@ nav a {
 }
 
 /* ==========================================================================
-   9. DETALLE DE PRODUCTO
-   ========================================================================== */
-.producto-detalle-contenedor {
-  width: 100%;
-  max-width: 1200px;
-  margin: 80px auto;
-  display: flex;
-  gap: 60px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.producto-detalle-imagen img {
-  width: 400px;
-  border-radius: 20px;
-}
-
-.precio-detalle {
-  color: #7b2cfb;
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-/* ==========================================================================
-   10. PÁGINAS ESTÁTICAS Y CONTACTO
+   8. PÁGINAS ESTÁTICAS (CASCADA VERTICAL)
    ========================================================================== */
 .acerca-container,
-.card-contacto {
+#contenedor-faq,
+#contenedor-nosotros,
+#contenedor-politicas {
+  display: flex !important;
+  flex-direction: column !important; /* Fuerza el orden vertical */
+  align-items: flex-start !important;
+  gap: 20px !important;
   max-width: 900px;
   margin: 2rem auto;
   background-color: #ffffff;
@@ -394,25 +270,119 @@ nav a {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.card-contacto {
-  max-width: 600px; /* Ajuste para formularios específicos */
-}
-
-.form-contact {
+/* Estilo para cada bloque Pregunta-Respuesta o Título-Contenido */
+.info-block {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  flex-direction: column; /* Apila título sobre texto */
+  gap: 10px;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
 }
 
-.form-contact input,
-.form-contact textarea {
-  padding: 12px;
-  border-radius: 10px;
-  border: 1.5px solid #ccc;
+.info-block:last-child {
+  border-bottom: none;
+}
+
+.info-block h2,
+.info-block h3 {
+  margin: 0;
+  color: #8a2be2; /* Morado Doble L */
+  font-size: 1.5rem;
+}
+
+.info-block p {
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+  text-align: justify;
 }
 
 /* ==========================================================================
-   11. PAGINACIÓN (Estilo Morado unificado)
+   9. CONTACTO E ICONOS
+   ========================================================================== */
+.card-contacto {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.social-icons {
+  display: flex !important;
+  gap: 20px !important;
+  justify-content: center !important;
+  padding: 20px 0 !important;
+}
+
+.social-icons .icon {
+  width: 60px !important;
+  height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #f0f0f0 !important;
+  border-radius: 12px !important;
+  transition: 0.3s !important;
+}
+
+.social-icons .icon img {
+  width: 30px !important;
+  height: 30px !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+}
+
+.social-icons .icon:hover {
+  background: #e0e0e0 !important;
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   10. HERO Y BOTÓN CIRCULAR
+   ========================================================================== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 30px;
+  height: 100%;
+}
+
+.hero-form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-hero-principal {
+  background-color: #8a2be2 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff;
+  border-radius: 50px !important; /* Forma de píldora */
+  padding: 15px 45px !important;
+  font-size: 1.1rem !important;
+  font-weight: bold !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-hero-principal:hover {
+  background-color: #ffffff !important;
+  color: #8a2be2 !important;
+  border-color: #8a2be2;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   11. PAGINACIÓN Y FOOTER
    ========================================================================== */
 .paginacion .pagina,
 .btn-pag {
@@ -424,7 +394,6 @@ nav a {
   font-weight: bold !important;
   text-decoration: none !important;
   transition: all 0.3s ease !important;
-  cursor: pointer;
 }
 
 .paginacion .activa,
@@ -433,22 +402,6 @@ nav a {
   color: #ffffff !important;
 }
 
-.paginacion .pagina:hover,
-.btn-pag:hover {
-  background-color: #7b2cfb !important;
-  color: #ffffff !important;
-}
-
-.paginacion-publica {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 12px !important;
-  margin: 40px 0 !important;
-}
-
-/* ==========================================================================
-   12. FOOTER (Unificado y Forzado)
-   ========================================================================== */
 footer {
   width: 100% !important;
   background-color: #8a2be2 !important;
@@ -462,8 +415,6 @@ footer {
   justify-content: center !important;
   align-items: center !important;
   gap: 20px 40px !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
 }
 
 .linksFooter a {
@@ -478,85 +429,4 @@ footer {
     flex-direction: column !important;
     text-align: center !important;
   }
-}
-.social-icons {
-    display: flex !important;
-    gap: 20px !important;
-    justify-content: center !important;
-    padding: 20px 0 !important;
-}
-
-.social-icons .icon {
-    width: 60px !important;
-    height: 60px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #f0f0f0 !important;
-    border-radius: 12px !important;
-    transition: 0.3s !important;
-}
-
-.social-icons .icon img {
-    width: 30px !important;  /* Tamaño controlado */
-    height: 30px !important; /* Tamaño controlado */
-    margin: 0 !important;
-    object-fit: contain !important;
-}
-
-.social-icons .icon:hover {
-    background: #e0e0e0 !important;
-    transform: translateY(-3px);
-}
-/* ==========================================================================
-   ESTILOS PARA EL HERO Y BOTÓN CIRCULAR
-   ========================================================================== */
-
-/* Asegura que el contenido del Hero esté centrado vertical y horizontalmente */
-.hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;    /* Centra el texto y el form horizontalmente */
-    justify-content: center; /* Centra el contenido verticalmente */
-    text-align: center;
-    gap: 30px;
-    height: 100%;
-}
-
-/* Contenedor del formulario del Hero */
-.hero-form {
-    display: flex;
-    justify-content: center; /* Centra el botón dentro del formulario */
-    width: 100%;
-}
-
-/* BOTÓN DE COMPRAR (DISEÑO CIRCULAR / PÍLDORA) */
-.btn-hero-principal {
-    background-color: #8a2be2 !important; /* Morado institucional */
-    color: #ffffff !important;           /* Texto blanco */
-    border: 2px solid #ffffff;           /* Borde blanco para resaltar sobre el fondo oscuro */
-    
-    /* Forma circular (Píldora) */
-    border-radius: 50px !important;      
-    
-    /* Tamaño y espaciado */
-    padding: 15px 45px !important;
-    font-size: 1.1rem !important;
-    font-weight: bold !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    
-    /* Comportamiento */
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Efecto al pasar el mouse */
-.btn-hero-principal:hover {
-    background-color: #ffffff !important; /* Cambia a blanco */
-    color: #8a2be2 !important;           /* Texto morado */
-    border-color: #8a2be2;               /* Borde morado */
-    transform: scale(1.05);              /* Crece un poco */
-    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
 }
