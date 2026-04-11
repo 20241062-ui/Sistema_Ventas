@@ -1,24 +1,33 @@
 (async function() {
     const contenedor = document.getElementById('contenedor-nosotros');
-    const API_URL = 'https://sistemaventasback.vercel.app/api/public/nosotros';
+    const API_URL = 'https://sistemaventasback.vercel.app/api/informacion';
+
+    if (!contenedor) return;
 
     try {
         const response = await fetch(API_URL);
-        const secciones = await response.json();
+        const datos = await response.json();
 
-        if (secciones && secciones.length > 0) {
-            contenedor.innerHTML = '<h1>¿Quiénes somos?</h1>';
-            secciones.forEach(sec => {
-                const h2 = document.createElement('h2');
-                h2.textContent = sec.titulo;
-                const p = document.createElement('p');
-                p.innerHTML = sec.contenido.replace(/\n/g, '<br>');
-                contenedor.appendChild(h2);
-                contenedor.appendChild(p);
+        if (datos && datos.length > 0) {
+            contenedor.innerHTML = '<h1>Nuestra Identidad</h1>';
+
+            datos.forEach(item => {
+                if (item.Estado == 1 || item.estado == 1) {
+                    const h2 = document.createElement('h2');
+                    h2.textContent = item.vchtitulo;
+
+                    const p = document.createElement('p');
+                    p.innerHTML = item.vchcontenido.replace(/\n/g, '<br>');
+
+                    contenedor.appendChild(h2);
+                    contenedor.appendChild(p);
+                }
             });
+        } else {
+            contenedor.innerHTML = '<h1>Información no disponible</h1>';
         }
     } catch (error) {
-        const h1 = document.getElementById('titulo-pagina');
-        if (h1) h1.textContent = 'Error al cargar información.';
+        console.error("Error cargando identidad:", error);
+        contenedor.innerHTML = '<h1>Error de conexión</h1>';
     }
 })();
