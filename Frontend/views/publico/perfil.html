@@ -23,20 +23,33 @@
         </div>
     </header>
     <main>
-        <div class="perfil-container">
-            <div class="perfil-menu">
-                <h2>Mi cuenta</h2>
-                <p id="menu-user-name">Cargando...<br><small>...</small></p>
-                <a href="perfil.html" style="background-color: rgba(255,255,255,0.4);">Mis datos</a>
-                <a href="actualizarPerfil.html">Editar información</a>
-                <a href="#" id="btn-logout-perfil">Cerrar sesión</a>
+        <div class="perfil-card">
+            <div class="perfil-header">
+                <div class="avatar-circle">
+                    <span id="avatar-inicial">U</span>
+                </div>
+                <h2 id="menu-user-name">Cargando...</h2>
+                <p class="rol-badge">Cliente Verificado</p>
             </div>
-            <div class="perfil-info">
-                <h3>Información del perfil</h3>
-                <p><strong>Nombre:</strong> <span id="info-nombre">...</span></p>
-                <p><strong>Apellidos:</strong> <span id="info-apellidos">...</span></p>
-                <p><strong>Correo:</strong> <span id="info-correo">...</span></p>
-                <button class="btn-editar" onclick="window.location.href='actualizarPerfil.html'">Editar perfil</button>
+
+            <div class="perfil-body">
+                <div class="info-group">
+                    <label>Nombre Completo</label>
+                    <div class="info-value" id="info-full-name">---</div>
+                </div>
+                <div class="info-group">
+                    <label>Correo Electrónico</label>
+                    <div class="info-value" id="info-correo">---</div>
+                </div>
+                <div class="info-group">
+                    <label>Teléfono</label>
+                    <div class="info-value" id="info-tel">No registrado</div>
+                </div>
+            </div>
+
+            <div class="perfil-footer">
+                <button class="btn-editar" onclick="abrirModal()">Editar Perfil</button>
+                <button id="btn-logout-perfil" class="btn-logout-simple">Cerrar Sesión</button>
             </div>
         </div>
     </main>
