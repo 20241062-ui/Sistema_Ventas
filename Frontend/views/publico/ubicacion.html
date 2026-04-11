@@ -57,17 +57,21 @@
         </div>
     </header>
 
-    <main class="acerca-container">
-        <h1>Nuestras sucursales</h1>
-        <p id="mensaje-carga">Cargando información de sucursales...</p>
+    <main style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <div class="acerca-container" style="width: 90%; max-width: 900px; margin: 40px auto;">
+            <h1 style="text-align: center;">Nuestras sucursales</h1>
+            <p id="mensaje-carga" style="text-align: center;">Cargando información de sucursales...</p>
 
-        <div id="contenido-ubicacion" style="display: none;">
-            <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
-            <select id="sucursalSelect"></select>
+            <div id="contenido-ubicacion" style="display: none;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <label for="sucursalSelect"><strong>Selecciona una sucursal:</strong></label><br>
+                    <select id="sucursalSelect" style="margin-top: 10px;"></select>
+                </div>
 
-            <iframe id="mapaSucursal" src="" allowfullscreen="" loading="lazy"></iframe>
+                <iframe id="mapaSucursal" src="" allowfullscreen="" loading="lazy"></iframe>
 
-            <div class="card-contacto" id="cardSucursal">
+                <div class="card-contacto" id="cardSucursal" style="margin-top: 30px;">
+                </div>
             </div>
         </div>
     </main>

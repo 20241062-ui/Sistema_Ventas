@@ -479,3 +479,32 @@ footer {
     text-align: center !important;
   }
 }
+.social-icons {
+    display: flex !important;
+    gap: 20px !important;
+    justify-content: center !important;
+    padding: 20px 0 !important;
+}
+
+.social-icons .icon {
+    width: 60px !important;
+    height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #f0f0f0 !important;
+    border-radius: 12px !important;
+    transition: 0.3s !important;
+}
+
+.social-icons .icon img {
+    width: 30px !important;  /* Tamaño controlado */
+    height: 30px !important; /* Tamaño controlado */
+    margin: 0 !important;
+    object-fit: contain !important;
+}
+
+.social-icons .icon:hover {
+    background: #e0e0e0 !important;
+    transform: translateY(-3px);
+}
