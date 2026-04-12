@@ -55,9 +55,9 @@ async function cargarClientes(buscar = "") {
                 <td>${c.vchApellido_Paterno} ${c.vchApellido_Materno || ''}</td>
                 <td>${c.vchCorreo}</td>
                 <td>
-                    <span class="badge ${c.Estado == 1 ? 'badge-success' : 'badge-danger'}">
-                        ${c.Estado == 1 ? 'Activo' : 'Inactivo'}
-                    </span>
+                    
+                    <td>${c.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
+                
                 </td>
                 <td>
                     <button class="guardar" onclick="window.location.href='clienteActualizar.html?id=${c.intid_Cliente}'">Editar</button>
