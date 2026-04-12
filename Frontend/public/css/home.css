@@ -395,7 +395,7 @@ nav a {
   display: flex !important;
   justify-content: center !important;
   gap: 12px !important;
-  margin-top: 40px !important;    /* Espacio entre catálogo y botones */
+  margin-top: 40px !important; /* Espacio entre catálogo y botones */
   margin-bottom: 60px !important; /* Espacio entre botones y footer */
   width: 100%;
 }
@@ -456,87 +456,110 @@ footer {
 }
 /* DISEÑO DE PERFIL MINIMALISTA */
 .perfil-card {
-    background: #ffffff;
-    width: 100%;
-    max-width: 500px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    padding: 40px;
-    text-align: center;
-    border: 1px solid #f0f0f0;
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  text-align: center;
+  border: 1px solid #f0f0f0;
 }
 
 .perfil-header {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .avatar-circle {
-    width: 80px;
-    height: 80px;
-    background: #8a2be2;
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+  width: 80px;
+  height: 80px;
+  background: #8a2be2;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
 }
 
 .rol-badge {
-    background: #f3e8ff;
-    color: #8a2be2;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    display: inline-block;
-    font-weight: bold;
+  background: #f3e8ff;
+  color: #8a2be2;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: inline-block;
+  font-weight: bold;
 }
 
 .perfil-body {
-    text-align: left;
-    margin-bottom: 30px;
+  text-align: left;
+  margin-bottom: 30px;
 }
 
 .info-group {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #f9f9f9;
-    padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f9f9f9;
+  padding-bottom: 10px;
 }
 
 .info-group label {
-    display: block;
-    font-size: 0.75rem;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
 }
 
 .info-value {
-    font-size: 1.1rem;
-    color: #333;
-    font-weight: 500;
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 500;
 }
 
 .perfil-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .btn-logout-simple {
-    background: transparent;
-    border: none;
-    color: #ff4d4d;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 10px;
-    transition: 0.3s;
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px;
+  transition: 0.3s;
 }
 
 .btn-logout-simple:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+}
+.cart-link {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+#cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4d4d;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  border: 2px solid white;
+}
+.cart-icon-nav {
+  width: 28px;
+  height: 28px;
+  filter: invert(1);
 }

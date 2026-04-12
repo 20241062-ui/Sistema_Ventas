@@ -8,7 +8,7 @@ document.addEventListener('currencyReady', async () => {
     const linkLogin = document.getElementById('link-login');
     const linkLogout = document.getElementById('link-logout');
     const linkPerfil = document.getElementById('link-perfil') || document.querySelector('a[href*="perfil.html"]');
-    
+
     const API_URL = 'https://sistemaventasback.vercel.app/api';
 
     const esSubcarpeta = window.location.pathname.includes('/publico/');
@@ -17,8 +17,8 @@ document.addEventListener('currencyReady', async () => {
     const rutaLogin = esSubcarpeta ? "../login.html" : "login.html";
 
     const params = new URLSearchParams(window.location.search);
-    const idUrl = params.get('id'); 
-    let categoriaActual = idUrl || 'todas'; 
+    const idUrl = params.get('id');
+    let categoriaActual = idUrl || 'todas';
 
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     const token = localStorage.getItem('token');
@@ -40,7 +40,7 @@ document.addEventListener('currencyReady', async () => {
         if (rolesAdmin.includes(usuario.rol) && !document.getElementById('link-admin-panel')) {
             const adminLink = document.createElement('a');
             adminLink.id = 'link-admin-panel';
-            adminLink.href = rutaAdmin; 
+            adminLink.href = rutaAdmin;
             adminLink.textContent = 'Panel Admin';
             adminLink.style.color = 'red';
             if (linkLogout) linkLogout.before(adminLink);
@@ -49,9 +49,9 @@ document.addEventListener('currencyReady', async () => {
 
     async function cargarCatalogo(pagina = 1, categoria = 'todas') {
         if (!galeria) return;
-        
+
         galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Cargando catálogo localizado...</p>';
-        
+
         try {
             const url = `${API_URL}/productos/home?pagina=${pagina}&categoria=${categoria}`;
             const response = await fetch(url);
@@ -67,10 +67,10 @@ document.addEventListener('currencyReady', async () => {
                 heroForm.action = rutaDetalle;
             }
 
-            galeria.innerHTML = ''; 
+            galeria.innerHTML = '';
             if (data.productos && data.productos.length > 0) {
                 data.productos.forEach(prod => {
-                    const imgUrl = prod.vchImagen 
+                    const imgUrl = prod.vchImagen
                         ? prod.vchImagen
                         : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
 
@@ -78,14 +78,21 @@ document.addEventListener('currencyReady', async () => {
                         <div class="producto">
                             <img src="${imgUrl}" alt="${prod.vchNombre}" class="imagenproducto">
                             <div class="recuadro">
-                                <div class="producto-detalle">
-                                    <div class="texto-producto">
-                                        <h2>${prod.vchNombre}</h2>
-                                        <h3>${GlobalCurrency.format(prod.floPrecioUnitario)}</h3>
-                                    </div>
-                                    <form action="${rutaDetalle}" method="GET">
+                                <div class="texto-producto">
+                                    <h2>${prod.vchNombre}</h2>
+                                    <h3>${GlobalCurrency.format(prod.floPrecioUnitario)}</h3>
+                                </div>
+                                <div style="display:flex; gap:10px; width:100%; margin-top:10px;">
+                                    <button onclick="Cart.add({
+                                        id: '${prod.vchNo_Serie}', 
+                                        nombre: '${prod.vchNombre}', 
+                                        precio: ${prod.floPrecioUnitario}, 
+                                        img: '${imgUrl}'
+                                    })" class="btn-pag" style="flex:1;">🛒</button>
+                                    
+                                    <form action="${rutaDetalle}" method="GET" style="flex:2;">
                                         <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
-                                        <button type="submit" class="comprarproducto">Detalles</button>
+                                        <button type="submit" class="comprarproducto" style="width:100%; padding:10px;">Detalles</button>
                                     </form>
                                 </div>
                             </div>
@@ -124,8 +131,8 @@ document.addEventListener('currencyReady', async () => {
     window.aplicarFiltro = (idCat) => {
         categoriaActual = idCat;
         const nuevaUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + idCat;
-        window.history.pushState({path:nuevaUrl},'',nuevaUrl);
-        
+        window.history.pushState({ path: nuevaUrl }, '', nuevaUrl);
+
         cargarCatalogo(1, idCat);
     };
 
