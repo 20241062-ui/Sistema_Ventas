@@ -56,6 +56,20 @@
     #sucursalSelect:focus {
         border-color: #8a2be2;
     }
+    
+    .acerca-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* Centra el contenido interno */
+        gap: 20px !important;
+        width: 95% !important; 
+        max-width: 1200px !important; /* Aquí le damos el largo que buscas */
+        margin: 40px auto !important;
+        background-color: #ffffff !important; /* EL CUADRO BLANCO */
+        padding: 3rem !important;
+        border-radius: 20px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important; /* La sombra para que resalte */
+    }
     </style>
 </head>
 
@@ -84,7 +98,7 @@
     </header>
 
     <main style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <div class=".acerca-container-wide" style="width: 90%; max-width: 900px; margin: 40px auto;">
+        <div class="acerca-container" style="width: 90%; max-width: 900px; margin: 40px auto;">
             <h1 style="text-align: center;">Nuestras sucursales</h1>
             <p id="mensaje-carga" style="text-align: center;">Cargando información de sucursales...</p>
 
