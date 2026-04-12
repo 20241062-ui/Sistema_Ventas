@@ -310,7 +310,7 @@ nav a {
    9. CONTACTO E ICONOS
    ========================================================================== */
 .card-contacto {
-  max-width: 800px; /* Un poco más ancho para que luzca como la imagen */
+  max-width: 1000px; /* Un poco más ancho para que luzca como la imagen */
     margin: 2rem auto;
     background-color: #ffffff;
     padding: 2.5rem;
