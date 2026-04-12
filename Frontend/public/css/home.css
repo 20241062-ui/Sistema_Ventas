@@ -310,12 +310,13 @@ nav a {
    9. CONTACTO E ICONOS
    ========================================================================== */
 .card-contacto {
-  max-width: 600px;
-  margin: 2rem auto;
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* Un poco más ancho para que luzca como la imagen */
+    margin: 2rem auto;
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 20px; /* Bordes más redondeados como tus tarjetas de producto */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
 }
 
 .social-icons {
@@ -346,6 +347,50 @@ nav a {
 .social-icons .icon:hover {
   background: #e0e0e0 !important;
   transform: translateY(-3px);
+}
+
+.card-contacto h2 {
+    font-family: "SFBold", sans-serif;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    color: #000;
+}
+
+.form-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.form-contact input, 
+.form-contact textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #e0e0e0; 
+    border-radius: 12px;
+    font-family: "SF", sans-serif;
+    font-size: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+
+.form-contact input:focus, 
+.form-contact textarea:focus {
+    outline: none;
+    border-color: #8a2be2;
+    box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.1);
+}
+
+
+.form-contact .btn-enviar {
+    width: 100%; /* Botón ancho como en la imagen */
+    margin-top: 10px;
+    font-family: "SFBold", sans-serif;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
 
 /* ==========================================================================
