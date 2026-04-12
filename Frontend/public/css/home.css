@@ -768,3 +768,60 @@ footer {
   padding: 2px 7px;
   font-size: 12px;
 }
+
+/* ==========================================================================
+   12. DETALLE DE PRODUCTO (VISTA HORIZONTAL)
+   ========================================================================== */
+.producto-detalle-contenedor {
+    display: flex;          /* Activa el modo fila */
+    flex-direction: row;    /* Imagen a la izquierda, texto a la derecha */
+    align-items: center;    /* Centra verticalmente */
+    justify-content: center;/* Centra el bloque en la página */
+    gap: 80px;              /* Espacio de separación entre imagen y texto */
+    max-width: 1200px;
+    margin: 60px auto;      /* Espaciado exterior */
+    padding: 0 40px;
+}
+
+.producto-detalle-imagen {
+    flex: 1;                /* Ocupa el 50% del espacio */
+    display: flex;
+    justify-content: center;
+}
+
+.producto-detalle-imagen img {
+    width: 100%;
+    max-width: 500px;       /* Tamaño grande para la imagen principal */
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+.producto-detalle-info {
+    flex: 1;                /* Ocupa el otro 50% */
+    display: flex;
+    flex-direction: column; /* El texto dentro sí va hacia abajo */
+    align-items: flex-start;/* Alinea el texto a la izquierda */
+    text-align: left;
+}
+
+/* Ajuste para que el botón no sea excesivamente ancho */
+#btn-agregar-al-carrito {
+    width: fit-content;
+    min-width: 250px;
+    margin-top: 20px;
+}
+
+/* RESPONSIVO: En celulares se vuelve a poner uno abajo de otro */
+@media (max-width: 850px) {
+    .producto-detalle-contenedor {
+        flex-direction: column; 
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .producto-detalle-info {
+        align-items: center;
+        text-align: center;
+    }
+}
