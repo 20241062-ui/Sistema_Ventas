@@ -695,6 +695,10 @@ footer {
   display: none;
 }
 .carrito-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Mantiene el contenedor blanco al centro */
   padding: 40px 5%;
   min-height: 70vh;
 }
@@ -844,6 +848,15 @@ footer {
     overflow: hidden; /* Mantiene las esquinas redondeadas */
 }
 
+.carrito-main h1 {
+    width: 100%;
+    max-width: 900px; 
+    text-align: left; 
+    margin-bottom: 30px;
+    font-family: "SFBold", sans-serif;
+    font-size: 2.5rem;
+    padding-left: 10px;
+}
 
 #lista-carrito {
     padding: 20px 40px;
