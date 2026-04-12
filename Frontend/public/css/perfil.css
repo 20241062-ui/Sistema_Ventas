@@ -1,3 +1,4 @@
+/* --- Contenedor Principal (Compartido) --- */
 main {
     display: flex;
     width: 100%;
@@ -19,7 +20,7 @@ main {
     flex-wrap: wrap;
 }
 
-/* Columna Morada (Izquierda/Arriba) */
+/* --- Panel Lateral Morado (Compartido) --- */
 .perfil-menu {
     width: 100%;
     background-color: #8737d1ff;
@@ -38,6 +39,7 @@ main {
     text-align: center;
     margin-bottom: 25px;
     opacity: 0.9;
+    color: white;
 }
 
 .perfil-menu a {
@@ -55,33 +57,67 @@ main {
     background-color: rgba(255,255,255,0.25);
 }
 
-/* Columna de Información (Derecha/Abajo) */
+/* --- Área de Contenido (Compartido) --- */
 .perfil-info {
     width: 100%;
     padding: 40px;
 }
 
-h3 {
-    color: #8A2BE2;
+.perfil-info h3 {
+    color: #8737d1ff;
     font-size: 22px;
     margin-bottom: 20px;
 }
 
-p {
-    font-size: 16px;
-    margin-bottom: 10px;
+/* --- Estilos específicos para Formulario (Edición) --- */
+.perfil-info label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
 }
 
-.btn-editar {
+.perfil-info input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box; /* Evita que el input se salga del contenedor */
+}
+
+.perfil-info input[readonly] {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+/* --- Botones --- */
+.botones {
     margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+/* Botón Genérico (Sirve para "Guardar" y "Editar Perfil") */
+.btn-perfil {
     padding: 10px 20px;
-    background-color: #8A2BE2;
-    color: white;
     border: none;
     border-radius: 8px;
+    color: white;
     cursor: pointer;
+    font-size: 15px;
+    background-color: #8737d1ff;
+    transition: background 0.3s;
 }
 
-.btn-editar:hover {
+.btn-perfil:hover {
     background-color: #530853ff;
+}
+
+.btn-cancelar {
+    background-color: #333;
+}
+
+.btn-cancelar:hover {
+    background-color: #000;
 }
