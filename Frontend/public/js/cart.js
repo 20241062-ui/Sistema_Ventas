@@ -28,4 +28,8 @@ const Cart = {
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => Cart.updateUI());
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof Cart !== 'undefined') {
+        Cart.updateUI();
+    }
+});
