@@ -251,6 +251,7 @@ nav a {
   width: 100%;
   border-radius: 0 0 20px 20px;
   box-sizing: border-box;
+  gap: 20px;
 }
 
 .texto-producto h2,
