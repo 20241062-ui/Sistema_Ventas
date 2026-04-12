@@ -3,136 +3,60 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Tu Carrito - Comercializadora Doble L</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - Comercializadora Doble L</title>
     <link rel="stylesheet" href="../css/home.css">
-    <style>
-        .cart-page {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
-
-        .total-section {
-            text-align: right;
-            padding: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .btn-comprar {
-            background: #8a2be2;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            width: 100%;
-        }
-
-        .btn-comprar:disabled {
-            background: #ccc;
-        }
-    </style>
 </head>
 
 <body>
-    <main class="cart-page">
-        <h2>Mi Carrito de Compras</h2>
-        <div id="lista-carrito">
+    <header>
+        <div class="contenedor-header">
+            <a href="../index.html">
+                <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
+            </a>
+            <nav>
+                <a href="../index.html" class="nav-link">Volver al Inicio</a>
+            </nav>
         </div>
-        <div class="total-section">
-            Total: <span id="cart-total">$0.00</span>
-        </div>
-        <button id="btn-checkout" class="btn-comprar" onclick="procesarPago()">Finalizar Compra</button>
-        <p id="msg-login" style="display:none; color: red; text-align: center; margin-top: 10px;">
-            Debes iniciar sesión para completar la compra.
-        </p>
+    </header>
+
+    <main class="carrito-container">
+        <section class="lista-productos">
+            <h2 style="margin-top: 0;">Tu Carrito</h2>
+            <div id="lista-carrito">
+                <p style="text-align: center;">Cargando productos...</p>
+            </div>
+        </section>
+
+        <aside class="resumen-compra">
+            <h3>Resumen de Pedido</h3>
+            <div class="total-fila">
+                <span>Subtotal</span>
+                <span id="subtotal-precio">$0.00</span>
+            </div>
+            <div class="total-fila">
+                <span>Envío</span>
+                <span style="color: green; font-weight: bold;">Gratis</span>
+            </div>
+            <div class="total-fila total-final">
+                <span>Total</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+
+            <button id="btn-checkout" class="btn-pagar">
+                Finalizar Compra
+            </button>
+            
+            <p id="msg-login">Debes iniciar sesión para finalizar la compra.</p>
+        </aside>
     </main>
 
-    <script src="js/global-currency.js"></script>
-    <script src="js/cart.js"></script>
-    <script>
-        function renderCarrito() {
-            const items = Cart.get();
-            const contenedor = document.getElementById('lista-carrito');
-            let total = 0;
+    <footer>
+        <div class="linksFooter">
+            <p>&copy; 2026 Comercializadora Doble L - Todos los derechos reservados</p>
+        </div>
+    </footer>
 
-            if (items.length === 0) {
-                contenedor.innerHTML = "<p>Tu carrito está vacío.</p>";
-                document.getElementById('btn-checkout').disabled = true;
-                return;
-            }
-
-            contenedor.innerHTML = items.map(item => {
-                total += item.precio * item.cantidad;
-                return `
-                    <div class="cart-item">
-                        <img src="${item.img}" alt="${item.nombre}">
-                        <div>
-                            <h4>${item.nombre}</h4>
-                            <p>Cant: ${item.cantidad}</p>
-                        </div>
-                        <p>${GlobalCurrency.format(item.precio * item.cantidad)}</p>
-                        <button onclick="Cart.remove('${item.id}'); renderCarrito();" style="color:red; background:none; border:none; cursor:pointer;">Eliminar</button>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('cart-total').textContent = GlobalCurrency.format(total);
-        }
-
-        async function procesarPago() {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                document.getElementById('msg-login').style.display = 'block';
-                return;
-            }
-
-            const payload = {
-                total: Cart.get().reduce((acc, i) => acc + (i.precio * i.cantidad), 0),
-                items: Cart.get()
-            };
-
-            try {
-                const res = await fetch('https://sistemaventasback.vercel.app/api/pedidos/checkout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    alert("¡Pedido realizado con éxito!");
-                    localStorage.removeItem('comercializadora_cart');
-                    window.location.href = '../index.html';
-                }
-            } catch (e) {
-                alert("Error al procesar la compra.");
-            }
-        }
-
-        renderCarrito();
-    </script>
     <script src="../js/global-currency.js"></script>
     <script src="../js/cart.js"></script>
     <script src="../js/carrito-view.js"></script>
