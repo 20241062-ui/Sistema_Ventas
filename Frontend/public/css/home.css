@@ -694,11 +694,12 @@ footer {
   margin-top: 10px;
   display: none;
 }
+
 .carrito-main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Mantiene el contenedor blanco al centro */
+  align-items: center; 
   padding: 40px 5%;
   min-height: 70vh;
 }
