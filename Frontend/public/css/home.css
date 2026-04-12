@@ -309,16 +309,87 @@ nav a {
 /* ==========================================================================
    9. CONTACTO E ICONOS
    ========================================================================== */
-.card-contacto {
-  max-width: 1000px; /* Un poco más ancho para que luzca como la imagen */
+.contenedor-contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 30px;
+    max-width: 1100px;
     margin: 2rem auto;
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 20px; /* Bordes más redondeados como tus tarjetas de producto */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-
+    width: 100%;
+    align-items: stretch; /* Esto hace que ambas midan lo mismo de alto */
 }
 
+.card-contacto {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el contenido uniformemente */
+    margin: 0; /* Quitamos el margin auto para que el grid mande */
+    box-sizing: border-box;
+}
+
+.card-contacto h2 {
+    font-family: "SFBold", sans-serif;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #000;
+}
+
+/* Ajustes de Información de contacto */
+.info-content p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.card-contacto h3 {
+    margin-top: 20px;
+    font-family: "SFSembibold", sans-serif;
+}
+
+/* Formulario */
+.form-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%; /* Para que el formulario llene el espacio */
+}
+
+.form-contact input, 
+.form-contact textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #e0e0e0; 
+    border-radius: 12px;
+    font-family: "SF", sans-serif;
+    font-size: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.form-contact input:focus, 
+.form-contact textarea:focus {
+    outline: none;
+    border-color: #8a2be2;
+    box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.1);
+}
+
+/* Botón Morado (Usando tu clase existente) */
+.form-contact .comprarproducto {
+    width: 100%;
+    margin-top: auto; /* Empuja el botón al final para alinear con la otra tarjeta */
+}
+
+/* Responsivo: Una debajo de otra en móviles */
+@media (max-width: 850px) {
+    .contenedor-contacto-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+}
 .social-icons {
   display: flex !important;
   gap: 20px !important;
@@ -349,49 +420,6 @@ nav a {
   transform: translateY(-3px);
 }
 
-.card-contacto h2 {
-    font-family: "SFBold", sans-serif;
-    margin-bottom: 25px;
-    font-size: 1.8rem;
-    color: #000;
-}
-
-.form-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-
-.form-contact input, 
-.form-contact textarea {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #e0e0e0; 
-    border-radius: 12px;
-    font-family: "SF", sans-serif;
-    font-size: 1rem;
-    background-color: #fff;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-
-.form-contact input:focus, 
-.form-contact textarea:focus {
-    outline: none;
-    border-color: #8a2be2;
-    box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.1);
-}
-
-
-.form-contact .btn-enviar {
-    width: 100%; /* Botón ancho como en la imagen */
-    margin-top: 10px;
-    font-family: "SFBold", sans-serif;
-    font-size: 1.1rem;
-    cursor: pointer;
-}
 
 /* ==========================================================================
    10. HERO Y BOTÓN CIRCULAR
