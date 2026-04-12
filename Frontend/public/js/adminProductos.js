@@ -55,9 +55,6 @@ document.addEventListener('currencyReady', async () => {
                         <div style="font-weight: bold; color: #333;">
                             $${parseFloat(prod.floPrecioUnitario).toLocaleString('es-MX', { minimumFractionDigits: 2 })} MXN
                         </div>
-                        <div style="font-size: 0.85em; color: #8737d1ff; margin-top: 4px;">
-                            ${GlobalCurrency.format(prod.floPrecioUnitario)}
-                        </div>
                     </td>
                     <td>${prod.intStock || 0}</td>
                     <td>${prod.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
