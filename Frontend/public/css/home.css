@@ -772,6 +772,9 @@ footer {
 /* ==========================================================================
    12. DETALLE DE PRODUCTO (VISTA HORIZONTAL)
    ========================================================================== */
+/* ==========================================================================
+   12. DETALLE DE PRODUCTO (VISTA UNIFICADA)
+   ========================================================================== */
 .producto-detalle-contenedor {
     display: flex;          
     flex-direction: row;    
@@ -783,13 +786,15 @@ footer {
     padding: 0 40px;
 }
 
+/* Imagen del detalle */
 .producto-detalle-imagen {
     flex: 1;                
     display: flex;
     justify-content: center;
 }
 
-.producto-detalle-imagen img {
+.producto-detalle-imagen img, 
+.imagen-detalle-principal {
     width: 100%;
     max-width: 500px;      
     height: auto;
@@ -805,13 +810,34 @@ footer {
     text-align: left;
 }
 
-
-#btn-agregar-al-carrito {
-    width: fit-content;
-    min-width: 250px;
-    margin-top: 20px;
+.precio-detalle {
+    color: #8a2be2 !important; 
+    font-size: 2.8rem;        
+    font-family: "SFBold", sans-serif;
+    margin: 15px 0;
+    font-weight: bold;
 }
 
+.colores {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color:hover {
+    transform: scale(1.1);
+}
+
+/* Responsivo para móviles */
 @media (max-width: 850px) {
     .producto-detalle-contenedor {
         flex-direction: column; 
