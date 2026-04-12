@@ -6,6 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Carrito - Comercializadora Doble L</title>
     <link rel="stylesheet" href="../css/home.css">
+    <style>
+        /* Estilos específicos para que el carrito se vea bien dentro del diseño del index */
+        .carrito-main {
+            padding: 40px 5%;
+            min-height: 70vh;
+        }
+
+        .carrito-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 800px) {
+            .carrito-grid { grid-template-columns: 1fr; }
+        }
+
+        .productos-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .resumen-card {
+            background: #fdfdfd;
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #ddd;
+            height: fit-content;
+        }
+
+        .total-texto {
+            font-size: 1.8rem;
+            color: #8a2be2;
+            font-weight: bold;
+        }
+
+        /* Corregir el icono enorme del header */
+        .cart-icon-nav {
+            width: 30px !important;
+            height: 30px !important;
+        }
+
+        .cart-link {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,45 +91,59 @@
                 <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo">
             </a>
             <nav>
-                <a href="../index.html" class="nav-link">Volver al Inicio</a>
+                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="celulares.html?id=1" class="nav-link">Celulares</a>
+                <a href="Accesorios.html?id=8" class="nav-link">Accesorios</a>
+                <a href="Electrodomesticos.html?id=2" class="nav-link">Laptops</a>
             </nav>
+            <div class="user-controls" style="display: flex; align-items: center;">
+                <a href="carrito.html" class="cart-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="Carrito" class="cart-icon-nav" style="filter: invert(1);">
+                    <span id="cart-count">0</span>
+                </a>
+                <div class="user-menu">
+                    <img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/profileicon.jpg" alt="Perfil" class="profileicon">
+                    <div class="menu" id="menu-usuario">
+                        <a href="perfil.html" id="link-perfil">Mi cuenta</a>
+                        <a href="../login.html" id="link-login">Iniciar Sesión</a>
+                        <a href="#" id="link-logout" style="display: none;">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <main class="carrito-container">
-        <section class="lista-productos">
-            <h2 style="margin-top: 0;">Tu Carrito</h2>
-            <div id="lista-carrito">
-                <p style="text-align: center;">Cargando productos...</p>
-            </div>
-        </section>
+    <main class="carrito-main">
+        <h1>Tu Carrito de Compras</h1>
+        
+        <div class="carrito-grid">
+            <section class="productos-container" id="lista-carrito">
+                <p>Cargando productos...</p>
+            </section>
 
-        <aside class="resumen-compra">
-            <h3>Resumen de Pedido</h3>
-            <div class="total-fila">
-                <span>Subtotal</span>
-                <span id="subtotal-precio">$0.00</span>
-            </div>
-            <div class="total-fila">
-                <span>Envío</span>
-                <span style="color: green; font-weight: bold;">Gratis</span>
-            </div>
-            <div class="total-fila total-final">
-                <span>Total</span>
-                <span id="cart-total">$0.00</span>
-            </div>
-
-            <button id="btn-checkout" class="btn-pagar">
-                Finalizar Compra
-            </button>
-            
-            <p id="msg-login">Debes iniciar sesión para finalizar la compra.</p>
-        </aside>
+            <aside class="resumen-card">
+                <h3>Resumen</h3>
+                <hr>
+                <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+                    <span>Total a pagar:</span>
+                    <span id="cart-total" class="total-texto">$0.00</span>
+                </div>
+                <button id="btn-checkout" class="comprarproducto" style="width: 100%; padding: 15px;">
+                    Finalizar Compra
+                </button>
+                <p id="msg-login" style="display:none; color: red; margin-top: 15px; text-align: center;">
+                    Inicia sesión para completar tu compra.
+                </p>
+            </aside>
+        </div>
     </main>
 
     <footer>
         <div class="linksFooter">
-            <p>&copy; 2026 Comercializadora Doble L - Todos los derechos reservados</p>
+            <a href="quienessomos.html"><h3>¿Quiénes somos?</h3></a>
+            <a href="contactoPublico.html"><h3>Contacto</h3></a>
+            <a href="ubicacion.html"><h3>Ubicación</h3></a>
+            <a href="politicaCompra.html"><h3>Políticas</h3></a>
         </div>
     </footer>
 

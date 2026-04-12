@@ -1,3 +1,5 @@
+console.log("Carrito View cargado. Productos en Storage:", localStorage.getItem('comercializadora_cart'));
+
 document.addEventListener('DOMContentLoaded', () => {
     renderCarrito();
 
