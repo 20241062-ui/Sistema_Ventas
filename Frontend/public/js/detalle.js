@@ -49,6 +49,17 @@ document.addEventListener('currencyReady', async () => {
                 `;
             }
         }
+        const btnAdd = document.getElementById('btn-add-detalle');
+        if (btnAdd) {
+            btnAdd.onclick = () => {
+                Cart.add({
+                    id: prod.vchNo_Serie,
+                    nombre: prod.vchNombre,
+                    precio: parseFloat(prod.floPrecioUnitario),
+                    img: prod.vchImagen || 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png'
+                });
+            };
+        }
     } catch (error) {
         console.error("Error al cargar el detalle del producto:", error);
         const contenedor = document.querySelector('.producto-detalle-contenedor');
