@@ -840,12 +840,13 @@ footer {
 
 
 .contenedor-carrito-unico {
-    background: #ffffff;
+   background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    max-width: 900px;
+    width: 100%;
+    max-width: 1100px; /* Coincide con el título */
     margin: 0 auto;
-    overflow: hidden; /* Mantiene las esquinas redondeadas */
+    overflow: hidden;
 }
 
 .carrito-main h1 {
@@ -868,35 +869,28 @@ footer {
     padding: 25px 0 !important;
 }
 
-/* Sección de resumen al final (Estilo Apple) */
 .resumen-final-integrado {
-    background: #fafafa; /* Un tono ligeramente distinto para diferenciar el fondo */
+    background: #fafafa;
     padding: 40px;
     border-top: 1px solid #eee;
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Alinea el total a la derecha */
+    align-items: flex-end; /* Mueve todo el bloque a la derecha */
 }
 
-.fila-resumen {
+/* Este es el cambio clave para el texto */
+.fila-resumen-ajustada {
     display: flex;
-    justify-content: space-between;
-    width: 300px; /* Ancho controlado para el área de texto */
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-    color: #666;
+    justify-content: space-between; /* Empuja el texto a los extremos */
+    width: 400px; /* Un poco más ancho para que luzca mejor */
+    margin-bottom: 15px;
 }
 
-.total-destacado {
-    display: flex;
-    justify-content: space-between;
-    width: 300px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px solid #333;
+.total-texto {
     font-size: 1.8rem;
-    font-family: "SFBold", sans-serif;
-    color: #000;
+    color: #8a2be2;
+    font-weight: bold;
+    text-align: right; /* Asegura que el número crezca hacia la izquierda */
 }
 
 .total-destacado span:last-child {
