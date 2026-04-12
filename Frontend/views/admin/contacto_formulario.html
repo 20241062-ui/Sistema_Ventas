@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Gestionar Contacto - Doble L</title>
+    <link rel="stylesheet" href="../../public/css/estiloAdmin.css">
+</head>
+<body>
+    <header class="header-admin">
+        <div class="contenedor-header">
+            <a href="menuAdministrador.html"><img src="https://comercializadorall.grupoctic.com/ComercializadoraLL/img/whitelogo.png" alt="Logo" class="logo"></a>
+            <nav class="nav-admin">
+                <a href="menuAdministrador.html">Productos</a>
+                <a href="contactoLista.html" class="active">Contacto</a>
+                <a href="usuarios.html">Usuarios</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main">
+            <h2 id="tituloFormulario">Nuevo Contacto</h2>
+            <div class="panel">
+                <form id="formContacto" class="formulario-admin">
+                    <input type="hidden" id="intid">
+
+                    <div class="campo">
+                        <label for="vchcampo">Nombre del Campo (Ej: Teléfono, Email):</label>
+                        <input type="text" id="vchcampo" required placeholder="Ej: WhatsApp">
+                    </div>
+
+                    <div class="campo">
+                        <label for="vchvalor">Valor:</label>
+                        <input type="text" id="vchvalor" required placeholder="Ej: +52 771...">
+                    </div>
+
+                    <div class="botones-form">
+                        <button type="submit" class="btn-superior">Guardar Información</button>
+                        <button type="button" class="btn-superior" onclick="window.location.href='contactoLista.html'">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../../public/js/authAdmin.js"></script>
+    <script src="../../public/js/contacto_form.js"></script>
+</body>
+</html>

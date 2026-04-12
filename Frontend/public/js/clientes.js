@@ -5,17 +5,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnBuscar = document.getElementById('btn-buscar');
     const inputBuscar = document.getElementById('input-buscar');
 
-    
+
     if (tablaBody) cargarClientes();
 
-    
+
     if (btnBuscar) {
         btnBuscar.addEventListener('click', () => {
-            cargarClientes(inputBuscar.value.trim()); 
+            cargarClientes(inputBuscar.value.trim());
         });
     }
 
-   
+
     if (inputBuscar) {
         inputBuscar.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -31,10 +31,10 @@ async function cargarClientes(buscar = "") {
         const res = await fetch(url);
         const clientes = await res.json();
         const tabla = document.getElementById("tablaClientesBody");
-        
+
         if (!tabla) return;
 
-       
+
         const total = clientes.length;
         const activos = clientes.filter(c => c.Estado == 1).length;
         const inactivos = clientes.filter(c => c.Estado == 0).length;
@@ -55,7 +55,6 @@ async function cargarClientes(buscar = "") {
                 <td>${c.vchApellido_Paterno} ${c.vchApellido_Materno || ''}</td>
                 <td>${c.vchCorreo}</td>
                 <td>${c.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
-          
                 <td>
                     <button class="guardar" onclick="window.location.href='clienteActualizar.html?id=${c.intid_Cliente}'">Editar</button>
                     <button class="${c.Estado == 1 ? 'cancelar' : 'activar'}" onclick="cambiarEstado(${c.intid_Cliente}, ${c.Estado == 1 ? 0 : 1})">

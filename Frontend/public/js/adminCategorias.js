@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 tr.innerHTML = `
                     <td>${cat.intid_Categoria}</td>
-                    <td>${cat.vchNombre} ${cat.Estado === 0 ? '<span style="color:red; font-size:10px;">(Inactiva)</span>' : ''}</td>
+                    <td>${cat.vchNombre}</td>
                     <td>
                         <button class="guardar" onclick="window.location.href='categoria_actualizar.html?id=${cat.intid_Categoria}'">Editar</button>
                         
