@@ -17,13 +17,14 @@ const Cart = {
         
         localStorage.setItem(this.key, JSON.stringify(items));
         this.updateUI();
-        alert(`¡${producto.nombre} agregado al carrito!`);
+        alert(`¡${producto.nombre} añadido al carrito!`);
     },
 
     updateUI() {
-        const count = this.get().reduce((acc, item) => acc + item.cantidad, 0);
-        const el = document.getElementById('cart-count');
-        if (el) el.textContent = count;
+        const items = this.get();
+        const totalItems = items.reduce((acc, item) => acc + item.cantidad, 0);
+        const badge = document.getElementById('cart-count');
+        if (badge) badge.textContent = totalItems;
     }
 };
 

@@ -82,19 +82,10 @@ document.addEventListener('currencyReady', async () => {
                                     <h2>${prod.vchNombre}</h2>
                                     <h3>${GlobalCurrency.format(prod.floPrecioUnitario)}</h3>
                                 </div>
-                                <div style="display:flex; gap:10px; width:100%; margin-top:10px;">
-                                    <button onclick="Cart.add({
-                                        id: '${prod.vchNo_Serie}', 
-                                        nombre: '${prod.vchNombre}', 
-                                        precio: ${prod.floPrecioUnitario}, 
-                                        img: '${imgUrl}'
-                                    })" class="btn-pag" style="flex:1;">🛒</button>
-                                    
-                                    <form action="${rutaDetalle}" method="GET" style="flex:2;">
-                                        <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
-                                        <button type="submit" class="comprarproducto" style="width:100%; padding:10px;">Detalles</button>
-                                    </form>
-                                </div>
+                                <form action="${rutaDetalle}" method="GET">
+                                    <input type="hidden" name="producto_id" value="${prod.vchNo_Serie}">
+                                    <button type="submit" class="comprarproducto">Ver Detalles</button>
+                                </form>
                             </div>
                         </div>`;
                 });

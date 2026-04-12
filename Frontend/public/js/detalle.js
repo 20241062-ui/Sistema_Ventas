@@ -60,6 +60,24 @@ document.addEventListener('currencyReady', async () => {
                 });
             };
         }
+        const btnAgregar = document.getElementById('btn-agregar-al-carrito');
+
+        if (btnAgregar) {
+            btnAgregar.addEventListener('click', () => {
+                const producto = {
+                    id: document.getElementById('det-id').value,
+                    nombre: document.getElementById('det-nombre').textContent,
+                    precio: parseFloat(document.getElementById('det-precio').textContent.replace(/[^0-9.-]+/g, "")),
+                    img: document.querySelector('.imagen-detalle-principal').src
+                };
+
+                if (producto.id) {
+                    Cart.add(producto);
+                } else {
+                    alert("Error: No se pudo cargar la información del producto.");
+                }
+            });
+        }
     } catch (error) {
         console.error("Error al cargar el detalle del producto:", error);
         const contenedor = document.querySelector('.producto-detalle-contenedor');
