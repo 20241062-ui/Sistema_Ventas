@@ -33,10 +33,10 @@ async function cargarFAQ(busqueda = "") {
                     <td>${f.intid}</td>
                     <td><strong>${f.vchpregunta}</strong></td>
                     <td>${f.vchrespuesta ? f.vchrespuesta.substring(0, 50) + '...' : ''}</td>
-                    <td>${estaActivo ? '✅ Activo' : '❌ Inactivo'}</td>
+                    <td>${estaActivo ? 'Activo' : 'Inactivo'}</td>
                     <td>${fecha}</td>
                     <td>
-                        <button class="btn-superior" onclick="editarFAQ(${f.intid})">✏️</button>
+                        <button class="btn-superior" onclick="editarFAQ(${f.intid})">Editar</button>
                         <button class="${estaActivo ? 'btn-superior buscar' : 'btn-superior'}" 
                                 onclick="cambiarEstadoFAQ(${f.intid}, ${estaActivo ? 0 : 1})">
                             ${estaActivo ? 'Baja' : 'Activar'}
