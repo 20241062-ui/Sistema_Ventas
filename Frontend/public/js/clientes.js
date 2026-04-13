@@ -82,3 +82,67 @@ async function cambiarEstado(id, nuevoEstado) {
         }
     }
 }
+const formCliente = document.getElementById("formCliente");
+
+if (formCliente) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const idCliente = urlParams.get("id");
+
+    if (idCliente) {
+        cargarDatosCliente(idCliente);
+    }
+
+    formCliente.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        actualizarDatosCliente(idCliente);
+    });
+}
+
+async function cargarDatosCliente(id) {
+    try {
+        const res = await fetch(`${API_URL}/${id}`);
+        const c = await res.json();
+
+        if (res.ok && c) {
+            document.getElementById("intid_Cliente").value = c.intid_Cliente;
+            document.getElementById("vchNombre").value = c.vchNombre;
+            document.getElementById("vchApellido_Paterno").value = c.vchApellido_Paterno;
+            document.getElementById("vchApellido_Materno").value = c.vchApellido_Materno || "";
+            document.getElementById("vchCorreo").value = c.vchCorreo;
+            document.getElementById("Estado").value = c.Estado;
+        } else {
+            alert("No se pudo cargar la información del cliente.");
+        }
+    } catch (error) {
+        console.error("Error al cargar datos:", error);
+    }
+}
+
+async function actualizarDatosCliente(id) {
+    const datos = {
+        vchNombre: document.getElementById("vchNombre").value,
+        vchApellido_Paterno: document.getElementById("vchApellido_Paterno").value,
+        vchApellido_Materno: document.getElementById("vchApellido_Materno").value,
+        vchCorreo: document.getElementById("vchCorreo").value,
+        Estado: document.getElementById("Estado").value
+    };
+
+    try {
+        const res = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
+
+        if (res.ok) {
+            alert("Cliente actualizado con éxito");
+            window.location.href = "clientes.html";
+        } else {
+            const error = await res.json();
+            alert("Error: " + error.error);
+        }
+    } catch (error) {
+        console.error("Error al actualizar:", error);
+        alert("Ocurrió un error al intentar actualizar.");
+    }
+}
