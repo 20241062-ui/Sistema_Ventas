@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const API_URL = 'https://sistemaventasback.vercel.app/api/admin/marcas';
     const token = localStorage.getItem('token');
     const tablaBody = document.getElementById('tabla-marcas-body');
-    const btnBuscar = document.getElementById('btnBuscar'); 
+    const btnBuscar = document.getElementById('btnBuscar');
     const inputBuscar = document.getElementById('inputBuscar');
 
     const cargarMarcas = async (buscar = "") => {
@@ -11,18 +11,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const marcas = await res.json();
-            
+
             if (!tablaBody) return;
             tablaBody.innerHTML = '';
 
             marcas.forEach(marca => {
                 const tr = document.createElement('tr');
+
+                const estaActiva = marca.Estado === 1;
+                const textoBoton = estaActiva ? "Desactivar" : "Activar";
+                const claseBoton = estaActiva ? "cancelar" : "guardar";
+
                 tr.innerHTML = `
                     <td>${marca.intid_Marca}</td>
                     <td>${marca.vchNombre}</td>
                     <td>
                         <button class="guardar" onclick="window.location.href='marca_actualizar.html?id=${marca.intid_Marca}'">Editar</button>
-                        <button class="cancelar" onclick="eliminarMarcaLogica(${marca.intid_Marca})">Baja</button>
+                        <button class="${claseBoton}" onclick="toggleEstadoMarca(${marca.intid_Marca}, ${marca.Estado})">
+                            ${textoBoton}
+                        </button>
                     </td>
                 `;
                 tablaBody.appendChild(tr);
@@ -32,22 +39,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    window.eliminarMarcaLogica = async (id) => {
-        if (!confirm('¿Deseas dar de baja esta marca?')) return;
+    window.toggleEstadoMarca = async (id, estadoActual) => {
+        const accion = estadoActual === 1 ? 'desactivar' : 'activar';
+        if (!confirm(`¿Deseas ${accion} esta marca?`)) return;
+
         try {
-            const res = await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
+            const res = await fetch(`${API_URL}/estado/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ estadoActual })
             });
+
             if (res.ok) {
-                alert("Marca desactivada correctamente.");
-                cargarMarcas();
+                alert(`Marca ${accion}ada correctamente.`);
+                location.reload();
             }
         } catch (error) {
-            alert("Error al procesar la baja.");
+            alert("Error al procesar el cambio de estado.");
         }
     };
-     if (btnBuscar) {
+    if (btnBuscar) {
         btnBuscar.addEventListener('click', () => cargarMarcas(inputBuscar.value));
     }
 
