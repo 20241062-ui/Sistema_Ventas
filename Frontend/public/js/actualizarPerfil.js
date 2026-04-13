@@ -6,18 +6,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!token) { window.location.href = '../login.html'; return; }
 
     try {
-        const response = await fetch(`${API_URL}/perfil`, {
+        const response = await fetch(`${API_URL}/usuarios/perfil`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const user = await response.json();
 
-        document.getElementById('menu-user-info').innerHTML = `${user.vchNombre} ${user.vchApellido_Paterno}<br>${user.vchCorreo}`;
+        document.getElementById('menu-user-info').innerHTML = `<strong>${user.vchNombre}</strong><br>${user.vchCorreo}`;
         document.getElementById('input-nombre').value = user.vchNombre;
         document.getElementById('input-paterno').value = user.vchApellido_Paterno;
-        document.getElementById('input-materno').value = user.vchApellido_Materno;
+        document.getElementById('input-materno').value = user.vchApellido_Materno || '';
         document.getElementById('input-correo').value = user.vchCorreo;
         document.getElementById('vchTelefono').value = user.vchTelefono || '';
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Error cargando datos:", e); }
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -28,10 +28,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const datos = Object.fromEntries(new FormData(form));
+        const formData = new FormData(form);
+        const datos = Object.fromEntries(formData.entries());
+
+        if (!datos.vchpassword) delete datos.vchpassword;
 
         try {
-            const response = await fetch(`${API_URL}/actualizar`, {
+            const response = await fetch(`${API_URL}/usuarios/actualizar`, {
                 method: 'PUT',
                 headers: { 
                     'Authorization': `Bearer ${token}`,
@@ -39,18 +42,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 body: JSON.stringify(datos)
             });
-            const res = await response.json();
 
-            if (res.success) {
-                alert('¡Datos actualizados!');
+            if (response.ok) {
+                alert('¡Datos actualizados con éxito!');
                 window.location.href = 'perfil.html';
             } else {
-                alert('Error al actualizar: ' + res.message);
+                const res = await response.json();
+                alert('Error al actualizar: ' + (res.mensaje || res.message || 'Error desconocido'));
             }
-        } catch (err) { alert('Error de conexión'); }
+        } catch (err) { 
+            alert('Error de conexión con el servidor'); 
+        }
     });
 
-    document.getElementById('vchTelefono').onkeypress = (e) => {
-        if (e.which < 48 || e.which > 57) e.preventDefault();
-    };
+    const telInput = document.getElementById('vchTelefono');
+    if(telInput){
+        telInput.onkeypress = (e) => {
+            if (e.which < 48 || e.which > 57) e.preventDefault();
+        };
+    }
 });

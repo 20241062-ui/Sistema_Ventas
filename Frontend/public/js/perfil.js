@@ -16,39 +16,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Error al obtener perfil');
-        }
+        if (!response.ok) throw new Error('Sesión inválida');
 
         const user = await response.json();
-
-        const paterno = user.vchApellido_Paterno || "";
-        const materno = user.vchApellido_Materno || "";
-        const nombre = user.vchNombre || "";
-        const apellidos = `${paterno} ${materno}`.trim();
-
         const menuName = document.getElementById('menu-user-name');
         if (menuName) {
-            menuName.innerHTML = `${nombre} ${apellidos}<br><small>${user.vchCorreo}</small>`;
+            menuName.innerHTML = `${user.vchNombre} ${user.vchApellido_Paterno} ${user.vchApellido_Materno || ''}<br><small>${user.vchCorreo}</small>`;
         }
 
-        const campos = {
-            'info-nombre': nombre,
-            'info-apellidos': apellidos,
-            'info-correo': user.vchCorreo
-        };
-
-        for (const [id, valor] of Object.entries(campos)) {
-            const el = document.getElementById(id);
-            if (el) el.textContent = valor;
+        const avatar = document.getElementById('avatar-inicial');
+        if (avatar && user.vchNombre) {
+            avatar.textContent = user.vchNombre.charAt(0).toUpperCase();
         }
+        const infoNombreCompleto = document.getElementById('info-full-name');
+        if (infoNombreCompleto) {
+            infoNombreCompleto.textContent = `${user.vchNombre} ${user.vchApellido_Paterno} ${user.vchApellido_Materno || ''}`;
+        }
+
+        const infoCorreo = document.getElementById('info-correo');
+        if (infoCorreo) infoCorreo.textContent = user.vchCorreo;
+
+        const infoTel = document.getElementById('info-tel');
+        if (infoTel) infoTel.textContent = user.vchTelefono || "No registrado";
 
     } catch (error) {
         console.error("Error en perfil:", error.message);
-        alert('Tu sesión ha expirado o hubo un error de conexión.');
         localStorage.removeItem('token');
-        localStorage.removeItem('usuario');
         window.location.href = '../login.html';
     }
 
@@ -62,3 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 });
+
+window.abrirModal = () => {
+    window.location.href = 'actualizarPerfil.html';
+};
