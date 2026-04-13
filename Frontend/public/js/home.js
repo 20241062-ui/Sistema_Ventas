@@ -15,6 +15,7 @@ document.addEventListener('currencyReady', async () => {
     const rutaDetalle = esSubcarpeta ? "productoDetalle.html" : "publico/productoDetalle.html";
     const rutaAdmin = esSubcarpeta ? "../admin/menuAdministrador.html" : "admin/menuAdministrador.html";
     const rutaLogin = esSubcarpeta ? "../login.html" : "login.html";
+    const rutaIndex = esSubcarpeta ? "../index.html" : "index.html";
 
     const params = new URLSearchParams(window.location.search);
     const idUrl = params.get('id');
@@ -43,6 +44,7 @@ document.addEventListener('currencyReady', async () => {
             adminLink.href = rutaAdmin;
             adminLink.textContent = 'Panel Admin';
             adminLink.style.color = 'red';
+            adminLink.style.fontWeight = 'bold';
             if (linkLogout) linkLogout.before(adminLink);
         }
     }
@@ -50,7 +52,7 @@ document.addEventListener('currencyReady', async () => {
     async function cargarCatalogo(pagina = 1, categoria = 'todas') {
         if (!galeria) return;
 
-        galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Cargando catálogo localizado...</p>';
+        galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">Cargando catálogo...</p>';
 
         try {
             const url = `${API_URL}/productos/home?pagina=${pagina}&categoria=${categoria}`;
@@ -70,9 +72,7 @@ document.addEventListener('currencyReady', async () => {
             galeria.innerHTML = '';
             if (data.productos && data.productos.length > 0) {
                 data.productos.forEach(prod => {
-                    const imgUrl = prod.vchImagen
-                        ? prod.vchImagen
-                        : 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
+                    const imgUrl = prod.vchImagen || 'https://res.cloudinary.com/dnu57rgek/image/upload/v1774479182/sin-imagen.png';
 
                     galeria.innerHTML += `
                         <div class="producto">
@@ -90,7 +90,7 @@ document.addEventListener('currencyReady', async () => {
                         </div>`;
                 });
             } else {
-                galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">No hay productos disponibles en esta categoría.</p>';
+                galeria.innerHTML = '<p style="text-align:center; width:100%; color:white;">No hay productos disponibles.</p>';
             }
 
             if (data.pagination) {
@@ -123,17 +123,20 @@ document.addEventListener('currencyReady', async () => {
         categoriaActual = idCat;
         const nuevaUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + idCat;
         window.history.pushState({ path: nuevaUrl }, '', nuevaUrl);
-
         cargarCatalogo(1, idCat);
     };
 
     document.addEventListener('click', (e) => {
         if (e.target.id === 'link-logout' || e.target.id === 'btn-logout') {
             e.preventDefault();
+            
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
-            alert('Sesión finalizada.');
-            window.location.href = rutaLogin;
+            localStorage.removeItem('rol');
+            
+            alert('Sesión finalizada correctamente.');
+            
+            window.location.href = rutaIndex;
         }
     });
 
