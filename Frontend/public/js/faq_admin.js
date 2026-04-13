@@ -36,8 +36,8 @@ async function cargarFAQ(busqueda = "") {
                     <td>${estaActivo ? 'Activo' : 'Inactivo'}</td>
                     <td>${fecha}</td>
                     <td>
-                        <button class="btn-superior" onclick="editarFAQ(${f.intid})">Editar</button>
-                        <button class="${estaActivo ? 'btn-superior buscar' : 'btn-superior'}" 
+                        <button class="guardar" onclick="editarFAQ(${f.intid})">Editar</button>
+                        <button class="${estaActivo ? 'cancelar' : 'guardar'}" 
                                 onclick="cambiarEstadoFAQ(${f.intid}, ${estaActivo ? 0 : 1})">
                             ${estaActivo ? 'Baja' : 'Activar'}
                         </button>
