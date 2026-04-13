@@ -4,7 +4,7 @@ const formBuscar = document.getElementById('formBuscarFAQ');
 
 async function cargarFAQ(busqueda = "") {
     if (!tablaBody) return;
-    
+
     try {
         const url = busqueda ? `${API_URL}?buscar=${busqueda}` : API_URL;
         const res = await fetch(url);
@@ -18,39 +18,70 @@ async function cargarFAQ(busqueda = "") {
         }
 
         faqs.forEach(f => {
-            const fecha = f.dtmFecha ? new Date(f.dtmFecha).toLocaleDateString() : 'N/A';
+            const fecha = f.fecha ? new Date(f.fecha).toLocaleDateString() : 'N/A';
+            const estaActivo = f.estado === 1; 
+
             tablaBody.innerHTML += `
-                <tr>
-                    <td>${f.intid}</td>
-                    <td><strong>${f.vchpregunta}</strong></td>
-                    <td>${f.vchrespuesta.substring(0, 50)}...</td>
-                    <td>${f.intEstado === 1 ? 'Activo' : 'Inactivo'}</td>
-                    <td>${fecha}</td>
-                    <td>
-                        <button class="btn-superior" onclick="editarFAQ(${f.intid})">Editar</button>
-                        <button class="btn-superior buscar" onclick="eliminarFAQ(${f.intid})">Baja</button>
-                    </td>
-                </tr>
-            `;
+        <tr>
+            <td>${f.intid}</td>
+            <td><strong>${f.vchpregunta}</strong></td>
+            <td>${f.vchrespuesta.substring(0, 50)}...</td>
+            <td>${estaActivo ? '✅ Activo' : '❌ Inactivo'}</td>
+            <td>${fecha}</td>
+            <td>
+                <button class="btn-superior" onclick="editarFAQ(${f.intid})">✏️</button>
+                <button class="${estaActivo ? 'btn-superior buscar' : 'btn-superior'}" 
+                        onclick="cambiarEstadoFAQ(${f.intid}, ${estaActivo ? 0 : 1})">
+                    ${estaActiva ? 'Baja' : 'Activar'}
+                </button>
+            </td>
+        </tr>
+    `;
         });
+
+        window.cambiarEstadoFAQ = async (id, nuevoEstado) => {
+            const accion = nuevoEstado === 0 ? 'dar de baja' : 'activar';
+            if (!confirm(`¿Deseas ${accion} esta pregunta?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/${id}/estado`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ estado: nuevoEstado })
+                });
+
+                if (res.ok) {
+                    cargarFAQ();
+                }
+            } catch (error) {
+                alert("Error en el servidor");
+            }
+        };
     } catch (error) {
         tablaBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Error al cargar datos.</td></tr>';
     }
 }
 
+window.cambiarEstadoFAQ = async (id, nuevoEstado) => {
+    const accion = nuevoEstado === 0 ? 'dar de baja' : 'activar';
+    if (!confirm(`¿Deseas ${accion} esta pregunta?`)) return;
+
+    try {
+        const res = await fetch(`${API_URL}/${id}/estado`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ estado: nuevoEstado })
+        });
+
+        if (res.ok) {
+            cargarFAQ();
+        }
+    } catch (error) {
+        alert("Error en el servidor");
+    }
+};
 window.editarFAQ = (id) => {
     window.location.href = `preguntaFormulario.html?id=${id}`;
-};
-
-window.eliminarFAQ = async (id) => {
-    if (confirm('¿Deseas eliminar esta pregunta?')) {
-        try {
-            const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-            if (res.ok) cargarFAQ();
-        } catch (error) {
-            alert("No se pudo eliminar.");
-        }
-    }
 };
 
 if (formBuscar) {
