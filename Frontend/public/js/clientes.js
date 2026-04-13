@@ -56,7 +56,7 @@ async function cargarClientes(buscar = "") {
                 <td>${c.vchCorreo}</td>
                 <td>${c.Estado == 1 ? 'Activo' : 'Inactivo'}</td>
                 <td>
-                    <button class="guardar" onclick="window.location.href='clienteActualizar.html?id=${c.intid_Cliente}'">Editar</button>
+                    <button class="guardar" onclick="window.location.href='cliente_actualizar.html?id=${c.intid_Cliente}'">Editar</button>
                     <button class="${c.Estado == 1 ? 'cancelar' : 'activar'}" onclick="cambiarEstado(${c.intid_Cliente}, ${c.Estado == 1 ? 0 : 1})">
                         ${c.Estado == 1 ? 'Baja' : 'Activar'}
                     </button>
