@@ -21,8 +21,8 @@ async function cargarContactos(busqueda = "") {
                     <td><strong>${c.vchcampo}</strong></td>
                     <td>${c.vchvalor}</td>
                     <td>
-                        <button class="btn-superior" onclick="editarContacto(${c.intid})">✏️</button>
-                        <button class="btn-superior buscar" onclick="eliminarContacto(${c.intid})">🗑️</button>
+                        <button class="guardar" onclick="editarContacto(${c.intid})">Editar</button>
+                        <button class="cancelar" onclick="eliminarContacto(${c.intid})">Eliminar</button>
                     </td>
                 </tr>
             `;
