@@ -29,6 +29,8 @@ async function cargarFAQ(busqueda = "") {
                     <td>
                         <button class="btn-superior" onclick="editarFAQ(${f.intid})">Editar</button>
                         <button class="btn-superior buscar" onclick="eliminarFAQ(${f.intid})">Baja</button>
+                        <button class="guardar" onclick="editarFAQ(${f.intid})">Editar</button>
+                        <button class="cancelar" onclick="eliminarFAQ(${f.intid})">Baja</button>
                     </td>
                 </tr>
             `;
