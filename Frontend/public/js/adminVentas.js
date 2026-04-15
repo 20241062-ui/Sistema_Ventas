@@ -3,12 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     const API_URL = "https://sistemaventasback.vercel.app/api";
 
-    if (!token || !usuario || usuario.rol !== "Administrador") {
-        alert("Acceso restringido");
-        window.location.href = "../login.html";
-        return;
-    }
-
     const tbody = document.getElementById("tabla-ventas-body");
     const totalVentas = document.getElementById("total-ventas");
 
@@ -17,7 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const cargarVentas = async (buscar = "") => {
         try {
-           
             tbody.innerHTML = '<tr><td colspan="7">Cargando ventas...</td></tr>';
 
             const res = await fetch(`${API_URL}/ventas?buscar=${encodeURIComponent(buscar)}`, {
@@ -63,12 +56,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-   const btnLimpiar = document.getElementById('btn-limpiar');
+    const btnLimpiar = document.getElementById('btn-limpiar');
 
     if (btnBuscar) {
         btnBuscar.addEventListener('click', () => {
             const valorBusqueda = inputBuscar.value;
-            cargarVentas(valorBusqueda); 
+            cargarVentas(valorBusqueda);
         });
     }
     if (inputBuscar) {
