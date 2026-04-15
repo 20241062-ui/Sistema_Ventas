@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const rolActual = usuarioLocal.rol || 'Invitado';
 
     const matrizPermisos = {
-        'Administrador': { modulos: ['ALL'], puedeEscribir: true },
-        'DBA':           { modulos: ['ALL'], puedeEscribir: true },
-        'Programador':   { modulos: ['ALL'], puedeEscribir: false },
-        'Auditor':       { modulos: ['ALL'], puedeEscribir: false },
-        'Soporte Técnico':{ modulos: ['clientes', 'ventas', 'productos'], puedeEscribir: false },
-        'Auxiliar':      { modulos: ['productos', 'clientes'], puedeEscribir: false }
+        'Administrador':   { modulos: ['ALL'], puedeEscribir: true },
+        'DBA':             { modulos: ['ALL'], puedeEscribir: true },
+        'Encargado':       { modulos: ['ALL'], puedeEscribir: true },
+        'Programador':     { modulos: ['ALL'], puedeEscribir: false },
+        'Auditor':         { modulos: ['ALL'], puedeEscribir: false },
+        'Vendedor':        { modulos: ['ventas', 'productos', 'clientes'], puedeEscribir: true },
+        'Auxiliar':        { modulos: ['ventas', 'productos', 'clientes'], puedeEscribir: false },
+        'Soporte Técnico': { modulos: ['clientes', 'ventas', 'productos'], puedeEscribir: false }
     };
 
     const misPermisos = matrizPermisos[rolActual] || { modulos: [], puedeEscribir: false };
@@ -30,12 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!accesoAutorizado && paginaActual.includes('.html')) {
             alert('Acceso restringido: Tu rol no tiene permisos para este módulo.');
             window.location.href = 'menuAdministrador.html';
-            return;
+            return; 
         }
     }
 
     if (!misPermisos.puedeEscribir) {
-        
         const bloquearAcciones = (contenedor) => {
             const elementosMutacion = contenedor.querySelectorAll('button, input[type="submit"], input, select, textarea');
             
@@ -45,20 +46,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const esBuscador = el.classList.contains('buscar') && !texto.includes('🗑️') && !texto.includes('Baja');
                 
                 if (esBuscador || id === 'inputBuscar' || id === 'btnBuscar' || id === 'link-logout-global') {
-                    return;
+                    return; 
                 }
 
                 if (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') {
                     el.setAttribute('readonly', true);
                     el.setAttribute('disabled', true);
-                } 
-                else {
+                } else {
                     el.style.opacity = '0.4';
                     el.style.cursor = 'not-allowed';
                     el.setAttribute('disabled', 'true');
                     el.removeAttribute('onclick');
                     el.title = "Acción bloqueada por permisos de tu rol";
-                    el.style.display = 'none';
                 }
             });
         };
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mutations.forEach((mutation) => {
                 if (mutation.addedNodes.length > 0) {
                     mutation.addedNodes.forEach((node) => {
-                        if (node.nodeType === 1) { // Si es un elemento HTML
+                        if (node.nodeType === 1) { 
                             bloquearAcciones(node);
                         }
                     });
