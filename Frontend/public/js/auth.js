@@ -2,10 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const API_URL = 'https://sistemaventasback.vercel.app/api';
 
-    // --- MEJORA: AUTO-LOGIN (PERSISTENCIA) ---
     const tokenExistente = localStorage.getItem('token');
     const usuarioExistente = JSON.parse(localStorage.getItem('usuario') || '{}');
-    const rolesAdmin = ['Administrador', 'Vendedor', 'Encargado'];
+    const rolesAdmin = [
+        'Administrador', 'Vendedor', 'Encargado',
+        'Auxiliar', 'DBA', 'Programador',
+        'Auditor', 'Soporte Técnico'
+    ];
 
     if (tokenExistente && usuarioExistente.rol) {
         if (rolesAdmin.includes(usuarioExistente.rol)) {
@@ -36,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('usuario', JSON.stringify(data.user));
-                    localStorage.setItem('rol', data.user.rol); 
+                    localStorage.setItem('rol', data.user.rol);
 
                     alert(`¡Bienvenido/a, ${data.user.nombre}!`);
 

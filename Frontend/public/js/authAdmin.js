@@ -4,15 +4,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const API_URL = 'https://sistemaventasback.vercel.app/api/usuarios';
     const currentPath = window.location.pathname;
 
-    const rolesPermitidos = ['Administrador', 'Vendedor', 'Encargado'];
-
+    const rolesPermitidos = [
+        'Administrador', 'Vendedor', 'Encargado',
+        'Auxiliar', 'DBA', 'Programador',
+        'Auditor', 'Soporte Técnico'
+    ];
     if (!token || !usuarioLocal || !rolesPermitidos.includes(usuarioLocal.rol)) {
         console.warn("Acceso denegado: Token ausente o permisos insuficientes.");
-        
+
         localStorage.removeItem('token');
         localStorage.removeItem('usuario');
         localStorage.removeItem('rol');
-        
+
         window.location.href = '../index.html';
         return;
     }
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('usuario');
                 localStorage.removeItem('rol');
-                
+
                 window.location.href = '../index.html';
             }
         });

@@ -37,7 +37,12 @@ document.addEventListener('currencyReady', async () => {
             menuUsuario.prepend(saludo);
         }
 
-        const rolesAdmin = ['Administrador', 'Vendedor', 'Encargado'];
+        const rolesAdmin = [
+            'Administrador', 'Vendedor', 'Encargado',
+            'Auxiliar', 'DBA', 'Programador',
+            'Auditor', 'Soporte Técnico'
+        ];
+
         if (rolesAdmin.includes(usuario.rol) && !document.getElementById('link-admin-panel')) {
             const adminLink = document.createElement('a');
             adminLink.id = 'link-admin-panel';
@@ -129,13 +134,13 @@ document.addEventListener('currencyReady', async () => {
     document.addEventListener('click', (e) => {
         if (e.target.id === 'link-logout' || e.target.id === 'btn-logout') {
             e.preventDefault();
-            
+
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
             localStorage.removeItem('rol');
-            
+
             alert('Sesión finalizada correctamente.');
-            
+
             window.location.href = rutaIndex;
         }
     });
