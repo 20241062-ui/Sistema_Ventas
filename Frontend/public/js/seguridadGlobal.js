@@ -1,23 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. EXTRACCIÓN A PRUEBA DE BALAS: Forzamos TODO a minúsculas y sin espacios
     const usuarioLocal = JSON.parse(localStorage.getItem('usuario') || '{}');
-    const rolActual = (localStorage.getItem('rol') || usuarioLocal.vchRol || usuarioLocal.rol || 'Invitado').trim();
+    const rolBruto = (localStorage.getItem('rol') || usuarioLocal.vchRol || usuarioLocal.rol || 'invitado');
+    const rolNormalizado = rolBruto.trim().toLowerCase(); // ej: "vendedor"
     
+    // Extraemos la ruta y eliminamos basuras como "?id=5" o "#ancla"
     const pathFull = window.location.pathname.toLowerCase();
-    const paginaActual = pathFull.split('/').pop() || 'index.html';
+    let paginaActual = pathFull.split('/').pop() || 'index.html';
+    paginaActual = paginaActual.split('?')[0].split('#')[0]; // Limpieza total de URL
 
+    // 2. MATRIZ EN MINÚSCULAS (Para que el emparejamiento sea infalible)
     const matrizPermisos = {
-        'Administrador':   { modulos: ['all'], puedeEscribir: true },
-        'DBA':             { modulos: ['all'], puedeEscribir: true },
-        'Encargado':       { modulos: ['all'], puedeEscribir: true },
-        'Programador':     { modulos: ['all'], puedeEscribir: false },
-        'Auditor':         { modulos: ['all'], puedeEscribir: false },
-        'Vendedor':        { modulos: ['ventas', 'clientes', 'productos'], puedeEscribir: true }, 
-        'Auxiliar':        { modulos: ['clientes', 'productos'], puedeEscribir: false },
-        'Soporte Técnico': { modulos: ['clientes', 'ventas', 'productos'], puedeEscribir: false }
+        'administrador':   { modulos: ['all'], puedeEscribir: true },
+        'dba':             { modulos: ['all'], puedeEscribir: true },
+        'encargado':       { modulos: ['all'], puedeEscribir: true },
+        'programador':     { modulos: ['all'], puedeEscribir: false },
+        'auditor':         { modulos: ['all'], puedeEscribir: false },
+        'vendedor':        { modulos: ['ventas', 'clientes', 'productos'], puedeEscribir: true }, 
+        'auxiliar':        { modulos: ['clientes', 'productos'], puedeEscribir: false },
+        'soporte técnico': { modulos: ['clientes', 'ventas', 'productos'], puedeEscribir: false }
     };
 
-    const misPermisos = matrizPermisos[rolActual] || { modulos: [], puedeEscribir: false };
+    // Si el rol no existe, le damos el perfil vacío (Invitado)
+    const misPermisos = matrizPermisos[rolNormalizado] || { modulos: [], puedeEscribir: false };
 
+    // 3. DICCIONARIO
     const mapaRutas = {
         'menuadministrador.html': 'productos',
         'ventas.html': 'ventas',
@@ -33,37 +40,58 @@ document.addEventListener('DOMContentLoaded', () => {
         'usuarios.html': 'usuarios'
     };
 
+    // ====================================================================
+    // A. CONTROL DEL MENÚ LATERAL
+    // ====================================================================
     if (!misPermisos.modulos.includes('all')) {
         document.querySelectorAll('.nav-admin a').forEach(enlace => {
-            const href = enlace.getAttribute('href').toLowerCase();
-            const archivoEnlace = href.split('/').pop();
-            const moduloDelEnlace = mapaRutas[archivoEnlace];
+            // Limpiamos el enlace de la misma forma que la página actual
+            let href = enlace.getAttribute('href').toLowerCase();
+            href = href.split('?')[0].split('#')[0].split('/').pop(); 
+            
+            const moduloDelEnlace = mapaRutas[href];
 
+            // Si es un enlace de módulo y NO está en sus permisos, lo ocultamos
             if (moduloDelEnlace && !misPermisos.modulos.includes(moduloDelEnlace)) {
                 enlace.style.display = 'none';
             }
         });
     }
 
+    // ====================================================================
+    // B. CONTROL DE ACCESO (Anti-Bucle)
+    // ====================================================================
     if (mapaRutas[paginaActual]) {
         const moduloRequerido = mapaRutas[paginaActual];
         const tieneAcceso = misPermisos.modulos.includes('all') || misPermisos.modulos.includes(moduloRequerido);
 
         if (!tieneAcceso) {
-            const primerModuloPermitido = misPermisos.modulos[0];
-            let paginaSegura = 'menuAdministrador.html';
-
-            if (primerModuloPermitido && primerModuloPermitido !== 'all') {
-                const rutaDestino = Object.keys(mapaRutas).find(key => mapaRutas[key] === primerModuloPermitido);
-                if (rutaDestino) paginaSegura = rutaDestino;
+            // SALIDA DE EMERGENCIA: Si no tiene NINGÚN módulo (Hubo error en el login)
+            if (misPermisos.modulos.length === 0) {
+                alert('Sesión inválida o rol no reconocido. Por favor, inicia sesión de nuevo.');
+                window.location.replace('../login.html');
+                return;
             }
 
-            alert(`Acceso Restringido: El rol [${rolActual}] no tiene acceso a esta sección.`);
-            window.location.replace(paginaSegura);
-            return;
+            // Si sí tiene módulos, lo mandamos a su primera opción válida
+            const primerModuloPermitido = misPermisos.modulos[0];
+            const rutaDestino = Object.keys(mapaRutas).find(key => mapaRutas[key] === primerModuloPermitido);
+
+            // PREVENCIÓN DE BUCLE: Evitamos redirigir a la misma página
+            if (rutaDestino && rutaDestino !== paginaActual) {
+                alert(`Acceso Restringido: Como ${rolBruto}, no tienes acceso al módulo de ${moduloRequerido}.`);
+                window.location.replace(rutaDestino);
+            } else {
+                // Fallback de seguridad extrema
+                window.location.replace('../index.html'); 
+            }
+            return; // Detenemos la ejecución
         }
     }
 
+    // ====================================================================
+    // C. BLOQUEO DE BOTONES Y FORMULARIOS
+    // ====================================================================
     if (!misPermisos.puedeEscribir) {
         const aplicarBloqueo = (nodo) => {
             const botones = nodo.querySelectorAll('button:not(#link-logout-global), .guardar, .activar, .cancelar, input[type="submit"]');
@@ -85,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         aplicarBloqueo(document);
-
         const obs = new MutationObserver(muts => {
             muts.forEach(m => m.addedNodes.forEach(n => {
                 if (n.nodeType === 1) aplicarBloqueo(n);
