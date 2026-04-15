@@ -11,8 +11,7 @@
         'encargado':       { modulos: ['all'], puedeEscribir: true },
         'programador':     { modulos: ['all'], puedeEscribir: false },
         'auditor':         { modulos: ['all'], puedeEscribir: false },
-        'vendedor':        { modulos: ['ventas', 'clientes', 'productos'], puedeEscribir: true }, 
-        'auxiliar':        { modulos: ['clientes', 'productos'], puedeEscribir: false },
+        'auxiliar':        { modulos: ['ventas', 'clientes', 'productos'], puedeEscribir: true },
         'soporte técnico': { modulos: ['clientes', 'ventas', 'productos'], puedeEscribir: false }
     };
 

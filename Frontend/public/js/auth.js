@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tokenExistente = localStorage.getItem('token');
     const usuarioExistente = JSON.parse(localStorage.getItem('usuario') || '{}');
     const rolesAdmin = [
-        'Administrador', 'Vendedor', 'Encargado',
+        'Administrador', 'Encargado',
         'Auxiliar', 'DBA', 'Programador',
         'Auditor', 'Soporte Técnico'
     ];

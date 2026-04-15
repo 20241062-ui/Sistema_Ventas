@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentPath = window.location.pathname;
 
     const rolesPermitidos = [
-        'Administrador', 'Vendedor', 'Encargado',
+        'Administrador', 'Encargado',
         'Auxiliar', 'DBA', 'Programador',
         'Auditor', 'Soporte Técnico'
     ];
