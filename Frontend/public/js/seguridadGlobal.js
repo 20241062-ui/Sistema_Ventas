@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Obtener datos y normalizar para evitar errores de mayúsculas
     const usuarioLocal = JSON.parse(localStorage.getItem('usuario') || '{}');
-    const rolActual = (usuarioLocal.rol || 'Invitado').trim();
+    const rolActual = (localStorage.getItem('rol') || usuarioLocal.vchRol || usuarioLocal.rol || 'Invitado').trim();
     
-    // Extraemos solo el nombre del archivo (ej: "ventas.html")
     const pathFull = window.location.pathname.toLowerCase();
     const paginaActual = pathFull.split('/').pop() || 'index.html';
 
-    // 2. MATRIZ DE PERMISOS (Asegúrate de que los nombres coincidan con tu DB)
     const matrizPermisos = {
         'Administrador':   { modulos: ['all'], puedeEscribir: true },
         'DBA':             { modulos: ['all'], puedeEscribir: true },
@@ -21,66 +18,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const misPermisos = matrizPermisos[rolActual] || { modulos: [], puedeEscribir: false };
 
-    // ====================================================================
-    // A. LÓGICA DE REDIRECCIÓN INICIAL (El Recepcionista)
-    // ====================================================================
-    
-    // Si entras a la raíz del admin y no eres Admin total, te mandamos a tu primer módulo
-    if (paginaActual === 'menuadministrador.html' && !misPermisos.modulos.includes('all')) {
-        const destino = misPermisos.modulos[0]; // Ej: "ventas"
-        if (destino) {
-            window.location.replace(`${destino}.html`);
-            return;
-        }
-    }
+    const mapaRutas = {
+        'menuadministrador.html': 'productos',
+        'ventas.html': 'ventas',
+        'compra.html': 'compras',
+        'categorias.html': 'categorias',
+        'marcas.html': 'marcas',
+        'proveedores.html': 'proveedores',
+        'listasucursales.html': 'sucursales',
+        'informacionempresa.html': 'informacion',
+        'clientes.html': 'clientes',
+        'preguntasfrecuentes.html': 'faq',
+        'contactolista.html': 'contacto',
+        'usuarios.html': 'usuarios'
+    };
 
-    // ====================================================================
-    // B. CONTROL DE ACCESO (El Guardia)
-    // ====================================================================
-    
     if (!misPermisos.modulos.includes('all')) {
-        // 1. Ocultar enlaces del menú lateral
-        const enlacesMenu = document.querySelectorAll('.nav-admin a');
-        enlacesMenu.forEach(enlace => {
+        document.querySelectorAll('.nav-admin a').forEach(enlace => {
             const href = enlace.getAttribute('href').toLowerCase();
-            const tieneAcceso = misPermisos.modulos.some(mod => href.includes(mod));
-            
-            if (!tieneAcceso && !href.includes('perfil')) {
+            const archivoEnlace = href.split('/').pop();
+            const moduloDelEnlace = mapaRutas[archivoEnlace];
+
+            if (moduloDelEnlace && !misPermisos.modulos.includes(moduloDelEnlace)) {
                 enlace.style.display = 'none';
             }
         });
+    }
 
-        // 2. Verificar si la página actual está permitida
-        const esPaginaEspecial = paginaActual.includes('perfil') || paginaActual.includes('menuadministrador');
-        const tienePermisoRuta = misPermisos.modulos.some(mod => paginaActual.includes(mod));
+    if (mapaRutas[paginaActual]) {
+        const moduloRequerido = mapaRutas[paginaActual];
+        const tieneAcceso = misPermisos.modulos.includes('all') || misPermisos.modulos.includes(moduloRequerido);
 
-        // PROTECCIÓN CONTRA BUCLE: Solo alertamos si NO es una página especial y NO tiene permiso
-        if (!esPaginaEspecial && !tienePermisoRuta && paginaActual.endsWith('.html')) {
-            alert(`Acceso Restringido: El perfil ${rolActual} no tiene acceso a ${paginaActual}`);
-            window.location.replace('menuAdministrador.html');
+        if (!tieneAcceso) {
+            const primerModuloPermitido = misPermisos.modulos[0];
+            let paginaSegura = 'menuAdministrador.html';
+
+            if (primerModuloPermitido && primerModuloPermitido !== 'all') {
+                const rutaDestino = Object.keys(mapaRutas).find(key => mapaRutas[key] === primerModuloPermitido);
+                if (rutaDestino) paginaSegura = rutaDestino;
+            }
+
+            alert(`Acceso Restringido: El rol [${rolActual}] no tiene acceso a esta sección.`);
+            window.location.replace(paginaSegura);
             return;
         }
     }
 
-    // ====================================================================
-    // C. BLOQUEO DE BOTONES (Solo Lectura)
-    // ====================================================================
     if (!misPermisos.puedeEscribir) {
         const aplicarBloqueo = (nodo) => {
-            // Seleccionamos botones de acción (excepto el de cerrar sesión)
             const botones = nodo.querySelectorAll('button:not(#link-logout-global), .guardar, .activar, .cancelar, input[type="submit"]');
             botones.forEach(btn => {
-                // Ocultamos botones críticos en tablas
                 const txt = btn.innerText.toLowerCase();
-                if (txt.includes('editar') || txt.includes('baja') || txt.includes('eliminar') || txt.includes('actualizar')) {
+                if (txt.includes('editar') || txt.includes('baja') || txt.includes('eliminar') || txt.includes('actualizar') || txt.includes('nuevo')) {
                     btn.style.display = 'none';
                 } else {
                     btn.disabled = true;
                     btn.style.opacity = '0.5';
+                    btn.style.cursor = 'not-allowed';
                 }
             });
 
-            // Bloqueamos inputs de formularios
             nodo.querySelectorAll('input:not([type="search"]), select, textarea').forEach(input => {
                 input.disabled = true;
                 input.style.backgroundColor = '#f0f0f0';
@@ -89,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         aplicarBloqueo(document);
 
-        // Observador para contenido dinámico (tablas)
         const obs = new MutationObserver(muts => {
             muts.forEach(m => m.addedNodes.forEach(n => {
                 if (n.nodeType === 1) aplicarBloqueo(n);
