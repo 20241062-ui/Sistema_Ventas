@@ -23,7 +23,6 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
             const tPedido = parseFloat(data.resultados.semanasPedido);
             const tAgotamiento = parseFloat(data.resultados.semanasAgotamiento);
 
-            // --- LÓGICA DE CATEGORIZACIÓN (Semaforización de Tiempos) ---
             let mensajeStatus, claseAlerta, sugerenciaAdmin;
 
             if (tAgotamiento <= 4) {
@@ -94,7 +93,6 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                 </div>
             `;
 
-            // Forzar a MathJax a procesar el nuevo HTML inyectado
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise([tablaDiv]).catch((err) => console.log("Error MathJax:", err));
             }
