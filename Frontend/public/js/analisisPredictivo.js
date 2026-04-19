@@ -85,7 +85,7 @@ async function ejecutarPrediccion(noSerie, nombreProducto) {
                         <b style="color: #2c3e50;">Parámetros del Modelo de Decaimiento:</b><br>
                         • Stock Inicial estimado \\( S_0 \\): <b style="color: #2c3e50;">${data.stockInicial} unidades</b><br>
                         • Tasa de decaimiento \\( k \\): <b style="color: #2c3e50;">${data.k}</b><br>
-                        • Tiempo: <b style="color: #2c3e50;"${data.tiempo} semanas</b><br>
+                        • Tiempo: <b style="color: #2c3e50;">${data.tiempo} semanas</b><br>
                         • Variación semanal: <b style="color: #2c3e50;">${(Math.abs(data.k) * 100).toFixed(2)}%</b> del inventario disponible.<br>
                         <p style="margin-top: 10px; font-style: italic; color: #7f8c8d;">
                             <strong>Sugerencia:</strong> ${sugerenciaAdmin}
